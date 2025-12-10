@@ -1,7 +1,7 @@
 import React from 'react'
 import { saveAs } from 'file-saver';
 import { Workbook } from 'exceljs';
-import { SiMicrosoftExcel } from "react-icons/si";
+// import removed: SiMicrosoftexcel not available
 import dateFormat from "dateformat";
 import { OutTurn, Finalizing, relStts } from '../../../components/const'
 import { getTtl } from '../../../utils/languages';
@@ -130,7 +130,7 @@ export const EXD = (dataTable, settings, name, ln) => {
                     className="hover:bg-slate-200 text-slate-700 justify-center w-10 h-10 inline-flex
      items-center text-sm rounded-full  hover:drop-shadow-md focus:outline-none"
                 >
-                    <SiMicrosoftExcel className="scale-[1.4] text-gray-500" />
+                    <div className="scale-[1.4] text-gray-500">[icon]</div>
                 </div>
             </Tltip>
         </div>

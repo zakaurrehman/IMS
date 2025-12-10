@@ -179,7 +179,7 @@ export default function SignInPage() {
                 {/* Register */}
                 <div className="text-center mt-6">
                   <p className="text-sm text-gray-600">
-                    Don't have an account?{' '}
+                    Don&#39;t have an account?{' '}
                     <a href="#" className="text-[#0055FF] hover:text-[#0044DD] font-medium transition-colors">
                       Register
                     </a>

@@ -245,30 +245,21 @@ export function Calendar({
         ...formatters,
       }}
       classNames={{
-        root: "w-fit",
-        months: "flex flex-col gap-4 md:flex-row relative",
-        month: "flex flex-col gap-4",
-        nav: "absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1",
-        nav_button_previous: cn(
-          buttonVariants({ variant: buttonVariant }),
-          "h-[--cell-size] w-[--cell-size] p-0 aria-disabled:opacity-50"
-        ),
-        nav_button_next: cn(
-          buttonVariants({ variant: buttonVariant }),
-          "h-[--cell-size] w-[--cell-size] p-0 aria-disabled:opacity-50"
-        ),
-        table: "w-full border-collapse",
-        weekdays: "flex",
-        weekday: "text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal",
-        week: "mt-2 flex w-full",
-        day: "group/day relative aspect-square h-full w-full select-none p-0 text-center",
-        range_start: "bg-accent rounded-l-md",
-        range_middle: "rounded-none",
-        range_end: "bg-accent rounded-r-md",
-        today: "bg-accent text-accent-foreground rounded-md",
-        outside: "text-muted-foreground aria-selected:text-muted-foreground",
-        disabled: "text-muted-foreground opacity-50",
-        ...classNames,
+          root: "w-fit",
+          months: "flex flex-col gap-4 md:flex-row relative",
+          month: "flex flex-col gap-4",
+          nav: "absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1",
+          nav_button_previous: cn(
+            buttonVariants({ variant: buttonVariant }),
+            "h-[--cell-size] w-[--cell-size] p-0 aria-disabled:opacity-50"
+          ),
+          nav_button_next: cn(
+            buttonVariants({ variant: buttonVariant }),
+            "h-[--cell-size] w-[--cell-size] p-0 aria-disabled:opacity-50"
+          ),
+          table: "w-full border-collapse",
+          day: "group/day relative aspect-square h-full w-full select-none p-0 text-center",
+          ...classNames,
       }}
       components={{
         Day: CalendarDayButton,
@@ -281,20 +272,10 @@ export function Calendar({
   )
 }
 
-function CalendarDayButton({ date, selected, disabled, outside, today }: DayProps) {
+function CalendarDayButton({ date, ...props }: DayProps) {
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className={cn(
-        "flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-1 font-normal leading-none",
-        selected && "bg-primary text-primary-foreground",
-        today && "border border-accent rounded-md",
-        disabled && "opacity-50",
-        outside && "text-muted-foreground"
-      )}
-    >
+    <Button variant="ghost" size="icon" {...props}>
       {date.getDate()}
     </Button>
-  )
+  );
 }

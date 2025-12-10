@@ -109,6 +109,8 @@ const ChartTooltipContent = React.forwardRef<
       indicator?: "line" | "dot" | "dashed"
       nameKey?: string
       labelKey?: string
+      payload?: any[];
+      label?: string;
     }
 >(
   (
@@ -257,25 +259,21 @@ const ChartTooltipContent = React.forwardRef<
 ChartTooltipContent.displayName = "ChartTooltip"
 
 const ChartLegend = RechartsPrimitive.Legend
-
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"div"> &
-    Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
-      hideIcon?: boolean
-      nameKey?: string
-    }
+  React.ComponentProps<"div"> & {
+    payload?: any[];
+    verticalAlign?: string;
+    hideIcon?: boolean;
+    nameKey?: string;
+  }
 >(
-  (
-    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
-    ref
-  ) => {
-    const { config } = useChart()
-
-    if (!payload?.length) {
-      return null
+  ({ className, hideIcon = false, payload = [], verticalAlign = "bottom", nameKey }, ref) => {
+    const { config } = useChart();
+    const safePayload = Array.isArray(payload) ? payload : [];
+    if (!safePayload.length) {
+      return null;
     }
-
     return (
       <div
         ref={ref}
@@ -285,12 +283,11 @@ const ChartLegendContent = React.forwardRef<
           className
         )}
       >
-        {payload
-          .filter((item) => item.type !== "none")
-          .map((item) => {
-            const key = `${nameKey || item.dataKey || "value"}`
-            const itemConfig = getPayloadConfigFromPayload(config, item, key)
-
+        {safePayload
+          .filter((item: any) => item.type !== "none")
+          .map((item: any) => {
+            const key = `${nameKey || item.dataKey || "value"}`;
+            const itemConfig = getPayloadConfigFromPayload(config, item, key);
             return (
               <div
                 key={item.value}
@@ -303,20 +300,20 @@ const ChartLegendContent = React.forwardRef<
                 ) : (
                   <div
                     className="h-2 w-2 shrink-0 rounded-[2px]"
-                    style={{
-                      backgroundColor: item.color,
-                    }}
+                    style={{ backgroundColor: item.color }}
                   />
                 )}
                 {itemConfig?.label}
               </div>
-            )
+            );
           })}
       </div>
-    )
+    );
   }
-)
-ChartLegendContent.displayName = "ChartLegend"
+);
+ChartLegendContent.displayName = "ChartLegend";
+
+// ChartLegendContent is already declared above. Remove duplicate declaration.
 
 // Helper to extract item config from a payload.
 function getPayloadConfigFromPayload(

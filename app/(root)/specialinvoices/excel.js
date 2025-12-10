@@ -1,7 +1,7 @@
 import { saveAs } from 'file-saver';
 import { Workbook } from 'exceljs';
 import Tooltip from '../../../components/tooltip';
-import { SiMicrosoftoffice365 } from 'react-icons/si';
+// import removed: SiMicrosoft not available
 import dateFormat from "dateformat";
 import { getTtl } from '../../../utils/languages';
 import Tltip from '../../../components/tlTip';
@@ -118,7 +118,7 @@ export const EXD = (dataTable, settings, name, ln) => {
                     className="hover:bg-slate-200 text-slate-700 justify-center size-10 inline-flex
      items-center text-sm rounded-full  hover:drop-shadow-md focus:outline-none"
                 >
-                    <SiMicrosoftoffice365 className="scale-[1.4] text-gray-500" />
+                    <div className="scale-[1.4] text-gray-500">[icon]</div>
                 </div>
             </Tltip>
         </div>
