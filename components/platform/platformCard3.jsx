@@ -41,7 +41,7 @@ export function PlatformCard3() {
         className="relative min-h-[400px] w-full py-12 lg:pl-12 h-full"
       >
         {/* Main Card */}
-        <div className="relative z-10 bg-gradient-to-r from-[#0074F0] to-[#0056D2] rounded-2xl p-6 text-white shadow-2xl shadow-blue-500/20 w-[85%]">
+        <div className="relative z-10 bg-gradient-to-r from-[var(--endeavour)] to-[var(--port-gore)] rounded-2xl p-6 text-white shadow-2xl shadow-[var(--endeavour)]/20 w-[85%]">
           <div className="flex justify-between items-start mb-6">
             <span className="text-sm font-medium opacity-90">Credit Balance</span>
             <MoreHorizontal className="w-6 h-6 opacity-70" />

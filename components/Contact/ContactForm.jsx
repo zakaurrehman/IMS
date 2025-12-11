@@ -38,7 +38,7 @@ export default function ContactForm() {
           </div>
         )}
 
-        <h2 className="text-3xl md:text-4xl font-bold text-[#002159] mb-10 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-[var(--port-gore)] mb-10 text-center">
           Get in Touch
         </h2>
 
@@ -56,7 +56,7 @@ export default function ContactForm() {
               value={formData.name}
               onChange={handleChange}
               placeholder="Your Name"
-              className="w-full p-5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-300"
+              className="w-full p-5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[var(--endeavour)] focus:outline-none shadow-sm transition-all duration-300"
             />
           </div>
 
@@ -73,7 +73,7 @@ export default function ContactForm() {
               value={formData.email}
               onChange={handleChange}
               placeholder="Your Email"
-              className="w-full p-5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-300"
+              className="w-full p-5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[var(--endeavour)] focus:outline-none shadow-sm transition-all duration-300"
             />
           </div>
 
@@ -90,7 +90,7 @@ export default function ContactForm() {
               value={formData.subject}
               onChange={handleChange}
               placeholder="Subject"
-              className="w-full p-5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-300"
+              className="w-full p-5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[var(--endeavour)] focus:outline-none shadow-sm transition-all duration-300"
             />
           </div>
 
@@ -107,7 +107,7 @@ export default function ContactForm() {
               value={formData.message}
               onChange={handleChange}
               placeholder="Your Message"
-              className="w-full p-5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-300"
+              className="w-full p-5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[var(--endeavour)] focus:outline-none shadow-sm transition-all duration-300"
             />
           </div>
 
@@ -115,7 +115,7 @@ export default function ContactForm() {
           <div className="text-center">
             <button
               type="submit"
-              className="px-10 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-colors duration-300"
+              className="px-10 py-4 bg-[var(--endeavour)] text-white font-bold rounded-xl shadow-lg hover:bg-[var(--port-gore)] transition-colors duration-300"
             >
               Send Message
             </button>

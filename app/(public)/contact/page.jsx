@@ -19,9 +19,9 @@ export default function ContactPage() {
         />
 
         {/* Contact Form Section */}
-        <section className="py-24 bg-[#F8F9FB]">
+        <section className="py-24 bg-[var(--selago)]">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-4xl font-bold text-[#002159] mb-8 text-center">
+            <h2 className="text-4xl font-bold text-[var(--port-gore)] mb-8 text-center">
               Contact Us
             </h2>
             <p className="text-gray-600 text-center mb-12">

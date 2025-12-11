@@ -26,7 +26,7 @@ export default function FeaturesPage() {
   <div className="container mx-auto px-4">
 
     {/* SECTION TITLE */}
-    <h2 className="text-4xl font-bold text-center text-[#002159] mb-20 leading-tight">
+    <h2 className="text-4xl font-bold text-center text-[var(--port-gore)] mb-20 leading-tight">
       Powerful Tools to Streamline Your Workflow
     </h2>
 
@@ -44,23 +44,23 @@ export default function FeaturesPage() {
         ],
         preview: (
           <div className="flex flex-col items-start justify-center w-full h-full p-6">
-            <h4 className="text-lg font-semibold text-[#0056D2] mb-2">Contracts Overview</h4>
+            <h4 className="text-lg font-semibold text-[var(--endeavour)] mb-2">Contracts Overview</h4>
             <div className="flex items-center justify-between w-full mb-4">
               <span className="text-gray-500">Active Contracts</span>
               <span className="font-bold text-gray-700">128</span>
             </div>
-            <div className="h-2 w-full bg-blue-100 rounded-full mb-2">
-              <div className="h-2 w-3/4 bg-blue-600 rounded-full"></div>
+            <div className="h-2 w-full bg-[var(--selago)] rounded-full mb-2">
+              <div className="h-2 w-3/4 bg-[var(--endeavour)] rounded-full"></div>
             </div>
             <div className="flex items-center justify-between w-full mb-2">
               <span className="text-gray-500">Pending Approvals</span>
               <span className="font-bold text-gray-700">24</span>
             </div>
-            <div className="h-2 w-full bg-blue-100 rounded-full mb-2">
-              <div className="h-2 w-1/3 bg-blue-500 rounded-full"></div>
+            <div className="h-2 w-full bg-[var(--selago)] rounded-full mb-2">
+              <div className="h-2 w-1/3 bg-[var(--endeavour)] rounded-full"></div>
             </div>
             <div className="flex justify-center mt-4 w-full">
-              <BarChart className="w-6 h-6 text-[#0056D2]" />
+              <BarChart className="w-6 h-6 text-[var(--endeavour)]" />
             </div>
           </div>
         ),
@@ -78,7 +78,7 @@ export default function FeaturesPage() {
         ],
         preview: (
           <div className="flex flex-col items-start justify-center w-full h-full p-6">
-            <h4 className="text-lg font-semibold text-[#0056D2] mb-2">Invoices Status</h4>
+            <h4 className="text-lg font-semibold text-[var(--endeavour)] mb-2">Invoices Status</h4>
             <div className="flex items-center justify-between w-full mb-4">
               <span className="text-gray-500">Paid</span>
               <span className="font-bold text-gray-700">340</span>
@@ -94,7 +94,7 @@ export default function FeaturesPage() {
               <div className="h-2 w-1/4 bg-yellow-500 rounded-full"></div>
             </div>
             <div className="flex justify-center mt-4 w-full">
-              <DollarSign className="w-6 h-6 text-[#0056D2]" />
+              <DollarSign className="w-6 h-6 text-[var(--endeavour)]" />
             </div>
           </div>
         ),
@@ -112,7 +112,7 @@ export default function FeaturesPage() {
         ],
         preview: (
           <div className="flex flex-col items-start justify-center w-full h-full p-6">
-            <h4 className="text-lg font-semibold text-[#0056D2] mb-2">Expenses Overview</h4>
+            <h4 className="text-lg font-semibold text-[var(--endeavour)] mb-2">Expenses Overview</h4>
             <div className="flex items-center justify-between w-full mb-4">
               <span className="text-gray-500">Operational</span>
               <span className="font-bold text-gray-700">$12,450</span>
@@ -128,7 +128,7 @@ export default function FeaturesPage() {
               <div className="h-2 w-1/3 bg-purple-600 rounded-full"></div>
             </div>
             <div className="flex justify-center mt-4 w-full">
-              <PieChart className="w-6 h-6 text-[#0056D2]" />
+              <PieChart className="w-6 h-6 text-[var(--endeavour)]" />
             </div>
           </div>
         ),
@@ -172,9 +172,9 @@ export default function FeaturesPage() {
               <div
                 className="
                   relative h-80 w-full rounded-2xl
-                  bg-gradient-to-br from-[#E9F1FF] to-[#F7FAFF]
-                  shadow-xl shadow-blue-100
-                  border border-blue-200/40
+                  bg-gradient-to-br from-[var(--selago)] to-white
+                  shadow-xl shadow-[var(--selago)]
+                  border border-[var(--rock-blue)]/40
                   flex items-center justify-center
                   overflow-hidden
                   transition-all duration-300

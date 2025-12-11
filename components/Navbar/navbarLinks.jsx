@@ -12,7 +12,7 @@ export default function NavbarLinks() {
     { href: '/pricing', label: 'Pricing' },
     { href: '/features', label: 'Features' },
     { href: '/blog', label: 'Blog' },
-    { href: '/overview', label: 'Overview' },
+    // { href: '/overview', label: 'Overview' },
       { href: '/dashboard', label: 'Dashboard' },
       
 

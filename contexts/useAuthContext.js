@@ -42,10 +42,7 @@ const AuthContextProvider = ({ children }) => {
       });
 
   }
-  useEffect(() => {
-    let isLogged = sessionStorage.getItem('isLogged')
-    if (!isLogged && pathName !== '/') router.push("/");
-  }, []);
+  // Removed unwanted redirect to home page on refresh. Users will stay on the current page unless redirected elsewhere.
 
 
   /*

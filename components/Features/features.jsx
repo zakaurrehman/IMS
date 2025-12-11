@@ -11,7 +11,7 @@ const features = [
   },
   {
     icon: Command,
-    color: "bg-[#3B82F6]", // Bright Blue
+    color: "bg-[var(--endeavour)]", // Site Blue
     title: "Bank-Grade Security",
     description: "Your data is fully encrypted and secured with industry-leading standards."
   },
@@ -31,11 +31,11 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="relative py-40 z-10">
+    <section className="relative py-16 md:py-32 z-10">
       {/* Angled Background Layer */}
       <div className="absolute inset-0 w-full h-full z-0">
          <div 
-           className="absolute inset-0 bg-gradient-to-r from-[#0080FF] to-[#0055FF]"
+           className="absolute inset-0 bg-gradient-to-r from-[var(--endeavour)] to-[var(--port-gore)]"
            style={{
              clipPath: "polygon(0 15%, 100% 0, 100% 85%, 0% 100%)" 
            }}
@@ -50,7 +50,7 @@ export default function Features() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-white font-display tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white font-display tracking-tight">
             Everything you need to grow your business
           </h2>
         </motion.div>

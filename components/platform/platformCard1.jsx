@@ -42,7 +42,7 @@ export function PlatformCard1() {
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="absolute -top-12 right-12 bg-[#0056D2] w-48 h-32 rounded-2xl shadow-xl shadow-blue-500/20 flex flex-col justify-center px-6 space-y-3 z-10"
+          className="absolute -top-12 right-12 bg-[var(--endeavour)] w-48 h-32 rounded-2xl shadow-xl shadow-[var(--endeavour)]/20 flex flex-col justify-center px-6 space-y-3 z-10"
         >
           <div className="w-2/3 h-2 bg-white/90 rounded-full" />
           <div className="w-full h-2 bg-white/40 rounded-full" />
@@ -55,7 +55,7 @@ export function PlatformCard1() {
           <div className="space-y-4">
             <div>
               <p className="text-gray-400 text-sm font-medium">Sales trend</p>
-              <h3 className="text-3xl font-bold text-[#002159]">68%</h3>
+              <h3 className="text-3xl font-bold text-[var(--port-gore)]">68%</h3>
             </div>
             <div className="h-24 w-full">
               <ResponsiveContainer width="100%" height="100%">

@@ -13,13 +13,13 @@ export function SectionHeader({
     <div className={`flex flex-col items-start space-y-6 ${className}`}>
       
       {/* Icon Box */}
-      <div className="w-16 h-16 bg-[#0056D2] rounded-2xl flex items-center justify-center shadow-lg shadow-blue-900/20">
+      <div className="w-16 h-16 bg-[var(--endeavour)] rounded-2xl flex items-center justify-center shadow-lg shadow-[var(--endeavour)]/20">
         <Icon className="w-8 h-8 text-white" strokeWidth={2} />
       </div>
 
       {/* Title + Description */}
       <div className="space-y-4">
-        <h2 className="text-3xl font-bold text-[#0056D2] tracking-tight">
+        <h2 className="text-3xl font-bold text-[var(--endeavour)] tracking-tight">
           {title}
         </h2>
         <p className="text-gray-500 leading-relaxed text-lg max-w-md">
@@ -28,7 +28,7 @@ export function SectionHeader({
       </div>
 
       {/* Button */}
-      <Button className="bg-[#0056D2] hover:bg-[#0044A5] text-white px-8 py-6 rounded-xl text-lg font-medium shadow-lg shadow-blue-500/25 transition-transform hover:scale-105 cursor-pointer">
+      <Button className="bg-[var(--endeavour)] hover:bg-[var(--port-gore)] text-white px-8 py-6 rounded-xl text-lg font-medium shadow-lg shadow-[var(--endeavour)]/25 transition-transform hover:scale-105 cursor-pointer">
         {buttonText}
       </Button>
 

@@ -15,7 +15,7 @@ export default function FeatureCard({ icon: Icon, color, title, description, ind
         <Icon className="w-7 h-7 text-white" />
       </div>
       
-      <h3 className="text-[#004488] font-bold text-lg mb-4">
+      <h3 className="text-[var(--endeavour)] font-bold text-lg mb-4">
         {title}
       </h3>
       

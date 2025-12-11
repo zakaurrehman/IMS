@@ -284,8 +284,8 @@ export default function DashboardPreview() {
               {/* Stat 1: Total Transactions */}
               <motion.div variants={itemVariants} whileHover={{ y: -5 }} className="bg-white p-5 rounded-2xl border border-gray-50 shadow-[0_2px_20px_rgba(0,0,0,0.02)] flex flex-col justify-center h-28 cursor-default transition-shadow hover:shadow-lg">
                 <div className="flex items-start justify-between mb-2">
-                  <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
-                    <TrendingUp className="w-4 h-4" />
+                          <div className="w-9 h-9 rounded-full bg-[var(--rock-blue)] flex items-center justify-center">
+                            <TrendingUp className="w-4 h-4 text-[var(--endeavour)]" />
                   </div>
                 </div>
                 <div>
@@ -326,7 +326,7 @@ export default function DashboardPreview() {
               {/* Stat 4: Net Profit */}
               <motion.div variants={itemVariants} whileHover={{ y: -5 }} className="bg-white p-5 rounded-2xl border border-gray-50 shadow-[0_2px_20px_rgba(0,0,0,0.02)] flex flex-col justify-center h-28 cursor-default transition-shadow hover:shadow-lg">
                 <p className="text-gray-400 text-xs font-medium mb-1">Net Profit</p>
-                <p className="text-xl font-bold text-gray-900">$18,200</p>
+                  <p className="text-xl font-bold text-[var(--endeavour)]">$18,200</p>
               </motion.div>
             </div>
 
@@ -335,13 +335,13 @@ export default function DashboardPreview() {
               {/* Left Column */}
               <div className="space-y-4">
                 {/* Blue Account Balance Card */}
-                <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="bg-[#0066FF] text-white p-6 rounded-2xl relative overflow-hidden shadow-lg shadow-blue-500/20 h-[120px] flex flex-col justify-between cursor-pointer">
+                <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="bg-[var(--endeavour)] text-white p-6 rounded-2xl relative overflow-hidden shadow-lg shadow-[var(--endeavour)]/20 h-[120px] flex flex-col justify-between cursor-pointer">
                   <div className="flex justify-between items-start z-10 relative">
                     <div>
-                      <p className="text-blue-100 text-xs font-medium mb-1">Account Balance</p>
+                             <p className="text-[var(--rock-blue)] text-xs font-medium mb-1">Account Balance</p>
                       <p className="text-3xl font-bold tracking-tight">$45,750</p>
                     </div>
-                    <MoreHorizontal className="text-blue-200 opacity-70 w-4 h-4" />
+                    <MoreHorizontal className="text-[var(--selago)] opacity-70 w-4 h-4" />
                   </div>
                   
                   {/* Decorative Wave inside blue card */}

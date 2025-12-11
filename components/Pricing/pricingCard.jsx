@@ -6,13 +6,13 @@ export default function PricingCard({ plan }) {
   const baseClasses =
     'flex flex-col h-full p-8 rounded-xl border-2 transition-all duration-300 hover:shadow-xl';
   const classes = plan.highlighted
-    ? `${baseClasses} border-blue-600 bg-blue-50 scale-105`
+    ? `${baseClasses} border-[var(--endeavour)] bg-[var(--selago)] scale-105`
     : `${baseClasses} border-gray-200 bg-white`;
 
   return (
     <div className={classes}>
       {plan.highlighted && (
-        <span className="inline-block w-fit px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-full mb-4">
+        <span className="inline-block w-fit px-3 py-1 bg-[var(--endeavour)] text-white text-sm font-semibold rounded-full mb-4">
           Most Popular
         </span>
       )}
@@ -28,8 +28,8 @@ export default function PricingCard({ plan }) {
       <button
         className={`w-full py-3 px-4 rounded-lg font-semibold mb-8 transition-colors ${
           plan.highlighted
-            ? 'bg-blue-600 text-white hover:bg-blue-700'
-            : 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50'
+            ? 'bg-[var(--endeavour)] text-white hover:bg-[var(--port-gore)]'
+            : 'border-2 border-[var(--endeavour)] text-[var(--endeavour)] hover:bg-[var(--selago)]'
         }`}
       >
         {plan.cta}

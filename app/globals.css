@@ -1,3 +1,19 @@
+
+/* Site Color Palette as CSS Variables */
+:root {
+  --endeavour: #0366ae;
+  --rock-blue: #9fb8d4;
+  --selago: #ebf2fc;
+  --port-gore: #28264f;
+  --bunting: #1c134d;
+  --chathams-blue: #103a7a;
+  --regent-gray: #838ca7;
+}
+
+/* Example usage:
+   background: var(--endeavour);
+   color: var(--selago);
+*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

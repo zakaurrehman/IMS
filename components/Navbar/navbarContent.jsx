@@ -1,15 +1,19 @@
 'use client';
 
+
 import React from 'react';
+import Image from 'next/image';
+import logo from '../../public/logo/imsLogo.png';
 
 export default function NavbarContent({ isMenuOpen, toggleMenu, children }) {
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-3">
       <div className="flex justify-between items-center">
         {/* Logo */}
+
         <div className="flex-shrink-0 flex items-center gap-3">
-          <div className="text-xl font-bold text-white">IMS</div>
-          <span className="text-xs text-blue-100">METALS & ALLOYS</span>
+          <Image src={logo} alt="IMS Logo" width={40} height={40} />
+          <span className="text-xs text-white">METALS & ALLOYS</span>
         </div>
 
         {/* Desktop Navigation */}
@@ -20,7 +24,7 @@ export default function NavbarContent({ isMenuOpen, toggleMenu, children }) {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
-          className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-blue-700 focus:outline-none"
+          className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-[var(--endeavour)] focus:outline-none"
         >
           <svg
             className={`h-6 w-6 transition-transform ${isMenuOpen ? 'rotate-90' : ''}`}
@@ -40,7 +44,7 @@ export default function NavbarContent({ isMenuOpen, toggleMenu, children }) {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden mt-4 pt-4 border-t border-blue-500">
+        <div className="md:hidden mt-4 pt-4 border-t border-[var(--endeavour)]">
           {children[1]}
         </div>
       )}

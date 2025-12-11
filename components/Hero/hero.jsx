@@ -74,7 +74,7 @@ import DashboardPreview from "./dashboard-preview";
 
 export default function Hero() {
   return (
-    <section className="relative pt-32 pb-20 bg-gradient-to-br from-[#0055FF] via-[#0044CC] to-[#0033AA] text-white overflow-hidden min-h-[110vh]">
+    <section className="relative pt-16 md:pt-32 pb-10 md:pb-20 bg-gradient-to-br from-[var(--endeavour)] via-[var(--rock-blue)] to-[var(--port-gore)] text-white overflow-hidden min-h-[70vh] md:min-h-[110vh]">
       {/* Main Content */}
       <div className="container mx-auto px-4 relative z-20">
         <div className="text-center max-w-4xl mx-auto">
@@ -83,7 +83,7 @@ export default function Hero() {
   initial={{ opacity: 0, y: -20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.6 }}
-  className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight tracking-tight font-display"
+  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight tracking-tight font-display"
 >
   Advanced Metal Trading<br />Operations & Logistics Platform
 </motion.h1>
@@ -92,7 +92,7 @@ export default function Hero() {
   initial={{ opacity: 0 }}
   animate={{ opacity: 1 }}
   transition={{ duration: 0.6, delay: 0.2 }}
-  className="text-xs md:text-sm text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed font-light"
+  className="text-xs sm:text-sm md:text-base lg:text-lg text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed font-light"
 >
   A complete digital system designed for metal traders to manage contracts, logistics, pricing, 
   inventory, and financial documentation — all in one powerful dashboard with real-time accuracy.
