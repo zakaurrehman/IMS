@@ -34,7 +34,7 @@ const Page = () => {
 
     return (
         <div>
-            <div className="border border-transparent border-slate-200  p-1">
+            <div className="border border-transparent border-[var(--selago)] p-1">
                 <div className="w-full px-0 ">
                     <Tab.Group >
                         <Tab.List className="max-w-xl flex space-x-1 p-1">
@@ -47,8 +47,8 @@ const Page = () => {
                                             'w-full rounded-lg py-1 text-xs font-medium leading-4 ',
                                             'ring-white ring-opacity-60 focus:outline-none focus:ring-1',
                                             selected
-                                                ? 'text-white bg-slate-500 shadow'
-                                                : 'text-slate-600 hover:bg-slate-400 hover:text-white border border-slate-400'
+                                                ? 'text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] shadow'
+                                                : 'text-[var(--port-gore)] hover:bg-[var(--selago)] border border-[var(--rock-blue)]'
                                         )
                                     }
                                 >

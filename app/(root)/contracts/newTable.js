@@ -84,25 +84,25 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                     resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
                 />
 
-                <div className=" overflow-x-auto border-x md:max-h-[310px] 2xl:max-h-[550px]">
+                <div className="overflow-x-auto border-x border-[var(--selago)] md:max-h-[310px] 2xl:max-h-[550px]">
                     <table className="w-full">
-                        <thead className="bg-gray-50 divide-y divide-gray-200 md:sticky md:top-0 md:z-10 ">
+                        <thead className="bg-white md:sticky md:top-0 md:z-10">
                             {table.getHeaderGroups().map(hdGroup =>
-                                <tr key={hdGroup.id} className='border-b'>
+                                <tr key={hdGroup.id} className='border-b border-[var(--selago)] bg-[var(--selago)]'>
                                     {hdGroup.headers.map(
                                         header =>
-                                            <th key={header.id} className="relative px-6 py-2 text-left text-sm font-medium text-gray-500 uppercase">
+                                            <th key={header.id} className="relative px-6 py-2.5 text-left text-sm font-semibold text-[var(--port-gore)] uppercase bg-[var(--selago)]">
                                                 {header.column.getCanSort() ?
                                                     <div onClick={header.column.getToggleSortingHandler()} className="table-caption cursor-pointer items-center gap-1 text-xs
-                                                    font-medium">
+                                                    font-semibold">
                                                         {/* <Tltip direction='top' tltpText='sdsd ffgf'> */}
                                                         {header.column.columnDef.header}
                                                         {/* </Tltip> */}
 
                                                         {
                                                             {
-                                                                asc: <TbSortAscending className="text-slate-600 scale-125" />,
-                                                                desc: <TbSortDescending className="text-slate-600 scale-125" />
+                                                                asc: <TbSortAscending className="text-[var(--endeavour)] scale-125" />,
+                                                                desc: <TbSortDescending className="text-[var(--endeavour)] scale-125" />
                                                             }[header.column.getIsSorted()]
                                                         }
                                                     </div>
@@ -118,9 +118,9 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                                     )}
                                 </tr>)}
                         </thead>
-                        <tbody className="divide-y divide-gray-200 ">
+                        <tbody className="divide-y divide-[var(--selago)]">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer hover:bg-slate-200 ' onDoubleClick={() => SelectRow(row.original)}>
+                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--selago)]/50 transition-colors' onDoubleClick={() => SelectRow(row.original)}>
 
                                     {row.getVisibleCells().map(cell => (
                                         <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
@@ -133,8 +133,8 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                         </tbody>
                     </table>
                 </div>
-                <div className="flex p-2 border-t flex-wrap bg-slate-50 border rounded-b-xl">
-                    <div className="hidden lg:flex text-gray-600 text-sm w-48 xl:w-96 p-2 items-center">
+                <div className="flex p-2.5 border-t border-[var(--selago)] flex-wrap bg-white rounded-b-2xl">
+                    <div className="hidden lg:flex text-[var(--regent-gray)] text-sm w-48 xl:w-96 p-2 items-center">
                         {`${getTtl('Showing', ln)} ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
                             (table.getFilteredRowModel().rows.length ? 1 : 0)}-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
                             ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}

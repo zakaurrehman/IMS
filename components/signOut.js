@@ -11,7 +11,7 @@ const SignOut = () => {
     const router = useRouter()
     const { SignOut } = UserAuth();
     const { compData } = useContext(SettingsContext);
-    const ln = compData?.lng || 'en';
+    const ln = compData?.lng || 'English';
 
 
     const LogOut = async () => {

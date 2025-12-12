@@ -11,6 +11,212 @@ function checkIfInArray(values) {
     return arr.indexOf(sumOfY_axe) !== -1
 }
 
+// Line Chart for Sales Overview - Using Site Color Palette
+export const LineChart = (data1, data2) => {
+    const obj = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+            {
+                label: 'Total Sales',
+                data: data1,
+                borderColor: '#9fb8d4', // rock-blue
+                backgroundColor: 'transparent',
+                borderWidth: 2.5,
+                tension: 0.4,
+                fill: false,
+                pointRadius: 4,
+                pointBackgroundColor: '#9fb8d4',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointHoverBackgroundColor: '#9fb8d4',
+                pointHoverBorderColor: '#fff',
+                pointHoverBorderWidth: 2,
+            },
+            {
+                label: 'Total Revenue',
+                data: data2,
+                borderColor: '#103a7a', // chathams-blue
+                backgroundColor: 'transparent',
+                borderWidth: 2.5,
+                tension: 0.4,
+                fill: false,
+                pointRadius: 4,
+                pointBackgroundColor: '#103a7a',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointHoverBackgroundColor: '#103a7a',
+                pointHoverBorderColor: '#fff',
+                pointHoverBorderWidth: 2,
+            },
+        ]
+    };
+
+    const options = {
+        responsive: true,
+        plugins: {
+            title: {
+                display: false,
+            },
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                titleColor: '#28264f', // port-gore
+                bodyColor: '#838ca7', // regent-gray
+                borderColor: '#ebf2fc', // selago
+                borderWidth: 1,
+                cornerRadius: 8,
+                padding: 12,
+                callbacks: {
+                    label: function (context) {
+                        return context.dataset.label + ': $' + addCommas(context.parsed.y.toString())
+                    }
+                },
+                titleFont: { family: 'Poppins', weight: 'bold' },
+                bodyFont: { family: 'Poppins' },
+            },
+        },
+        maintainAspectRatio: false,
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        },
+        scales: {
+            y: {
+                border: {
+                    display: false,
+                },
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                    stepSize: 20,
+                    callback: function (value) {
+                        return value;
+                    },
+                    font: { family: 'Poppins', size: 11 },
+                    color: '#838ca7', // regent-gray
+                    padding: 10,
+                },
+                grid: {
+                    color: 'rgba(159, 184, 212, 0.3)', // rock-blue with opacity
+                    drawBorder: false,
+                }
+            },
+            x: {
+                ticks: { 
+                    font: { family: 'Poppins', size: 11 }, 
+                    color: '#838ca7', // regent-gray
+                    padding: 5,
+                },
+                grid: {
+                    display: false,
+                },
+                border: {
+                    display: false,
+                }
+            }
+        },
+    };
+
+    return { obj, options };
+};
+
+// Grouped Bar Chart for Total Revenue - Using Site Color Palette  
+export const GroupedBarChart = (data1, data2) => {
+    const obj = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+            {
+                label: 'Total Income',
+                backgroundColor: '#9fb8d4', // rock-blue
+                data: data1,
+                borderRadius: 4,
+                borderSkipped: false,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6,
+            },
+            {
+                label: 'Total Outcome',
+                backgroundColor: '#103a7a', // chathams-blue
+                data: data2,
+                borderRadius: 4,
+                borderSkipped: false,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6,
+            },
+        ]
+    };
+
+    const options = {
+        responsive: true,
+        plugins: {
+            title: {
+                display: false,
+            },
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                titleColor: '#28264f', // port-gore
+                bodyColor: '#838ca7', // regent-gray
+                borderColor: '#ebf2fc', // selago
+                borderWidth: 1,
+                cornerRadius: 8,
+                padding: 12,
+                callbacks: {
+                    label: function (context) {
+                        return context.dataset.label + ': $' + addCommas(context.parsed.y.toString())
+                    }
+                },
+                titleFont: { family: 'Poppins', weight: 'bold' },
+                bodyFont: { family: 'Poppins' },
+            },
+        },
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                border: {
+                    display: false,
+                },
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                    stepSize: 20,
+                    callback: function (value) {
+                        return value;
+                    },
+                    font: { family: 'Poppins', size: 11 },
+                    color: '#838ca7', // regent-gray
+                    padding: 10,
+                },
+                grid: {
+                    color: 'rgba(159, 184, 212, 0.3)', // rock-blue with opacity
+                    drawBorder: false,
+                }
+            },
+            x: {
+                ticks: { 
+                    font: { family: 'Poppins', size: 11 }, 
+                    color: '#838ca7', // regent-gray
+                    padding: 5,
+                },
+                grid: {
+                    display: false,
+                },
+                border: {
+                    display: false,
+                }
+            }
+        },
+    };
+
+    return { obj, options };
+};
+
 export const BarChart = (data, color) => {
 
     const obj = {

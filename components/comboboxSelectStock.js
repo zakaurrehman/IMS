@@ -34,16 +34,16 @@ const MyComboboxSelectStock = ({ data, setValue, value, idx, name, classes, disa
             <Combobox by="id" value={selected} onChange={(e) => setSelection(e)} disabled={disabled}>
                 <div className="relative">
                     <div className={`relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left 
-                     focus:outline-none sm:text-sm border border-slate-400 ${classes}`}>
+                     focus:outline-none sm:text-sm border border-[var(--rock-blue)] ${classes}`}>
                         <ComboboxInput
-                            className={cn('w-full py-1 pl-3 pr-10 text-xs leading-5  focus:outline-none',
-                                selected[name] !== plcHolder ? 'text-slate-900' : 'text-slate-400')}
+                            className={cn('w-full py-1 pl-3 pr-10 text-xs leading-5 focus:outline-none',
+                                selected[name] !== plcHolder ? 'text-[var(--port-gore)]' : 'text-[var(--regent-gray)]')}
                             displayValue={(value) => (value || {})[name] || selected ? selected[name] : plcHolder}
                             onChange={(event) => setQuery(event.target.value)}
                         />
                         <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
                             <HiChevronUpDown
-                                className="h-5 w-5 text-gray-400"
+                                className="h-5 w-5 text-[var(--regent-gray)]"
                                 aria-hidden="true"
                             />
                         </ComboboxButton>
@@ -56,10 +56,10 @@ const MyComboboxSelectStock = ({ data, setValue, value, idx, name, classes, disa
                         afterLeave={() => setQuery('')}
                     >
                         <ComboboxOptions className={`z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md 
-                        bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none 
+                        bg-white py-1 text-base shadow-lg ring-1 ring-[var(--selago)] focus:outline-none 
                         sm:text-sm ${classes1}`}>
                             {filteredData.length === 0 && query !== '' ? (
-                                <div className="relative cursor-default select-none py-2 px-4 text-gray-700 text-xs">
+                                <div className="relative cursor-default select-none py-2 px-4 text-[var(--regent-gray)] text-xs">
                                     Nothing found.
                                 </div>
                             ) : (
@@ -68,11 +68,11 @@ const MyComboboxSelectStock = ({ data, setValue, value, idx, name, classes, disa
                                     <ComboboxOption
                                         key={x.id}
                                         className={cn(
-                                            'relative cursor-default select-none py-1 text-[0.75rem] pl-10 pr-4 text-gray-900 hover:bg-gray-200',
+                                            'relative cursor-default select-none py-1 text-[0.75rem] pl-10 pr-4 text-[var(--port-gore)] hover:bg-[var(--selago)]',
                                             selected.id === x.id
-                                                ? 'bg-slate-400 text-white hover:bg-slate-400'
+                                                ? 'bg-[var(--endeavour)] text-white hover:bg-[var(--endeavour)]'
                                                 : '', 
-                                                x.id==='allStocks' ? 'text-purple-900 italic font-bold truncate': ''
+                                                x.id==='allStocks' ? 'text-[var(--chathams-blue)] italic font-bold truncate': ''
                                         )}
                                         value={x}
                                     >
@@ -86,7 +86,7 @@ const MyComboboxSelectStock = ({ data, setValue, value, idx, name, classes, disa
                                                 </span>
                                                 {selected ? (
                                                     <span
-                                                        className={`absolute inset-y-0 left-0 flex items-center pl-3 ${selected.id === x.id ? 'text-teal-600' : 'text-white'
+                                                        className={`absolute inset-y-0 left-0 flex items-center pl-3 ${selected.id === x.id ? 'text-white' : 'text-[var(--endeavour)]'
                                                             }`}
                                                     >
                                                         <AiOutlineCheck className="h-5 w-5" aria-hidden="true" />

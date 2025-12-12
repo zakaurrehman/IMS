@@ -175,48 +175,48 @@ const InvoiceModal = () => {
 		<div className="px-1">
 			{loading && <Spinner />}
 			<div className='grid grid-cols-12 gap-3 pt-1'>
-				<div className='col-span-12 md:col-span-3 border border-slate-300 p-2 rounded-lg'>
-					<p className='flex items-center text-sm font-medium'>{getTtl('Consignee', ln)}:</p>
+				<div className='col-span-12 md:col-span-3 border border-[var(--selago)] p-2 rounded-lg'>
+					<p className='flex items-center text-sm text-[var(--port-gore)] font-medium'>{getTtl('Consignee', ln)}:</p>
 					<div>
 						{!fnl ?
 							<CBox data={clts} setValue={setValueInv} value={valueInv} name='client' classes='shadow-md' />
 							:
-							<p className='pt-2 pl-1 text-xs font-medium'>{valueInv.client.client}</p>
+							<p className='pt-2 pl-1 text-xs font-medium text-[var(--port-gore)]'>{valueInv.client.client}</p>
 						}
 						<ErrDiv field='client' errors={errors} />
 					</div>
 					{client && (
 						<>
-							<p className='pt-2 pl-1 text-xs'>{client.street}</p>
-							<p className='pt-2 pl-1 text-xs'>{client.city}</p>
-							<p className='pt-2 pl-1 text-xs'>{client.country}</p>
-							<p className='pt-2 pl-1 text-xs'>{client.other1}</p>
+							<p className='pt-2 pl-1 text-xs text-[var(--regent-gray)]'>{client.street}</p>
+							<p className='pt-2 pl-1 text-xs text-[var(--regent-gray)]'>{client.city}</p>
+							<p className='pt-2 pl-1 text-xs text-[var(--regent-gray)]'>{client.country}</p>
+							<p className='pt-2 pl-1 text-xs text-[var(--regent-gray)]'>{client.other1}</p>
 						</>
 					)}
 					{fnl && (
 						<>
-							<p className='pt-2 pl-1 text-xs'>{valueInv.client.street}</p>
-							<p className='pt-2 pl-1 text-xs'>{valueInv.client.city}</p>
-							<p className='pt-2 pl-1 text-xs'>{valueInv.client.country}</p>
-							<p className='pt-2 pl-1 text-xs'>{valueInv.client.other1}</p>
+							<p className='pt-2 pl-1 text-xs text-[var(--regent-gray)]'>{valueInv.client.street}</p>
+							<p className='pt-2 pl-1 text-xs text-[var(--regent-gray)]'>{valueInv.client.city}</p>
+							<p className='pt-2 pl-1 text-xs text-[var(--regent-gray)]'>{valueInv.client.country}</p>
+							<p className='pt-2 pl-1 text-xs text-[var(--regent-gray)]'>{valueInv.client.other1}</p>
 						</>
 					)}
 				</div>
-				<div className='col-span-12 md:col-span-2 border border-slate-300 p-2 rounded-lg flex flex-col'>
-					<p className='text-sm text-slate-600 font-medium indent-1'>{getTtl('Invoice Type', ln)}:</p>
+				<div className='col-span-12 md:col-span-2 border border-[var(--selago)] p-2 rounded-lg flex flex-col'>
+					<p className='text-sm text-[var(--port-gore)] font-medium indent-1'>{getTtl('Invoice Type', ln)}:</p>
 					{!fnl ?
 						<InvoiceType setSelected={selectInvType} plans={settings.InvTypes.InvTypes} value={valueInv} ln={ln} />
 						:
-						<p className='pt-2 pl-1 text-xs'>{valueInv.invType}</p>
+						<p className='pt-2 pl-1 text-xs text-[var(--port-gore)]'>{valueInv.invType}</p>
 					}
 				</div>
-				<div className='col-span-12 md:col-span-3 border border-slate-300 p-2 rounded-lg flex flex-col'>
-					<p className='text-sm text-slate-600 font-medium indent-1'>{getTtl('PO', ln)}#:</p>
-					{valueInv.productsDataInvoice.length > 0 && <ul className="flex flex-col mt-1 ring-1 ring-black/5 rounded-lg divide-y" >
+				<div className='col-span-12 md:col-span-3 border border-[var(--selago)] p-2 rounded-lg flex flex-col'>
+					<p className='text-sm text-[var(--port-gore)] font-medium indent-1'>{getTtl('PO', ln)}#:</p>
+					{valueInv.productsDataInvoice.length > 0 && <ul className="flex flex-col mt-1 ring-1 ring-[var(--selago)] rounded-lg divide-y divide-[var(--selago)]" >
 						{poArr.map((x, i) => {
 							return (
 								<li key={i}
-									className='items-center py-0.5 px-1.5 text-[0.8rem] text-slate-700
+									className='items-center py-0.5 px-1.5 text-[0.8rem] text-[var(--port-gore)]
 									truncate'>
 									{x}
 								</li>
@@ -225,9 +225,9 @@ const InvoiceModal = () => {
 					</ul>}
 
 				</div>
-				<div className='col-span-12 md:col-span-4 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-4 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className='flex items-center pt-1'>
-						<p className='flex text-xs font-medium'>{getTtl('Date', ln)}:</p>
+						<p className='flex text-xs text-[var(--port-gore)] font-medium'>{getTtl('Date', ln)}:</p>
 						<div className='w-full px-2'>
 							{!fnl ?
 								<>
@@ -242,7 +242,7 @@ const InvoiceModal = () => {
 									<ErrDiv field='date' errors={errors} />
 								</>
 								:
-								<p className='pl-1 text-xs'>{valueInv.date}</p>
+								<p className='pl-1 text-xs text-[var(--port-gore)]'>{valueInv.date}</p>
 							}
 						</div>
 					</div>
@@ -268,9 +268,9 @@ const InvoiceModal = () => {
 
 
 			<div className='grid grid-cols-3 gap-3 pt-2'>
-				<div className='col-span-12 md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className='flex gap-4 justify-between'>
-						<p className='flex items-center text-sm font-medium whitespace-nowrap'>{getTtl('Shipment', ln)}:</p>
+						<p className='flex items-center text-sm text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('Shipment', ln)}:</p>
 						<div className='w-full md:w-44'>
 							{!fnl ?
 								<CBox data={settings.Shipment.Shipment} setValue={setValueInv} value={valueInv} name='shpType' classes='shadow-md' />
@@ -282,27 +282,27 @@ const InvoiceModal = () => {
 					</div>
 
 					<div className='flex gap-4 justify-between'>
-						<p className='flex items-center text-sm font-medium whitespace-nowrap'>{getTtl('Origin', ln)}:</p>
+						<p className='flex items-center text-sm text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('Origin', ln)}:</p>
 						<div className='w-full md:w-44'>
 							{!fnl ?
 								<CBox data={[...settings.Origin.Origin, { id: 'empty', origin: '...Empty' }]} setValue={setValueInv} value={valueInv} name='origin' classes='shadow-md' />
 								:
-								<p className=' pl-1 text-sm'>{valueInv.origin}</p>
+								<p className=' pl-1 text-sm text-[var(--port-gore)]'>{valueInv.origin}</p>
 							}
 						</div>
 					</div>
 					<div className='flex gap-4 justify-between'>
-						<p className='flex items-center text-sm font-medium whitespace-nowrap'>{getTtl('Delivery Terms', ln)}:</p>
+						<p className='flex items-center text-sm text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('Delivery Terms', ln)}:</p>
 						<div className='w-full md:w-44'>
 							{!fnl ?
 								<CBox data={settings['Delivery Terms']['Delivery Terms']} setValue={setValueInv} value={valueInv} name='delTerm' classes='shadow-md' />
 								:
-								<p className=' pl-1 text-sm'>{valueInv.delTerm}</p>
+								<p className=' pl-1 text-sm text-[var(--port-gore)]'>{valueInv.delTerm}</p>
 							}
 						</div>
 					</div>
 					<div className='flex items-center pt-1 justify-between'>
-						<p className='flex text-sm font-medium whitespace-nowrap'>{getTtl('Delivery Date', ln)}:</p>
+						<p className='flex text-sm text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('Delivery Date', ln)}:</p>
 						<div className='w-full md:w-44'>
 							{!fnl ?
 								<Datepicker useRange={false}
@@ -320,9 +320,9 @@ const InvoiceModal = () => {
 					</div>
 				</div>
 
-				<div className='col-span-12 md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className='flex gap-4 justify-between'>
-						<p className='flex items-center text-sm font-medium whitespace-nowrap'>{getTtl('POL', ln)}:</p>
+						<p className='flex items-center text-sm text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('POL', ln)}:</p>
 						<div className='w-full md:w-44'>
 							{!fnl ?
 								<CBox data={settings.POL.POL} setValue={setValueInv} value={valueInv} name='pol' classes='shadow-md' />
@@ -332,21 +332,21 @@ const InvoiceModal = () => {
 						</div>
 					</div>
 					<div className='flex gap-4 justify-between'>
-						<p className='flex items-center text-sm font-medium whitespace-nowrap'>{getTtl('POD', ln)}:</p>
+						<p className='flex items-center text-sm text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('POD', ln)}:</p>
 						<div className='w-full md:w-44'>
 							{!fnl ?
 								<CBox data={settings.POD.POD} setValue={setValueInv} value={valueInv} name='pod' classes='shadow-md'
 									disabled={firstRule}
 								/>
 								:
-								<p className=' pl-1 text-sm'>{valueInv.pod}</p>
+								<p className=' pl-1 text-sm text-[var(--port-gore)]'>{valueInv.pod}</p>
 							}
 
 						</div>
 					</div>
 					{(valueInv.invType === '1111' || valueInv.invType === 'Invoice') &&
 						<div className='flex gap-4 justify-between'>
-							<p className='flex items-center text-sm font-medium whitespace-nowrap'>{getTtl('Packing', ln)}:</p>
+							<p className='flex items-center text-sm text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('Packing', ln)}:</p>
 							<div className='w-full md:w-44'>
 								{!fnl ?
 									<CBox data={settings.Packing.Packing} setValue={setValueInv} value={valueInv} name='packing' classes='shadow-md'
@@ -358,40 +358,40 @@ const InvoiceModal = () => {
 						</div>}
 				</div>
 
-				<div className='col-span-12 md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className={`flex gap-4 justify-between ${fnl ? 'py-0.5' : 'py-1.5'}`}>
-						<p className='flex items-center text-sm font-medium whitespace-nowrap'>{getTtl('totalNet', ln)}:</p>
-						<p className='text-sm pr-6 text-slate-700'>
+						<p className='flex items-center text-sm text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('totalNet', ln)}:</p>
+						<p className='text-sm pr-6 text-[var(--port-gore)]'>
 							{NetWTKgs}
 						</p>
 					</div>
 					{(valueInv.invType === '1111' || valueInv.invType === 'Invoice') &&
 						<div className={`flex gap-4 justify-between ${fnl ? 'py-0.5' : 'py-1.5'}`}>
-							<p className={`flex items-center text-sm ${(secondRule || fifthRule) && 'text-slate-400'} font-medium whitespace-nowrap`}>{getTtl('totalTare', ln)}:</p>
-							<p className={`text-sm pr-6  ${parseInt(TotalTarre) < 0 ? 'text-red-400 font-medium' : 'text-slate-700'}`}>{secondRule || fifthRule ? '' : TotalTarre}</p>
+							<p className={`flex items-center text-sm ${(secondRule || fifthRule) && 'text-[var(--regent-gray)]'} font-medium whitespace-nowrap text-[var(--port-gore)]`}>{getTtl('totalTare', ln)}:</p>
+							<p className={`text-sm pr-6  ${parseInt(TotalTarre) < 0 ? 'text-red-400 font-medium' : 'text-[var(--port-gore)]'}`}>{secondRule || fifthRule ? '' : TotalTarre}</p>
 						</div>
 					}
 					<div className={`flex gap-4 justify-between ${fnl ? 'py-0.5' : 'py-1.5'}`}>
-						<p className={`flex items-center text-sm font-medium whitespace-nowrap ${(fourthRule || fifthRule) && 'text-slate-400'}`}>{thirdRule ? 'QTY Ingots' : getTtl('totalGross', ln)}:</p>
+						<p className={`flex items-center text-sm font-medium whitespace-nowrap text-[var(--port-gore)] ${(fourthRule || fifthRule) && 'text-[var(--regent-gray)]'}`}>{thirdRule ? 'QTY Ingots' : getTtl('totalGross', ln)}:</p>
 						<div className='flex items-center text-sm font-medium whitespace-nowrap'>{(fourthRule || fifthRule) ? '' :
 							<div className='w-full  px-1'>
 								{!fnl ?
 									<input className="input text-[15px] shadow-lg h-7 text-xs" name='ttlGross' value={valueInv.ttlGross} onChange={handleValue} />
 									:
-									<p className='text-sm pr-5 text-slate-700'>{(valueInv.ttlGross * 1).toLocaleString(locale, options)}</p>
+									<p className='text-sm pr-5 text-[var(--port-gore)]'>{(valueInv.ttlGross * 1).toLocaleString(locale, options)}</p>
 								}
 							</div>
 						}</div>
 					</div>
 					{(valueInv.invType === '1111' || valueInv.invType === 'Invoice') &&
 						<div className={`flex gap-4 justify-between ${fnl ? 'py-0.5' : 'py-1.5'}`}>
-							<p className={`flex items-center text-sm font-medium whitespace-nowrap ${(fourthRule || thirdRule) && 'text-slate-400'}	`}>{getTtl('totalPack', ln)}:</p>
+							<p className={`flex items-center text-sm font-medium whitespace-nowrap text-[var(--port-gore)] ${(fourthRule || thirdRule) && 'text-[var(--regent-gray)]'}	`}>{getTtl('totalPack', ln)}:</p>
 							<div className='flex items-center text-sm font-medium whitespace-nowrap'>{(fourthRule || thirdRule) ? '' :
 								<div className='w-full  px-1'>
 									{!fnl ?
 										<input className="input text-[15px] shadow-lg h-7 text-xs" name='ttlPackages' value={valueInv.ttlPackages} onChange={handleValue} />
 										:
-										<p className='text-sm pr-5 text-slate-700'>{valueInv.ttlPackages}</p>
+										<p className='text-sm pr-5 text-[var(--port-gore)]'>{valueInv.ttlPackages}</p>
 									}
 								</div>
 							}</div>
@@ -401,8 +401,8 @@ const InvoiceModal = () => {
 			</div>
 
 			<div className='grid grid-cols-2 gap-3 mt-2'>
-				<div className='col-span-12 md:col-span-1 flex border border-slate-300 p-2 rounded-lg'>
-					<p className='flex items-center text-sm font-medium whitespace-nowrap '>{getTtl('Bank Account', ln)}:</p>
+				<div className='col-span-12 md:col-span-1 flex border border-[var(--selago)] p-2 rounded-lg'>
+					<p className='flex items-center text-sm text-[var(--port-gore)] font-medium whitespace-nowrap '>{getTtl('Bank Account', ln)}:</p>
 					<div className='w-full pl-4'>
 						{!fnl ?
 							<CBox data={settings['Bank Account']['Bank Account']} setValue={setValueInv} value={valueInv} name='bankNname' classes='shadow-md' />
@@ -412,9 +412,9 @@ const InvoiceModal = () => {
 					</div>
 				</div>
 
-				<div className='hidden md:flex col-span-0 md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='hidden md:flex col-span-0 md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 
-					<p className='flex items-center text-sm font-medium whitespace-nowrap '>HS Code:</p>
+					<p className='flex items-center text-sm text-[var(--port-gore)] font-medium whitespace-nowrap '>HS Code:</p>
 					<div className='w-full pl-4'>
 						{!fnl ?
 							<div className='flex gap-5'>
@@ -444,7 +444,7 @@ const InvoiceModal = () => {
 
 			<div className='grid grid-cols-8 gap-3 pt-2'>
 				<div className='col-span-12 md:col-span-7 '>
-					<div className='w-full border border-slate-300 p-2 rounded-lg'>
+					<div className='w-full border border-[var(--selago)] p-2 rounded-lg'>
 						<ProductsTable value={valueInv} setValue={setValueInv}
 							currency={settings.Currency.Currency} uidCollection={uidCollection}
 							settings={settings} setDeleteProducts={setDeleteProducts}
@@ -453,9 +453,9 @@ const InvoiceModal = () => {
 						/>
 					</div>
 				</div>
-				<div className='col-span-12 md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className='gap-4'>
-						<p className='flex text-xs font-medium whitespace-nowrap'>{getTtl('Currency', ln)}:</p>
+						<p className='flex text-xs text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('Currency', ln)}:</p>
 						<div className='w-full '>
 							{!fnl ?
 								<CBox data={settings.Currency.Currency} setValue={setValueInv} value={valueInv} name='cur' classes='shadow-md'
@@ -472,11 +472,11 @@ const InvoiceModal = () => {
 			</div>
 
 			<div className='grid grid-cols-8 gap-3 mt-2'>
-				<div className='col-span-12 md:col-span-5  w-full border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-5  w-full border border-[var(--selago)] p-2 rounded-lg'>
 					<Remarks value={valueInv} setValue={setValueInv} ln={ln} />
 				</div>
-				<div className='col-span-12 md:col-span-3 h-fit border border-slate-300 p-2 py-1 pb-0 rounded-lg'>
-					<p className='flex text-xs text-slate-600 font-medium whitespace-nowrap'>{getTtl('Comments', ln)}:</p>
+				<div className='col-span-12 md:col-span-3 h-fit border border-[var(--selago)] p-2 py-1 pb-0 rounded-lg'>
+					<p className='flex text-xs text-[var(--port-gore)] font-medium whitespace-nowrap'>{getTtl('Comments', ln)}:</p>
 					<textarea rows="2" cols="60" name="comments"
 						className="input text-[15px] h-11 text-xs p-1"
 						value={valueInv.comments}
@@ -489,7 +489,7 @@ const InvoiceModal = () => {
 			<Payments showPayments={showPayments} />
 
 
-			<div className="text-lg font-medium leading-5 text-gray-900 p-3 pl-6 flex gap-5 flex-wrap justify-center md:justify-start ">
+			<div className="text-lg font-medium leading-5 text-[var(--port-gore)] p-3 pl-6 flex gap-5 flex-wrap justify-center md:justify-start ">
 				{!fnl &&
 					<Tltip direction='top' tltpText='Save/Update invoice'>
 						<button

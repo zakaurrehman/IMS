@@ -23,7 +23,7 @@ function classNames(...classes) {
 const Page = () => {
 
   const { compData, loading } = useContext(SettingsContext);
-  const ln = compData?.lng || 'en';
+  const ln = compData?.lng || 'English';
   const { userTitle } = UserAuth();
 
   let tabs = ['Company Details', 'Setup', 'Suppliers', 'Clients', 'Bank Account', 'Stocks']

@@ -1,8 +1,8 @@
 'use client'
 
 export const getTtl = (txt, ln) => {
-
-    let num = ln === 'English' ? 0 : 1
+    // Handle both 'English'/'en' and 'Russian'/'ru' formats
+    let num = (ln === 'English' || ln === 'en') ? 0 : 1
     return TitlesArr.find(obj => txt in obj)?.[txt][num]
 }
 
@@ -14,6 +14,12 @@ const TitlesArr = [
     { Cancel: ['Cancel', 'Отменить'] },
 
     //***SideBar */
+    { 'MAIN MENU': ['MAIN MENU', 'ГЛАВНОЕ МЕНЮ'] },
+    { Apps: ['Apps', 'Приложения'] },
+    { Message: ['Message', 'Сообщение'] },
+    { Call: ['Call', 'Звонок'] },
+    { Calendar: ['Calendar', 'Календарь'] },
+    { Miscellaneous: ['Miscellaneous', 'Разное'] },
     { Shipments: ['Shipments', 'Отгрузки'] },
     { Review: ['Review', 'Обзор'] },
     { 'IMS Summary': ['IMS Summary', 'IMS Обзор'] },

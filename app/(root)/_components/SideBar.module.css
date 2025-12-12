@@ -1,0 +1,15 @@
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color:  var(--chathams-blue) var(--endeavour);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--endeavour);
+  border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--chathams-blue);
+}

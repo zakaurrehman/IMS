@@ -204,9 +204,9 @@ const Contracts = () => {
 					<Toast />
 					<ModalCopyInvoice />
 					{/* {loading && <Spin />} */}
-					<div className="border border-slate-200 rounded-xl p-4 mt-8 shadow-md relative">
+					<div className="border border-[var(--selago)] rounded-2xl p-4 mt-8 shadow-lg bg-white relative">
 						<div className='flex items-center justify-between flex-wrap pb-2'>
-							<div className="text-3xl p-1 pb-2 text-slate-500"> {getTtl('Contracts', ln)} </div>
+							<div className="text-2xl p-1 pb-2 font-semibold text-[var(--port-gore)]"> {getTtl('Contracts', ln)} </div>
 							<div className='flex group'>
 								<DateRangePicker />
 								<Tooltip txt='Select Dates Range' />
@@ -227,8 +227,8 @@ const Contracts = () => {
 							<button
 								type="button"
 								onClick={addNewContract}
-								className="text-white bg-slate-500 hover:bg-slate-400 focus:outline-none font-medium rounded-lg 
-													 text-sm px-4 py-3 text-center drop-shadow-xl gap-1.5 items-center flex"
+								className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 focus:outline-none font-medium rounded-xl 
+															 text-sm px-4 py-2.5 text-center shadow-lg gap-1.5 items-center flex transition-all"
 							>
 								<TbLayoutGridAdd className="scale-110" />
 								{getTtl('New Contract', ln)}
@@ -238,8 +238,8 @@ const Contracts = () => {
 							<button
 								type="button"
 								onClick={() => router.push('/analysis')}
-								className="text-white bg-slate-500 hover:bg-slate-400 focus:outline-none font-medium rounded-lg 
-													 text-sm px-4 py-3 text-center drop-shadow-xl gap-1.5 items-center flex"
+								className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 focus:outline-none font-medium rounded-xl 
+															 text-sm px-4 py-2.5 text-center shadow-lg gap-1.5 items-center flex transition-all"
 							>
 								<IoAnalyticsOutline className="scale-110" />
 								{getTtl('Weight Analysis', ln)}
@@ -249,10 +249,10 @@ const Contracts = () => {
 
 
 					{alertArr.length ? <div className='mt-8'>
-						<div className="text-lg font-medium leading-5 text-gray-900 border-2
-						 border-slate-200 p-2 max-w-2xl mb-10 rounded-xl shadow-md"
+						<div className="text-lg font-medium leading-5 text-[var(--port-gore)] border
+						 border-[var(--selago)] p-3 max-w-2xl mb-10 rounded-2xl shadow-lg bg-white"
 						>
-							<div className='text-slate-600 '>
+							<div className='text-[var(--port-gore)]'>
 								<span className='p-2'>Notification for delayed response</span>
 								<DlayedResponse alertArr={alertArr} setAlertArr={setAlertArr} />
 							</div>

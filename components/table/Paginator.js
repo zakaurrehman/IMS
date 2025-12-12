@@ -18,7 +18,7 @@ export const Paginator = ({table}) => {
 			 ${!table.getCanPreviousPage() ? 'opacity-50' : ''}`}
 						onClick={() => table.getCanPreviousPage() && table.previousPage()}
 					/>
-					<span className="text-slate-100  size-8 rounded-full bg-slate-400 items-center justify-center flex select-none">
+					<span className="text-white size-8 rounded-full bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] items-center justify-center flex select-none shadow-md">
 						{table.getState().pagination.pageIndex + 1}
 					</span>
 					<HiChevronRight className={`paginator_arrow scale-125 

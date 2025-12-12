@@ -20,18 +20,18 @@ const Header = ({ data, cb, cb1, type, excellReport,
 
 
 	return (
-		<div className="justify-between flex p-3 flex-wrap bg-gray-50 border rounded-t-xl">
+		<div className="justify-between flex p-3 flex-wrap bg-[var(--selago)]/30 border border-[var(--selago)] rounded-t-2xl">
 			<div className='flex items-center gap-5 w-full sm:w-auto'>
 				{pathname !== '/accounting' &&
 					<div className="flex items-center relative md:max-w-64 w-full sm:w-auto md:w-64">
-						<input className='input border-slate-300 shadow-sm pr-8' placeholder={getTtl('Search', ln)}
+						<input className='input border-[var(--rock-blue)]/50 shadow-sm pr-8 focus:border-[var(--endeavour)]' placeholder={getTtl('Search', ln)}
 							value={globalFilter ?? ''}
 							onChange={e => setGlobalFilter(e.target.value)} type='text' />
 
 						{globalFilter === '' ?
-							<FaSearch className="scale-140 text-slate-400 font-bold absolute right-2 " />
+							<FaSearch className="scale-140 text-[var(--regent-gray)] font-bold absolute right-2" />
 							:
-							<TiDeleteOutline className="scale-150 text-slate-400 font-bold absolute right-2 cursor-pointer "
+							<TiDeleteOutline className="scale-150 text-[var(--regent-gray)] font-bold absolute right-2 cursor-pointer hover:text-[var(--endeavour)]"
 								onClick={() => setGlobalFilter('')} />
 						}
 
@@ -56,27 +56,27 @@ const Header = ({ data, cb, cb1, type, excellReport,
 						<div className='flex items-center '>
 							<Tltip direction='bottom' tltpText='Add new material'>
 								<div onClick={addMaterial}
-									className="hover:bg-slate-200 text-slate-700 justify-center size-10 inline-flex
-				 items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50"
+									className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center size-10 inline-flex
+				 items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50 transition-colors"
 								>
-									<GrAddCircle className="scale-[1.4] cursor-pointer text-slate-600" />
+									<GrAddCircle className="scale-[1.4] cursor-pointer text-[var(--endeavour)]" />
 								</div>
 							</Tltip>
 							<Tltip direction='bottom' tltpText='Export to PDF'>
 								<div onClick={() => runPdf(table1)}
-									className="hover:bg-slate-200 text-slate-700 justify-center size-10 inline-flex
-				 items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50"
+									className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center size-10 inline-flex
+				 items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50 transition-colors"
 								>
-									<GrDocumentPdf className="scale-125 cursor-pointer text-slate-600" />
+									<GrDocumentPdf className="scale-125 cursor-pointer text-[var(--endeavour)]" />
 								</div>
 							</Tltip>
 
 							<Tltip direction='bottom' tltpText='Delete Table'>
 								<div onClick={() => delTable(table1)}
-									className="hover:bg-slate-200 text-slate-700 justify-center size-10 inline-flex
-									items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50"
+									className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center size-10 inline-flex
+									items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50 transition-colors"
 								>
-									<MdDeleteOutline className="scale-[1.6] cursor-pointer text-slate-600" />
+									<MdDeleteOutline className="scale-[1.6] cursor-pointer text-[var(--endeavour)]" />
 								</div>
 
 							</Tltip>

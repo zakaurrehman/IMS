@@ -94,7 +94,7 @@ const ContractModal = () => {
 		<div className="px-1">
 
 			<div className='grid grid-cols-6 gap-3 pt-1'>
-				<div className='col-span-12 md:col-span-3 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-3 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className='flex gap-4 items-center'>
 						<p className='flex pt-1 text-sm font-medium'>{getTtl('Supplier Name', ln)}:</p>
 						<div className='w-72'>
@@ -132,10 +132,10 @@ const ContractModal = () => {
 						</div>
 					}
 				</div>
-				<div className='hidden md:flex md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='hidden md:flex md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 
 				</div>
-				<div className='col-span-12 md:col-span-2 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-2 border border-[var(--selago)] p-2 rounded-lg'>
 					<p className='flex items-center text-sm font-medium'>{getTtl('PoOrderNo', ln)}:</p>
 					<div className='w-full md:w-48 '>
 						<input className="input text-[15px] shadow-lg h-9" name='order' value={valueCon.order} onChange={handleValue} />
@@ -156,7 +156,7 @@ const ContractModal = () => {
 				</div>
 			</div>
 			<div className='grid grid-cols-3 gap-3 pt-2'>
-				<div className='col-span-12 md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className='flex gap-4 justify-between'>
 						<p className='flex pt-1 text-sm font-medium whitespace-nowrap'>{getTtl('Shipment', ln)}:</p>
 						<div className='w-full md:w-44'>
@@ -178,7 +178,7 @@ const ContractModal = () => {
 					</div>
 				</div>
 
-				<div className='col-span-12 md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className='flex gap-4 justify-between'>
 						<p className='flex items-center text-sm font-medium whitespace-nowrap'>{getTtl('POL', ln)}:</p>
 						<div className='w-full md:w-44'>
@@ -201,7 +201,7 @@ const ContractModal = () => {
 					</div>
 				</div>
 
-				<div className='col-span-12 md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className='flex gap-4 justify-between'>
 						<p className='flex items-center text-sm font-medium whitespace-nowrap'>{getTtl('Container Type', ln)}:</p>
 						<div className='w-full md:w-44'>
@@ -226,7 +226,7 @@ const ContractModal = () => {
 								<input type='text' className="input text-[15px] shadow-lg h-[1.86rem] text-xs w-full rounded-lg" name='deltime'
 									value={valueCon.deltime} onChange={handleValue} />
 								<button className='relative right-6 '>
-									<MdClear className="h-5 w-5 text-gray-300  hover:text-gray-500"
+								<MdClear className="h-5 w-5 text-[var(--regent-gray)] hover:text-[var(--endeavour)]"
 										onClick={caneclEditText} />
 								</button>
 							</div>
@@ -235,7 +235,7 @@ const ContractModal = () => {
 				</div>
 			</div>
 
-			<div className='mt-2 w-full border border-slate-300 p-2 rounded-lg'>
+			<div className='mt-2 w-full border border-[var(--selago)] p-2 rounded-lg'>
 				<p className='flex items-center text-sm font-medium'>{getTtl('Payment Terms', ln)}:</p>
 				<div className='w-full '>
 					<CBox data={settings['Payment Terms']['Payment Terms']} setValue={setValueCon} value={valueCon} name='termPmnt' classes='shadow-md' />
@@ -244,14 +244,14 @@ const ContractModal = () => {
 
 			<div className='grid grid-cols-4 gap-3 pt-2'>
 				<div className='col-span-12 md:col-span-3 '>
-					<div className='w-full border border-slate-300 p-2 rounded-lg'>
+					<div className='w-full border border-[var(--selago)] p-2 rounded-lg'>
 						<ProductsTable value={valueCon} setValue={setValueCon} currency={settings.Currency.Currency}
 							quantityTable={settings.Quantity.Quantity} setShowPoInvModal={setShowPoInvModal}
 							setShowStockModal={setShowStockModal} setToast={setToast} contractsData={contractsData}
 						/>
 					</div>
 				</div>
-				<div className='col-span-12 md:col-span-1 border border-slate-300 p-2 rounded-lg'>
+				<div className='col-span-12 md:col-span-1 border border-[var(--selago)] p-2 rounded-lg'>
 					<div className='flex gap-4 justify-between'>
 						<p className='flex pt-1 text-sm font-medium whitespace-nowrap'>{getTtl('Currency', ln)}:</p>
 						<div className='w-full md:w-44'>
@@ -268,8 +268,7 @@ const ContractModal = () => {
 					<Tltip direction='bottom' tltpText='Contracts storage'>
 						<button
 							type="button"
-							className="mt-2 flex items-center gap-1 justify-center rounded-md border bg-slate-700 hover:bg-slate-400 px-3 py-1 text-sm font-medium 
-						text-white focus:outline-none" onClick={() => setShowFilesModal(true)}
+							className="blackButton mt-2" onClick={() => setShowFilesModal(true)}
 							disabled={!valueCon.id}
 						>
 							<MdOutlineStorage className='scale-0.9' />
@@ -281,15 +280,15 @@ const ContractModal = () => {
 
 			<div className='grid grid-cols-4 gap-3 pt-2'>
 				<div className='col-span-12 md:col-span-3 '>
-					<div className='mt-2 w-full border border-slate-300 p-2 rounded-lg'>
+					<div className='mt-2 w-full border border-[var(--selago)] p-2 rounded-lg'>
 						<Remarks settings={settings} value={valueCon} setValue={setValueCon} />
 					</div>
-					<div className='mt-2 w-full border border-slate-300 p-2 rounded-lg'>
+					<div className='mt-2 w-full border border-[var(--selago)] p-2 rounded-lg'>
 						<PriceRemarks value={valueCon} setValue={setValueCon} />
 					</div>
 				</div>
 				<div className='col-span-12 md:col-span-1 mt-1'>
-					<p className='flex text-xs text-slate-600 font-medium whitespace-nowrap'>{getTtl('Comments', ln)}:</p>
+					<p className='flex text-xs text-[var(--regent-gray)] font-medium whitespace-nowrap'>{getTtl('Comments', ln)}:</p>
 					<textarea rows="5" cols="60" name="comments"
 						className="input text-[15px] h-24 text-xs p-1"
 						value={valueCon.comments} onChange={handleValue} />
@@ -304,7 +303,7 @@ const ContractModal = () => {
 
 
 
-			<div className="text-lg font-medium leading-5 text-gray-900 p-3 pl-6 flex gap-4 flex-wrap justify-center md:justify-start ">
+			<div className="text-lg font-medium leading-5 text-[var(--port-gore)] p-3 pl-6 flex gap-4 flex-wrap justify-center md:justify-start ">
 				<Tltip direction='top' tltpText='Save/Update contract'>
 					<button
 						type="button"

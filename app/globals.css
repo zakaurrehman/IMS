@@ -27,37 +27,45 @@ body,
 
 @layer components {
   .table_cell {
-    @apply px-6 py-3 whitespace-nowrap text-sm text-gray-600 leading-4;
+    @apply px-6 py-3 whitespace-nowrap text-sm text-[var(--port-gore)] leading-4;
   }
 
   .paginator_arrow {
-    @apply text-gray-400 hover:text-blue-600 font-medium cursor-pointer;
+    @apply text-[var(--regent-gray)] hover:text-[var(--endeavour)] font-medium cursor-pointer transition-colors;
   }
 
   .input {
-    @apply w-full border rounded-md border-slate-400 h-10 focus:outline-0 focus:border-slate-600 indent-1.5 text-sm text-slate-500;
+    @apply w-full border rounded-lg border-[var(--rock-blue)] h-10 focus:outline-0 focus:border-[var(--endeavour)] indent-1.5 text-sm text-[var(--port-gore)];
   }
 
   .dashBox {
-    @apply col-span-12 md:col-span-1 border border-slate-200 rounded-xl bg-slate-50 justify-center flex shadow-lg text-[15px] flex-col p-2;
+    @apply col-span-12 md:col-span-1 border border-[var(--selago)] rounded-2xl bg-white justify-center flex shadow-lg text-[15px] flex-col p-4;
+  }
+
+  .dashCard {
+    @apply rounded-2xl bg-white shadow-lg p-5 border border-[var(--selago)];
+  }
+
+  .dashStatCard {
+    @apply rounded-2xl p-5 flex flex-col justify-between min-h-[120px] shadow-lg;
   }
 
   .blackButton {
-    @apply bg-slate-700 hover:bg-slate-400 text-white flex items-center gap-2 justify-center rounded-md border px-3 py-2 text-sm font-medium focus:outline-none drop-shadow-lg
+    @apply bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 text-white flex items-center gap-2 justify-center rounded-xl border-0 px-3 py-2 text-sm font-medium focus:outline-none shadow-lg transition-all
   }
 
   .whiteButton {
-    @apply bg-white border-slate-500 hover:bg-slate-100 text-slate-700 flex items-center gap-2 justify-center rounded-md border px-3 py-2 text-sm font-medium focus:outline-none drop-shadow-lg
+    @apply bg-white border-[var(--rock-blue)] hover:bg-[var(--selago)] text-[var(--port-gore)] flex items-center gap-2 justify-center rounded-xl border px-3 py-2 text-sm font-medium focus:outline-none shadow-md transition-colors
   }
 }
 
 @layer components {
   .title_style {
-    @apply text-slate-600 border-b border-slate-500 items-center flex justify-center text-[0.75rem] font-semibold;
+    @apply text-[var(--port-gore)] border-b border-[var(--rock-blue)] items-center flex justify-center text-[0.75rem] font-semibold;
   }
 
   .input_style {
-    @apply text-[0.75rem] py-0.5 text-center border-0 rounded-none w-full focus:outline-0 focus:border-slate-600 text-slate-500;
+    @apply text-[0.75rem] py-0.5 text-center border-0 rounded-none w-full focus:outline-0 focus:border-[var(--endeavour)] text-[var(--port-gore)];
   }
 }
 
@@ -197,7 +205,7 @@ input::-webkit-inner-spin-button {
 /******************************************/
 /* Only target disabled buttons inside the datepicker wrapper */
 .datepicker-wrapper button[disabled] {
-  @apply cursor-not-allowed relative text-xs text-slate-300;
+  @apply cursor-not-allowed relative text-xs text-[var(--regent-gray)];
 }
 
 /* Scope to datepicker only */

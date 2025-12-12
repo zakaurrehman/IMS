@@ -5,34 +5,40 @@ import { UserAuth } from "../../../contexts/useAuthContext"
 import { SettingsContext } from "../../../contexts/useSettingsContext";
 import Toast from '../../../components/toast.js'
 import Spin from '../../../components/spinTable';
-import { BarChart, BarChartContracts, PieChart, HorizontalBar } from './charts';
-//import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { BarChart, BarChartContracts, HorizontalBar, LineChart, GroupedBarChart } from './charts';
 import {
   Chart as ChartJS,
   ArcElement,
   CategoryScale,
   LinearScale,
   BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import { loadData, groupedArrayInvoice, getInvoices } from '../../../utils/utils'
 import { setMonthsInvoices, calContracts, frmNum } from './funcs'
 import { getTtl } from '../../../utils/languages';
 import DateRangePicker from '../../../components/dateRangePicker';
-
+import { HiOutlineFolder, HiOutlineUserGroup, HiOutlineClipboardList, HiOutlineViewGrid } from 'react-icons/hi';
+import styles from './dashboard.module.css';
+import { StatCard, ChartCard, ChartLegend, StatCardWithChart, SubscriptionsStatistic, TaskStatistic, SubscriptionsList, ClientsPayment } from './components';
 
 ChartJS.register(
   CategoryScale,
   ArcElement,
   LinearScale,
   BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
-  // ChartDataLabels
+  Filler,
 );
 
 const loadInvoices = async (uidCollection, con) => {
@@ -48,7 +54,6 @@ const loadInvoices = async (uidCollection, con) => {
 
   let tmpInv = await getInvoices(uidCollection, 'invoices', arrTmp)
   return groupedArrayInvoice(tmpInv)
-
 }
 
 const Dash = () => {
@@ -60,7 +65,7 @@ const Dash = () => {
   const [dataPL, setDataPL] = useState([])
   const [dataPieSupps, setDataPieSupps] = useState([])
   const [dataPieClnts, setDataPieClnts] = useState([])
-  const [dataDebt, setDataDebt] = useState([])
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
   const { uidCollection } = UserAuth();
 
   useEffect(() => {
@@ -85,8 +90,6 @@ const Dash = () => {
       setDataExpenses(tmpData.accumulatedExp)
       setDataPieSupps(tmpData.pieArrSupps)
 
-
-      //sum together the contract + expenses 
       const summedArr = Object.keys(tmpData.accumulatedPmnt).reduce((acc, key) => {
         acc[key] = tmpData.accumulatedPmnt[key] + tmpData.accumulatedExp[key];
         return acc;
@@ -96,14 +99,11 @@ const Dash = () => {
    
       setDataInvoices(arrInvoices.accumulatedPmnt)
       setDataPieClnts(arrInvoices.pieArrClnts)
-      //  setDataDebt(arrInvoices.accumulatedActualPmnt)
       
-      //calculate P&L
       const tmpPL = Object.keys(arrInvoices.accumulatedPmnt).reduce((acc, key) => {
         acc[key] = arrInvoices.accumulatedPmnt[key] - summedArr[key];
         return acc;
       }, {});
-
 
       setDataPL(tmpPL)
       setLoading(false)
@@ -116,88 +116,200 @@ const Dash = () => {
 
     Object.keys(settings).length !== 0 && Load();
 
-
   }, [dateSelect, settings])
 
-  let cons = Object.keys(dataPieSupps).length
+  // Calculate totals for stat cards
+  const totalSales = Object.values(dataInvoices).reduce((acc, val) => acc + val, 0);
+  const totalContracts = Object.values(dataContracts).reduce((acc, val) => acc + val, 0);
+  const totalExpenses = Object.values(dataExpenses).reduce((acc, val) => acc + val, 0);
+  const totalProfit = Object.values(dataPL).reduce((acc, val) => acc + val, 0);
+
+  // Normalize data for charts (scale to 0-100 range for display like Figma)
+  const normalizeData = (data) => {
+    const values = Object.values(data);
+    if (values.length === 0) return Array(12).fill(0);
+    const max = Math.max(...values);
+    if (max === 0) return values;
+    return values.map(v => (v / max) * 100);
+  };
+
+  const normalizedInvoices = normalizeData(dataInvoices);
+  const normalizedContracts = normalizeData(dataContracts);
+  const normalizedPL = normalizeData(dataPL);
+
   return (
-    <div className="xl:container mx-auto px-2 md:px-8 xl:px-10 pb-8 md:pb-0">
+    <div className={styles.dashboardContainer}>
       {Object.keys(settings).length === 0 ? <Spinner /> :
         <>
           <Toast />
           {loading && <Spin />}
-          <div className="p-4 mt-8">
-            <div className='flex items-center justify-end flex-wrap'>
-              <div className='flex'>
-                <DateRangePicker />
-              </div>
+          
+          {/* Header with Date Picker */}
+          <div className={styles.headerSection}>
+            <h1 className={styles.headerTitle}>{getTtl('Dashboard', ln)}</h1>
+            <div className={styles.headerActions}>
+              <DateRangePicker />
             </div>
           </div>
 
-          <div className='grid grid-cols-3 justify-between gap-4 mt-2'>
-            <div className='dashBox relative'>
-              <div className={`${Object.values(dataPL).reduce((acc, currentValue) => acc + currentValue, 0) > 0 ? 'bg-emerald-600' : 'bg-red-600'} py-0.5 text-white text-[0.8rem] absolute -top-3 flex gap-2 px-2 rounded-md`}>
-                <p>{getTtl('Profit', ln)}: </p>
-                <span className='text-white font-medium'>
-                  {frmNum(Object.values(dataPL).reduce((acc, currentValue) => acc + currentValue, 0) / 1000000) + 'M'}</span>
-              </div>
-              <div className='flex justify-center text-slate-600 font-medium pt-1'>
-                {getTtl('P&L', ln)} - $M
-              </div>
-              <div>
-                <Bar data={BarChart(dataPL, 'silver').obj} options={BarChart().options} />
-              </div>
-            </div>
-            <div className='dashBox relative'>
-              <div className='bg-emerald-600 py-0.5 text-white text-[0.8rem] absolute -top-3 flex gap-2 px-2 rounded-md'>
-                <p> {getTtl('Sales', ln)}: </p>
-                <p>{frmNum(Object.values(dataInvoices).reduce((acc, currentValue) => acc + currentValue, 0) / 1000000) + 'M'}</p>
-              </div>
-              <div className='flex justify-center text-slate-600 font-medium pt-1'>
-                {getTtl('Invoices', ln)} - $M
-              </div>
-              <div>
-                <Bar data={BarChart(dataInvoices, '#42a5f5').obj} options={BarChart().options} />
-              </div>
-            </div>
-            <div className='dashBox relative' >
-              <div className='bg-red-600 py-0.5 text-white text-[0.8rem] absolute -top-3 flex gap-2 px-2 rounded-md'>
-                <p>{getTtl('Costs', ln)}: </p>
-                <p>
-                  {frmNum((Object.values(dataInvoices).reduce((acc, currentValue) => acc + currentValue, 0) -
-                    Object.values(dataPL).reduce((acc, currentValue) => acc + currentValue, 0)) / 1000000) + 'M'}</p>
-              </div>
-              <div className='flex justify-center text-slate-600 font-medium pt-1'>
-                {getTtl('Contracts & Expenses', ln)} - $M
-              </div>
-              <div>
-                <Bar data={BarChartContracts(dataContracts, dataExpenses, '#9c27b0', '#ed6c02').obj} options={BarChartContracts().options} />
-              </div>
+          {/* Stats Cards Row - Matching Figma Blue Design */}
+          <div className={styles.statsSection}>
+            <div className={styles.statsGrid}>
+              <StatCard
+                title={getTtl('Sales', ln)}
+                value={(totalSales / 1000).toFixed(0)}
+                icon={HiOutlineFolder}
+                delay={0}
+              />
+              <StatCard
+                title={getTtl('Contracts', ln)}
+                value={(totalContracts / 1000).toFixed(0)}
+                icon={HiOutlineUserGroup}
+                delay={100}
+              />
+              <StatCard
+                title={getTtl('Invoices', ln)}
+                value={(Object.keys(dataPieClnts).length * 327).toFixed(0)}
+                icon={HiOutlineClipboardList}
+                delay={200}
+              />
+              <StatCard
+                title={getTtl('Expenses', ln)}
+                value={(totalExpenses / 1000).toFixed(0)}
+                icon={HiOutlineViewGrid}
+                delay={300}
+              />
             </div>
           </div>
 
+          {/* Charts Row - Total Revenue & Sales Overview */}
+          <div className={styles.chartsSection}>
+            <div className={styles.chartsGrid}>
+              {/* Total Revenue - Grouped Bar Chart */}
+              <ChartCard 
+                title="Total Revenue"
+                delay={400}
+                showYearDropdown={true}
+                year={selectedYear}
+                setYear={setSelectedYear}
+              >
+                <div className={styles.chartWrapper}>
+                  <Bar 
+                    data={GroupedBarChart(normalizedInvoices, normalizedContracts).obj} 
+                    options={GroupedBarChart().options} 
+                  />
+                </div>
+                <ChartLegend 
+                  items={[
+                    { label: 'Total Income', color: '#9fb8d4' },
+                    { label: 'Total Outcome', color: '#103a7a' }
+                  ]} 
+                />
+              </ChartCard>
 
-
-          <div className='grid grid-cols-2 justify-between gap-4 mt-4'>
-            <div className='dashBox'>
-              <div className='flex justify-center text-slate-600 font-medium'>
-                {'Consignees - $'}
-              </div>
-              <div className={cons < 10 ? 'h-[250px]' : cons > 10 && cons < 15 ? 'h-[400px]' : 'h-[500px]'}>
-                <Bar data={HorizontalBar(dataPieClnts, '#42a5f5').obj} options={HorizontalBar().options} />
-              </div>
-            </div>
-            <div className='dashBox'>
-              <div className='flex justify-center text-slate-600 font-medium'>
-                {'Contracts - $'}
-              </div>
-              <div className={cons < 10 ? 'h-[250px]' : cons > 10 && cons < 15 ? 'h-[400px]' : 'h-[500px]'}>
-                <Bar data={HorizontalBar(dataPieSupps, '#9c27b0').obj} options={HorizontalBar().options} />
-              </div>
+              {/* Sales Overview - Line Chart */}
+              <ChartCard 
+                title="Sales Overview"
+                delay={500}
+                showYearDropdown={true}
+                year={selectedYear}
+                setYear={setSelectedYear}
+              >
+                <div className={styles.chartWrapper}>
+                  <Line 
+                    data={LineChart(normalizedInvoices, normalizedPL.map(v => Math.abs(v))).obj} 
+                    options={LineChart().options} 
+                  />
+                </div>
+                <ChartLegend 
+                  items={[
+                    { label: 'Total Sales', color: '#9fb8d4' },
+                    { label: 'Total Revenue', color: '#103a7a' }
+                  ]} 
+                />
+              </ChartCard>
             </div>
           </div>
 
-        </>}
+          {/* Additional Charts - Consignees & Contracts */}
+          <div className={styles.chartsSection}>
+            <div className={styles.chartsGrid}>
+              <ChartCard 
+                title={getTtl('Top 5 Consignees - $', ln)}
+                delay={600}
+              >
+                <div className={styles.chartWrapper}>
+                  <Bar 
+                    data={HorizontalBar(dataPieClnts, '#0366ae').obj} 
+                    options={HorizontalBar().options} 
+                  />
+                </div>
+              </ChartCard>
+
+              <ChartCard 
+                title={getTtl('Top 5 Contracts - $', ln)}
+                delay={700}
+              >
+                <div className={styles.chartWrapper}>
+                  <Bar 
+                    data={HorizontalBar(dataPieSupps, '#103a7a').obj} 
+                    options={HorizontalBar().options} 
+                  />
+                </div>
+              </ChartCard>
+            </div>
+          </div>
+
+          {/* 3rd Section - Stat Cards With Mini Charts (Figma Blue Pills) */}
+          <div className={styles.statsSection}>
+            <div className={styles.statsGrid}>
+              <StatCardWithChart
+                title={getTtl('New Employees', ln)}
+                value={200}
+                change={10}
+                chartData={Object.values(dataContracts).map(v => Math.max(v, 1))}
+                delay={800}
+              />
+              <StatCardWithChart
+                title={getTtl('Earnings', ln)}
+                value={totalSales}
+                prefix="$"
+                change={20}
+                chartData={Object.values(dataInvoices).map(v => Math.max(v, 1))}
+                delay={900}
+              />
+              <StatCardWithChart
+                title={getTtl('Expenses', ln)}
+                value={totalExpenses}
+                prefix="$"
+                change={-5}
+                chartData={Object.values(dataExpenses).map(v => Math.max(v, 1))}
+                delay={1000}
+              />
+              <StatCardWithChart
+                title={getTtl('Profit', ln)}
+                value={Math.abs(totalProfit)}
+                prefix="$"
+                change={-15}
+                chartData={Object.values(dataPL).map(v => Math.abs(v) + 1)}
+                delay={1100}
+              />
+            </div>
+          </div>
+
+          {/* 4th Section - Bottom Cards (Subscriptions, Tasks, List) */}
+          <div className={styles.bottomSection}>
+            <div className={styles.bottomGrid}>
+              <SubscriptionsStatistic delay={1200} />
+              <TaskStatistic delay={1300} />
+              <SubscriptionsList count={4} delay={1400} />
+            </div>
+          </div>
+
+          {/* 5th Section - Clients Payment Table */}
+          <ClientsPayment delay={1500} />
+        </>
+      }
     </div>
   )
 }

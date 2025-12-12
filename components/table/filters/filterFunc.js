@@ -35,7 +35,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-md border-slate-400 p-1 focus:outline-0 focus:border-slate-600 w-24'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
             >
                 <option value="">All</option>
                 {
@@ -49,7 +49,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-md border-slate-400 p-1 focus:outline-0 focus:border-slate-600 w-24'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
             >
                 <option value="">All</option>
                 {
@@ -63,7 +63,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-md border-slate-400 p-1 focus:outline-0 focus:border-slate-600 w-24'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
             >
                 <option value="">All</option>
                 {
@@ -77,7 +77,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-md border-slate-400 p-1 focus:outline-0 focus:border-slate-600 w-24'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
             >
                 <option value="">All</option>
                 {
@@ -92,7 +92,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-md border-slate-400 p-1 focus:outline-0 focus:border-slate-600 w-24'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
             >
                 <option value="">All</option>
                 {
@@ -107,7 +107,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-md border-slate-400 p-1 focus:outline-0 focus:border-slate-600 w-24'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
             >
                 <option value="">All</option>
                 {
@@ -133,10 +133,10 @@ export const Filter = ({ column, table, filterOn }) => {
 
                         }}
                         className='text-xs shadow-lg 
-                border rounded-md border-slate-400 p-1 focus:outline-0 focus:border-slate-600 w-28 text-slate-500'
+                border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-28 text-[var(--port-gore)]'
                         max={columnFilterValue?.[1] || ''}
                     />
-                    <span className="flex items-center">-</span>
+                    <span className="flex items-center text-[var(--regent-gray)]">-</span>
                     <input
                         type="date"
                         value={columnFilterValue?.[1] || ''}
@@ -151,7 +151,7 @@ export const Filter = ({ column, table, filterOn }) => {
                         }}
                         min={columnFilterValue?.[0] || ''}
                         className='text-xs shadow-lg 
-                border rounded-md border-slate-400 p-1 focus:outline-0 focus:border-slate-600 w-28 text-slate-500'
+                border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-28 text-[var(--port-gore)]'
                     />
                 </div>
             ) : (
@@ -196,7 +196,7 @@ const DebouncedInput = ({
     return (
         <input {...props} value={value} onChange={e => setValue(e.target.value)}
             className={`text-xs shadow-lg 
-        border rounded-md border-slate-400 p-1 focus:outline-0 focus:border-slate-600 
-        indent-0.2 text-slate-500 ${type === 'number' ? 'w-16' : 'w-28'}`} />
+        border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] 
+        indent-0.2 text-[var(--port-gore)] ${type === 'number' ? 'w-16' : 'w-28'}`} />
     );
 }

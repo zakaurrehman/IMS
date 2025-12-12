@@ -1,0 +1,1218 @@
+/* Dashboard Module CSS - Using Site Color Palette */
+
+/* Main Container */
+.dashboardContainer {
+  min-height: 100vh;
+  background: var(--selago);
+  padding: 1.5rem;
+}
+
+/* Stats Section */
+.statsSection {
+  margin-bottom: 1.5rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Stat Card - Using Site Colors */
+.statCard {
+  background: linear-gradient(135deg, var(--endeavour) 0%, var(--chathams-blue) 50%, var(--bunting) 100%);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 10px 30px -10px rgba(3, 102, 174, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.statCard::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.statCardVisible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.statCard:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 40px -10px rgba(3, 102, 174, 0.5);
+}
+
+/* Icon Container */
+.statIconWrapper {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover .statIconWrapper {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.statIcon {
+  font-size: 1.5rem;
+  color: white;
+}
+
+/* Stat Content */
+.statContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.statTitle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.statValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin: 0.15rem 0 0;
+  letter-spacing: -0.02em;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Charts Section */
+.chartsSection {
+  margin-bottom: 1.5rem;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .chartsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Chart Card - White Rounded Card */
+.chartCard {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.08);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.chartCardVisible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.chartCard:hover {
+  box-shadow: 0 8px 30px -10px rgba(0, 0, 0, 0.12);
+}
+
+/* Chart Header */
+.chartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.chartTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--port-gore);
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Year Dropdown */
+.dropdownWrapper {
+  position: relative;
+}
+
+.dropdownButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid var(--rock-blue);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--port-gore);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dropdownButton:hover {
+  border-color: var(--endeavour);
+  background: var(--selago);
+}
+
+.dropdownIcon {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+  color: var(--regent-gray);
+}
+
+.dropdownIconOpen {
+  transform: rotate(180deg);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 100px;
+  background: white;
+  border: 1px solid var(--rock-blue);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+  overflow: hidden;
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownItem {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--port-gore);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dropdownItem:hover {
+  background: var(--selago);
+  color: var(--endeavour);
+}
+
+.dropdownItemActive {
+  background: var(--selago);
+  color: var(--endeavour);
+  font-weight: 500;
+}
+
+/* Chart Content */
+.chartContent {
+  position: relative;
+}
+
+.chartWrapper {
+  height: 280px;
+  position: relative;
+}
+
+/* Legend */
+.legendWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legendDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legendLabel {
+  font-size: 0.8125rem;
+  color: var(--regent-gray);
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Header with Date Picker */
+.headerSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.headerTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--port-gore);
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Animation keyframes */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== STAT CARD WITH CHART (Blue Pills with Mini Bar) ========== */
+.statCardWithChart {
+  background: linear-gradient(135deg, var(--endeavour) 0%, var(--chathams-blue) 50%, var(--bunting) 100%);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 10px 30px -10px rgba(3, 102, 174, 0.4);
+  position: relative;
+  overflow: hidden;
+  min-height: 120px;
+}
+
+.statCardWithChart::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.statCardWithChartVisible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.statCardWithChart:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 40px -10px rgba(3, 102, 174, 0.5);
+}
+
+.statCardLeftContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  z-index: 1;
+}
+
+.statCardRightContent {
+  display: flex;
+  align-items: flex-end;
+  height: 60px;
+  z-index: 1;
+}
+
+.statCardTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.statCardValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.2;
+}
+
+.statCardChange {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.statCardChangePositive { color: #86efac; }
+.statCardChangeNegative { color: #fca5a5; }
+
+/* Mini Bar Chart */
+.miniBarChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 100%;
+}
+
+.miniBar {
+  width: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 2px;
+  transition: height 0.3s ease;
+  min-height: 4px;
+}
+
+.statCardWithChart:hover .miniBar { background: white; }
+
+/* ========== BOTTOM SECTION (3rd Row) ========== */
+.bottomSection {
+  margin-top: 1.5rem;
+}
+
+.bottomGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .bottomGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .bottomGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Bottom Cards */
+.bottomCard {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.08);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bottomCardVisible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.bottomCard:hover {
+  box-shadow: 0 8px 30px -10px rgba(0, 0, 0, 0.12);
+}
+
+.bottomCardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--port-gore);
+  margin: 0 0 1.25rem 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Subscriptions Statistic Bar Chart */
+.subscriptionBarChart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 120px;
+  gap: 0.5rem;
+}
+
+.subscriptionBarGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+}
+
+.subscriptionBar {
+  width: 100%;
+  max-width: 40px;
+  background: linear-gradient(180deg, var(--endeavour) 0%, var(--chathams-blue) 100%);
+  border-radius: 4px 4px 0 0;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.subscriptionBar:hover {
+  background: linear-gradient(180deg, var(--rock-blue) 0%, var(--endeavour) 100%);
+}
+
+.subscriptionBarLabel {
+  font-size: 0.75rem;
+  color: var(--regent-gray);
+  margin-top: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Task Statistic Grouped Bar Chart */
+.taskBarChart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 120px;
+  gap: 0.5rem;
+}
+
+.taskBarGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+}
+
+.taskBarPair {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+}
+
+.taskBar {
+  width: 14px;
+  border-radius: 4px 4px 0 0;
+  transition: all 0.3s ease;
+}
+
+.taskBarLight { background: var(--rock-blue); }
+.taskBarDark { background: var(--chathams-blue); }
+.taskBar:hover { opacity: 0.85; }
+
+.taskBarLabel {
+  font-size: 0.75rem;
+  color: var(--regent-gray);
+  margin-top: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Subscriptions List */
+.subscriptionsListHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.subscriptionsBadge {
+  background: var(--endeavour);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.subscriptionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.subscriptionItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--selago);
+}
+
+.subscriptionItem:last-child { border-bottom: none; }
+
+.subscriptionDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.subscriptionName {
+  font-size: 0.875rem;
+  color: var(--port-gore);
+  flex: 1;
+  font-family: 'Poppins', sans-serif;
+}
+
+.subscriptionStatus {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.statusActive { background: #dcfce7; color: #16a34a; }
+.statusPending { background: #fef3c7; color: #d97706; }
+
+/* ========== SUBSCRIPTIONS STATISTIC - PROGRESS BARS ========== */
+.progressList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.progressItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progressLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--port-gore);
+  font-family: 'Poppins', sans-serif;
+}
+
+.progressValue {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--port-gore);
+  font-family: 'Poppins', sans-serif;
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 6px;
+  background: var(--selago);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--endeavour) 0%, var(--chathams-blue) 100%);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* ========== TASK STATISTIC - DONUT CHART ========== */
+.taskBadges {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.taskBadge {
+  flex: 1;
+  background: linear-gradient(135deg, var(--endeavour) 0%, var(--chathams-blue) 100%);
+  border-radius: 0.75rem;
+  padding: 0.875rem 1rem;
+  text-align: center;
+}
+
+.taskBadgeOverdue {
+  background: linear-gradient(135deg, var(--rock-blue) 0%, var(--endeavour) 100%);
+}
+
+.taskBadgeLabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Poppins', sans-serif;
+}
+
+.taskBadgeValue {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 0.25rem;
+}
+
+.donutWrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 1.5rem;
+}
+
+.donutChart {
+  width: 100%;
+  height: 100%;
+}
+
+.donutCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.donutCenterLabel {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--regent-gray);
+  font-family: 'Poppins', sans-serif;
+}
+
+.donutCenterValue {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--port-gore);
+  font-family: 'Poppins', sans-serif;
+}
+
+.taskLegend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.taskLegendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.taskLegendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.taskLegendLabel {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--regent-gray);
+  font-family: 'Poppins', sans-serif;
+}
+
+.taskLegendValue {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--port-gore);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ========== SUBSCRIPTIONS LIST - USER CARDS ========== */
+.userCardList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.userCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--selago);
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.userCard:hover {
+  border-color: var(--rock-blue);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.08);
+}
+
+.userAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  flex-shrink: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.userInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.userName {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--port-gore);
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.userRole {
+  font-size: 0.8125rem;
+  color: var(--regent-gray);
+  margin: 0.125rem 0 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.userDate {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--port-gore);
+  margin: 0.5rem 0 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.userStatus {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  font-family: 'Poppins', sans-serif;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
+.statusApproved {
+  background: #10b981;
+  color: white;
+}
+
+/* ========== CLIENTS PAYMENT TABLE ========== */
+.paymentsCard {
+  background: linear-gradient(135deg, var(--bunting) 0%, var(--chathams-blue) 50%, var(--endeavour) 100%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 10px 40px -10px rgba(3, 102, 174, 0.4);
+}
+
+.paymentsCardVisible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.paymentsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.paymentsTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.paymentsFilters {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.filterDropdown {
+  position: relative;
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.filterButton:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.filterIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.filterMenu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 120px;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+  z-index: 50;
+  overflow: hidden;
+}
+
+.filterMenuItem {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--port-gore);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.filterMenuItem:hover {
+  background: var(--selago);
+  color: var(--endeavour);
+}
+
+.filterMenuItemActive {
+  background: var(--selago);
+  color: var(--endeavour);
+  font-weight: 500;
+}
+
+/* Table Wrapper */
+.paymentsTableWrapper {
+  overflow-x: auto;
+  margin: 0 -0.5rem;
+  padding: 0 0.5rem;
+}
+
+.paymentsTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.paymentsTable th {
+  text-align: left;
+  padding: 1rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Poppins', sans-serif;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.paymentsTable td {
+  padding: 1rem 0.75rem;
+  font-size: 0.875rem;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.paymentsTable tbody tr {
+  transition: background 0.2s ease;
+}
+
+.paymentsTable tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Payment User */
+.paymentUser {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.paymentAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  flex-shrink: 0;
+}
+
+.paymentName {
+  font-weight: 500;
+}
+
+/* Payment Date */
+.paymentDate {
+  display: flex;
+  flex-direction: column;
+}
+
+.paymentTime {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Payment Status */
+.paymentStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.paymentStatusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.paymentStatusActive {
+  color: #4ade80;
+}
+
+.paymentStatusInactive {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Payment Actions */
+.paymentActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actionButton {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.5rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actionButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.actionButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Pagination */
+.paymentsPagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.paginationInfo {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Poppins', sans-serif;
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.paginationButton {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.paginationButton:hover:not(:disabled) {
+  color: white;
+}
+
+.paginationButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.paginationNumber {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 0.375rem;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.paginationNumber:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.paginationNumberActive {
+  background: var(--endeavour);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .dashboardContainer {
+    padding: 1rem;
+  }
+
+  .statCard {
+    padding: 1rem 1.25rem;
+  }
+
+  .statCardWithChart {
+    padding: 1rem 1.25rem;
+    min-height: 100px;
+  }
+
+  .statCardValue {
+    font-size: 1.5rem;
+  }
+
+  .statValue {
+    font-size: 1.5rem;
+  }
+
+  .chartWrapper {
+    height: 240px;
+  }
+  
+  .legendWrapper {
+    gap: 1rem;
+  }
+
+  .subscriptionBarChart,
+  .taskBarChart {
+    height: 100px;
+  }
+
+  .taskBadges {
+    flex-direction: column;
+  }
+
+  .donutWrapper {
+    width: 150px;
+    height: 150px;
+  }
+
+  .userCard {
+    flex-wrap: wrap;
+  }
+
+  .userStatus {
+    margin-left: auto;
+  }
+
+  .paymentsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .paymentsPagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -25,8 +25,8 @@ const DateRangePicker = () => {
 
     return (
         <Datepicker
-            inputClassName='border border-slate-300 text-sm/6 p-1 px-1.5 rounded-lg text-slate-500 w-60
-             focus:outline-none cursor-pointer z-0 bg-white'
+            inputClassName='border border-[var(--rock-blue)]/50 text-sm/6 p-1.5 px-2 rounded-xl text-[var(--port-gore)] w-60
+             focus:outline-none cursor-pointer z-0 bg-white shadow-sm hover:border-[var(--endeavour)] transition-colors'
             useRange={false}
             value={value}
             onChange={handleValueChange}

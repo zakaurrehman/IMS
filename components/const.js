@@ -2,7 +2,7 @@ import { DiBrackets } from "react-icons/di";
 import { TbFileInvoice } from "react-icons/tb";
 import { FaFileContract } from "react-icons/fa";
 import { TbShip } from "react-icons/tb";
-import { RiDashboardLine } from "react-icons/ri";
+import { RiDashboardLine, RiApps2Line } from "react-icons/ri";
 import { BiBasket } from "react-icons/bi";
 import { VscPreview } from "react-icons/vsc";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
@@ -16,13 +16,29 @@ import { UserAuth } from "../contexts/useAuthContext";
 import { TbBrandCashapp } from "react-icons/tb";
 import { FaTableList } from "react-icons/fa6";
 import { RiFormula } from "react-icons/ri";
+import { BiMessageRoundedDetail, BiPhone, BiCalendar } from "react-icons/bi";
 
 export const sideBar = () => {
     const { userTitle, gisAccount } = UserAuth(); // Assuming this is a hook that provides the user role
 
     const sb = [
         {
-            items: [{ item: 'Dashboard', img: <RiDashboardLine />, page: 'dashboard' }]
+             ttl: 'MAIN MENU',
+            items: [
+                { item: 'Dashboard', img: <RiDashboardLine />, page: 'dashboard' },
+                { 
+                    item: 'Apps', 
+                    img: <RiApps2Line />, 
+                    page: 'apps',
+                    hasDropdown: true,
+                    subItems: [
+                        { item: 'Message', img: <BiMessageRoundedDetail />, page: 'apps/message' },
+                        { item: 'Call', img: <BiPhone />, page: 'apps/call' },
+                        { item: 'Calendar', img: <BiCalendar />, page: 'apps/calendar' },
+                    ]
+                }
+
+            ]
         },
         {
             ttl: 'Shipments',

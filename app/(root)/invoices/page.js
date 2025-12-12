@@ -125,8 +125,8 @@ const Invoices = () => {
 		},
 		{
 			accessorKey: 'invoiceStatus', header: getTtl('Status', ln), cell: (props) => <p
-				className={`${setInvStatus(props) === 'Draft' ? 'text-slate-700' : setInvStatus(props) === 'Final' ? 'text-green-700' : 'text-red-700'} 
-			p-1.5 rounded-xl bg-slate-200 px-2 justify-center flex font-medium`}>{setInvStatus(props)}</p>
+				className={`${setInvStatus(props) === 'Draft' ? 'text-[var(--endeavour)]' : setInvStatus(props) === 'Final' ? 'text-green-600' : 'text-red-600'} 
+			p-1.5 rounded-xl bg-[var(--selago)] px-2 justify-center flex font-medium`}>{setInvStatus(props)}</p>
 		},
 		{
 			accessorKey: 'client', header: getTtl('Consignee', ln), meta: {
@@ -265,9 +265,9 @@ const Invoices = () => {
 
 					<Toast />
 					{/*loading && <Spin />*/}
-					<div className="border border-slate-200 rounded-xl p-4 mt-8 shadow-md relative">
+					<div className="border border-[var(--selago)] rounded-xl p-4 mt-8 shadow-md relative">
 						<div className='flex items-center justify-between flex-wrap pb-2'>
-							<div className="text-3xl p-1 pb-2 text-slate-500">{getTtl('Invoices', ln)}</div>
+							<div className="text-3xl p-1 pb-2 text-[var(--port-gore)] font-semibold">{getTtl('Invoices', ln)}</div>
 							<div className='flex group'>
 								<DateRangePicker />
 								<Tooltip txt='Select Dates Range' />
@@ -285,10 +285,10 @@ const Invoices = () => {
 					</div>
 
 					{alertArr.length ? <div className='mt-14'>
-						<div className="text-lg font-medium leading-5 text-gray-900 border-2
-						 border-slate-200 p-2 max-w-4xl mb-10 rounded-xl shadow-md"
+						<div className="text-lg font-medium leading-5 text-[var(--port-gore)] border-2
+						 border-[var(--selago)] p-2 max-w-4xl mb-10 rounded-xl shadow-md"
 						>
-							<div className='text-slate-600 '>
+							<div className='text-[var(--port-gore)] '>
 								<span className='p-2'>Notification for delayed response</span>
 								<DlayedResponse alertArr={alertArr} setAlertArr={setAlertArr} />
 							</div>

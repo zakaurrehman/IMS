@@ -1,13 +1,25 @@
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { saveDataSettings } from '../utils/utils';
 
 // You can expand this hook with your actual settings logic as needed
+
 
 function useSettingsState() {
     const [settings, setSettings] = useState({});
     const [compData, setCompData] = useState({ lng: 'English' });
     const [loading, setLoading] = useState(false);
+
+    // Computed language value for easy access
+    const ln = useMemo(() => compData?.lng || 'English', [compData?.lng]);
+
+    // Date range state for date picker components
+    const currentYear = new Date().getFullYear();
+    const defaultDateSelect = {
+        start: `${currentYear}-01-01`,
+        end: `${currentYear}-12-31`
+    };
+    const [dateSelect, setDateSelect] = useState(defaultDateSelect);
 
     // Setter for updating settings
     const updateSettings = (newSettings) => {
@@ -32,6 +44,9 @@ function useSettingsState() {
         updateCompanyData,
         loading,
         setLoading,
+        dateSelect,
+        setDateSelect,
+        ln, // Computed language value for easy access
     };
 }
 

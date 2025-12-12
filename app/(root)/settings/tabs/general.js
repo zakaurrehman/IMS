@@ -18,7 +18,7 @@ const languages = [{ lng: "English" }, { lng: "Русский" }]
 const General = () => {
     const { compData, setCompData, updateCompanyData, setToast } = useContext(SettingsContext);
     const { uidCollection } = UserAuth();
-    const ln = compData?.lng || 'en';
+    const ln = compData?.lng || 'English';
     // const [invNum, setInvNum] = useState('')
 
     //   const [isOpen, setIsOpen] = useState(false)
@@ -50,7 +50,7 @@ const General = () => {
                                 {getTtl('lng', ln)}:</p>
                             <div>
                                 <CBox languages={languages} compData={compData} setCompData={setCompData}
-                                    lang={languages.find(x => x.lng === (compData?.lng || 'en'))} />
+                                    lang={languages.find(x => x.lng === (compData?.lng || 'English'))} />
                             </div>
                         </div>
 

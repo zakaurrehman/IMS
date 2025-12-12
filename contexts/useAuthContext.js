@@ -18,7 +18,7 @@ const AuthContextProvider = ({ children }) => {
   const [err, setErr] = useState(null)
   const router = useRouter()
   const [loadingPage, setLoadingPage] = useState(true);
-  const { setCompData, setSettings } = useContext(SettingsContext);
+  const { setCompData, updateSettings } = useContext(SettingsContext);
   const [uidCollection, setUidCollection] = useState(null)
   const [userTitle, setUserTitle] = useState(null)
   const pathName = usePathname()
@@ -42,6 +42,10 @@ const AuthContextProvider = ({ children }) => {
       });
 
   }
+   useEffect(() => {
+    let isLogged = sessionStorage.getItem('isLogged')
+    if (!isLogged && pathName !== '/') router.push("/");
+  }, []);
   // Removed unwanted redirect to home page on refresh. Users will stay on the current page unless redirected elsewhere.
 
 
@@ -95,7 +99,7 @@ const AuthContextProvider = ({ children }) => {
       setCompData(dt)
 
       dt = await loadDataSettings(uidCollection, 'settings')
-      setSettings(dt)
+      updateSettings(dt)
 
     }
 
