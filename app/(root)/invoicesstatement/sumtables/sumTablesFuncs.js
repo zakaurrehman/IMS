@@ -132,20 +132,20 @@ export const detailsToolTip = (row, data, settings, dataTable, rmrk) => {
 
         return (
 
-            <div className="bg-customBlue max-h-[32rem] overflow-y-auto w-fit">
+            <div className="bg-[var(--selago)] max-h-[32rem] overflow-y-auto w-fit rounded-lg">
                 <table>
                     <thead>
-                        <tr className="border border-slate-300 p-2">
-                            <th className="text-left p-2">Supplier Inv</th>
-                            <th className="text-left p-2">Invoices amount</th>
-                            <th className="text-left p-2">Prepayment</th>
-                            <th className="text-left p-2">Balance</th>
+                        <tr className="border border-[var(--rock-blue)] p-2 bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
+                            <th className="text-left p-2 text-white">Supplier Inv</th>
+                            <th className="text-left p-2 text-white">Invoices amount</th>
+                            <th className="text-left p-2 text-white">Prepayment</th>
+                            <th className="text-left p-2 text-white">Balance</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredArr?.map((z, i) => {
                             return (
-                                <tr className="border border-slate-300 p-2" key={i}>
+                                <tr className="border border-[var(--rock-blue)]/50 p-2 hover:bg-[var(--rock-blue)]/30" key={i}>
                                     <td className="text-left p-2">{Array.isArray(z.supInvoices) ? z.supInvoices.map((item, index) => {
                                         return <div key={index}>{item}</div>
                                     }) : z.supInvoices}</td>
@@ -200,20 +200,20 @@ export const detailsToolTip = (row, data, settings, dataTable, rmrk) => {
 
         return (
 
-            <div className="bg-customBlue max-h-[32rem] overflow-y-auto w-fit">
+            <div className="bg-[var(--selago)] max-h-[32rem] overflow-y-auto w-fit rounded-lg">
                 <table>
                     <thead>
-                        <tr className="border border-slate-300 p-2">
-                            <th className="text-left p-2">Invoice</th>
-                            <th className="text-left p-2">Inv. amount</th>
-                            <th className="text-left p-2">Payment</th>
-                            <th className="text-left p-2">Debt</th>
+                        <tr className="border border-[var(--rock-blue)] p-2 bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
+                            <th className="text-left p-2 text-white">Invoice</th>
+                            <th className="text-left p-2 text-white">Inv. amount</th>
+                            <th className="text-left p-2 text-white">Payment</th>
+                            <th className="text-left p-2 text-white">Debt</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredArr?.map((z, i) => {
                             return (
-                                <tr className="border border-slate-300 p-2" key={i}>
+                                <tr className="border border-[var(--rock-blue)]/50 p-2 hover:bg-[var(--rock-blue)]/30" key={i}>
                                     <td className="text-left p-2">{z.InvNum}</td>
                                     <td className="text-left p-2">{
                                         <NumericFormat

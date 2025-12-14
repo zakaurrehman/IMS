@@ -103,7 +103,7 @@ const DraggableRow = ({ row, props, cName }) => {
                                 :
                                 cell.column.id === 'del' ?
                                     <div className='flex items-center max-w-4'>
-                                        <MdDeleteOutline className="scale-125 text-slate-500 cursor-pointer"
+                                        <MdDeleteOutline className="scale-125 text-[var(--endeavour)] cursor-pointer"
                                             onClick={(e) => deleteRow(e, cell.row.index, month)} />
                                     </div>
                                     :
@@ -133,7 +133,7 @@ const DraggableRow = ({ row, props, cName }) => {
                                                 prefix={currs.includes(cell.column.id) ? '$' : ''}
                                                 decimalScale={cell.getValue() !== 0 ? currs.includes(cell.column.id) ? '2' : '3' : 0}
                                                 fixedDecimalScale
-                                                className={`text-[0.8rem] text-slate-600 text-right ${cell.column.id === 'totalMargin' ?
+                                                className={`text-[0.8rem] text-[var(--port-gore)] text-right ${cell.column.id === 'totalMargin' ?
                                                     'justify-end flex px-1' : ''}`}
                                             />
                     }
@@ -210,16 +210,16 @@ const Customtable = (props) => {
             sensors={sensors}
         >
             <div className="flex flex-col relative">
-                <div className="rounded-md border overflow-visible relative">
+                <div className="rounded-md border border-[var(--selago)] overflow-visible relative">
 
                     <Table className="relative">
-                        <TableHeader>
+                        <TableHeader className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
                             {table.getHeaderGroups().map((headerGroup) => (
 
                                 <TableRow key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => {
                                         return (
-                                            <TableHead key={header.id} className={cn('p-1 h-8 font-bold text-xs',
+                                            <TableHead key={header.id} className={cn('p-1 h-8 font-bold text-xs text-white',
                                                 (header.column.id === 'margin' ? 'text-right px-6' :
                                                     header.column.id === 'totalMargin' ? 'text-right px-2' :
                                                         ''))}>
@@ -253,7 +253,7 @@ const Customtable = (props) => {
                         </TableBody>
                         {data.length ? <TableFooter>
                             {table.getFooterGroups().map((footerGroup) => (
-                                <TableRow key={footerGroup.id} className='bg-white'>
+                                <TableRow key={footerGroup.id} className='bg-[var(--selago)]/50'>
                                     {footerGroup.headers.map((footer) => {
                                         const accessorKey = footer.column.columnDef.accessorKey;
 
@@ -270,7 +270,7 @@ const Customtable = (props) => {
                                                 key={`footer-${footer.id}`}
                                                 className={cn('p-1 text-left text-xs',
                                                     ["totalMargin", "remaining", "purchase", "openShip"].includes(accessorKey) ?
-                                                        'border-t border-t-black' : '')}
+                                                        'border-t border-t-[var(--endeavour)]' : '')}
                                             >
                                                 {
                                                     ["totalMargin", "remaining", "purchase", "openShip"].includes(accessorKey) &&
@@ -282,7 +282,7 @@ const Customtable = (props) => {
                                                         prefix={currs.includes(accessorKey) ? '$' : ''}
                                                         decimalScale={currs.includes(accessorKey) ? '2' : '3'}
                                                         fixedDecimalScale
-                                                        className={`text-[0.8rem] text-slate-600 font-semibold
+                                                        className={`text-[0.8rem] text-[var(--port-gore)] font-semibold
                                                              ${accessorKey === 'totalMargin' ? 'flex justify-end px-1' : ''}`}
                                                     />
                                                 }

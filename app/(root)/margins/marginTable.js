@@ -13,22 +13,22 @@ const MarginTable = (props) => {
     let { month, year, addItem } = props
     let data = props.items
     return (
-        <Disclosure as="div" className="w-full mb-4 border border-slate-600 rounded-md" defaultOpen={true}>
+        <Disclosure as="div" className="w-full mb-4 border border-[var(--rock-blue)] rounded-md" defaultOpen={true}>
             {/* <DisclosureButton className="w-full p-2 text-left text-sm">{month}</DisclosureButton> */}
             {({ open }) => (
                 <>
                     <div className="flex items-center gap-2 p-2 text-[0.8rem] w-full">
                         <DisclosureButton className="flex items-center gap-2 w-full text-left">
-                            {!open ? <IoAddCircleOutline className="scale-125 font-bold" /> :
-                                <FiMinusCircle className="scale-110 font-bold" />}
-                            <span className='w-32 flex gap-5 items-center'>
+                            {!open ? <IoAddCircleOutline className="scale-125 font-bold text-[var(--endeavour)]" /> :
+                                <FiMinusCircle className="scale-110 font-bold text-[var(--endeavour)]" />}
+                            <span className='w-32 flex gap-5 items-center text-[var(--port-gore)] font-semibold'>
                                 {`${month} - ${year}`}
-                                {!open && <div className="border-l border-gray-400 h-7"></div>}
+                                {!open && <div className="border-l border-[var(--rock-blue)] h-7"></div>}
                             </span>
 
                             {!open ?
                                 <div className='w-full'>
-                                    <div className="flex justify-start space-x-4 w-96 gap-4 text-slate-600">
+                                    <div className="flex justify-start space-x-4 w-96 gap-4 text-[var(--port-gore)]">
                                         <div className="text-left ">
                                             <div className='font-semibold'>Qty (MT)</div>
                                             <div>
@@ -44,7 +44,7 @@ const MarginTable = (props) => {
                                                             allowNegative
                                                             prefix=""
                                                             decimalScale='3' fixedDecimalScale
-                                                            className="text-[0.8rem] text-slate-600 font-normal"
+                                                            className="text-[0.8rem] text-[var(--port-gore)] font-normal"
                                                         />
                                                     );
                                                 })()}
@@ -68,7 +68,7 @@ const MarginTable = (props) => {
                                                             prefix="$"
                                                             decimalScale='2'
                                                             fixedDecimalScale
-                                                            className="text-[0.8rem] text-slate-600 font-normal"
+                                                            className="text-[0.8rem] text-[var(--port-gore)] font-normal"
                                                         />
                                                     );
                                                 })()}
@@ -90,7 +90,7 @@ const MarginTable = (props) => {
                                                             prefix=""
                                                             decimalScale={totalOpenShip === 0 ? 0 : 3}
                                                             fixedDecimalScale
-                                                            className="text-[0.8rem] text-slate-600 font-normal"
+                                                            className="text-[0.8rem] text-[var(--port-gore)] font-normal"
                                                         />
                                                     );
                                                 })()}
@@ -114,7 +114,7 @@ const MarginTable = (props) => {
                                                             prefix="$"
                                                             decimalScale={remaining === 0 ? 0 : 2}
                                                             fixedDecimalScale
-                                                            className="text-[0.8rem] text-slate-600 font-normal"
+                                                            className="text-[0.8rem] text-[var(--port-gore)] font-normal"
                                                         />
                                                     );
                                                 })()}
@@ -129,7 +129,7 @@ const MarginTable = (props) => {
                         </DisclosureButton>
 
                         <button
-                            className="whiteButton py-0.5 relative"
+                            className="bg-white border border-[var(--rock-blue)] text-[var(--port-gore)] px-3 py-0.5 rounded-lg hover:bg-[var(--selago)]/30 font-medium relative"
                             onClick={(e) => {
                                 e.stopPropagation(); // Prevents triggering DisclosureButton
                                 addItem(month);

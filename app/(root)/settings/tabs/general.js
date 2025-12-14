@@ -33,9 +33,9 @@ const General = () => {
             {compData && Object.keys(compData).length === 0 ?
                 <Spinner />
                 : <>
-                    <div className='border border-slate-300 p-4 rounded-lg mt-1 flex flex-wrap md:flex-nowrap w-full space-x-4'>
+                    <div className='border border-[var(--rock-blue)] p-4 rounded-lg mt-1 flex flex-wrap md:flex-nowrap w-full space-x-4'>
                         <div className='flex gap-4 items-center w-full'>
-                            <p className='text-sm font-medium whitespace-nowrap text-slate-600'>
+                            <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>
                                 {getTtl('cmpName', ln)}:</p>
                                 <input
                                     type='input'
@@ -46,7 +46,7 @@ const General = () => {
                         </div>
 
                         <div className='flex gap-4 items-center w-full'>
-                            <p className='text-sm font-medium whitespace-nowrap text-slate-600'>
+                            <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>
                                 {getTtl('lng', ln)}:</p>
                             <div>
                                 <CBox languages={languages} compData={compData} setCompData={setCompData}
@@ -56,12 +56,12 @@ const General = () => {
 
                     </div>
 
-                    <div className='border border-slate-300 p-4 rounded-lg mt-5'>
+                    <div className='border border-[var(--rock-blue)] p-4 rounded-lg mt-5'>
                         <div className='grid grid-cols-2 gap-4'>
                             <div className='col-span-12 sm:col-span-1'>
                                 <div className='flex flex-col gap-2 max-w-sm'>
                                     <div className='gap-4 flex items-center' >
-                                        <p className='text-sm font-medium text-slate-600'>
+                                        <p className='text-sm font-medium text-[var(--port-gore)]'>
                                             {getTtl('street', ln)}:</p>
                                         <input
                                             type='input'
@@ -71,7 +71,7 @@ const General = () => {
                                         />
                                     </div>
                                     <div className='flex gap-4 items-center ' >
-                                        <p className='text-sm font-medium whitespace-nowrap text-slate-600'>
+                                        <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>
                                             {getTtl('city', ln)}: </p>
                                         <input
                                             type='input'
@@ -81,7 +81,7 @@ const General = () => {
                                         />
                                     </div>
                                     <div className='col-span-12 md:col-span-1 flex gap-4 items-center' >
-                                        <p className='text-sm font-medium whitespace-nowrap text-slate-600'>
+                                        <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>
                                             {getTtl('country', ln)}:</p>
                                         <input
                                             type='input'
@@ -91,7 +91,7 @@ const General = () => {
                                         />
                                     </div>
                                     <div className='col-span-12 md:col-span-1 flex gap-4 items-center' >
-                                        <p className='text-sm font-medium whitespace-nowrap text-slate-600'>
+                                        <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>
                                             {getTtl('zipCode', ln)}:</p>
                                         <input
                                             type='input'
@@ -105,7 +105,7 @@ const General = () => {
                             <div className='col-span-12 sm:col-span-1'>
                                 <div className='flex flex-col gap-2 max-w-sm'>
                                     <div className='col-span-12 md:col-span-1 flex gap-4 items-center' >
-                                        <p className='text-sm font-medium whitespace-nowrap text-slate-600'>Reg No.:</p>
+                                        <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>Reg No.:</p>
                                         <input
                                             type='input'
                                             className='input max-w-sm h-8'
@@ -114,7 +114,7 @@ const General = () => {
                                         />
                                     </div>
                                     <div className='col-span-12 md:col-span-1 flex gap-4 items-center' >
-                                        <p className='text-sm font-medium whitespace-nowrap text-slate-600'>VAT No.:</p>
+                                        <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>VAT No.:</p>
                                         <input
                                             type='input'
                                             className='input max-w-sm h-8'
@@ -123,7 +123,7 @@ const General = () => {
                                         />
                                     </div>
                                     <div className='col-span-12 md:col-span-1 flex gap-4 items-center' >
-                                        <p className='text-sm font-medium whitespace-nowrap text-slate-600'>EORI No.:</p>
+                                        <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>EORI No.:</p>
                                         <input
                                             type='input'
                                             className='input max-w-sm h-8'
@@ -139,10 +139,10 @@ const General = () => {
 
 
 
-                    <div className='border border-slate-300 p-4 rounded-lg  mt-5 w-full'>
+                    <div className='border border-[var(--rock-blue)] p-4 rounded-lg  mt-5 w-full'>
                         <div className='grid grid-cols-2 gap-2 w-full'>
                             <div className='col-span-12 md:col-span-1 flex gap-4 items-center' >
-                                <p className='text-sm font-medium whitespace-nowrap text-slate-600'>
+                                <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>
                                     {getTtl('cmpemail', ln)}:</p>
                                 <input
                                     type='input'
@@ -152,7 +152,7 @@ const General = () => {
                                 />
                             </div>
                             <div className='col-span-12 md:col-span-1 flex gap-4 items-center' >
-                                <p className='text-sm font-medium whitespace-nowrap text-slate-600'>
+                                <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>
                                     {getTtl('cmpwebsite', ln)}:</p>
                                 <input
                                     type='input'
@@ -165,10 +165,10 @@ const General = () => {
                     </div>
 
 
-                    <div className=' border border-slate-300 p-4 rounded-lg  mt-5 w-full'>
+                    <div className=' border border-[var(--rock-blue)] p-4 rounded-lg  mt-5 w-full'>
                         <div className='grid grid-cols-2 gap-2 w-full'>
                             <div className='col-span-12 md:col-span-1 flex gap-4 items-center' >
-                                <p className='text-sm font-medium whitespace-nowrap text-slate-600'>
+                                <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>
                                     {getTtl('cmpPhone', ln)}:</p>
                                 <input
                                     type='input'
@@ -178,7 +178,7 @@ const General = () => {
                                 />
                             </div>
                             <div className='col-span-12 md:col-span-1 flex gap-4 items-center' >
-                                <p className='text-sm font-medium whitespace-nowrap text-slate-600'>
+                                <p className='text-sm font-medium whitespace-nowrap text-[var(--port-gore)]'>
                                     {getTtl('cmpMobile', ln)}:</p>
                                 <input
                                     type='input'

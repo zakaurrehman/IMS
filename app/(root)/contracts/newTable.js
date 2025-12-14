@@ -86,12 +86,12 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
 
                 <div className="overflow-x-auto border-x border-[var(--selago)] md:max-h-[310px] 2xl:max-h-[550px]">
                     <table className="w-full">
-                        <thead className="bg-white md:sticky md:top-0 md:z-10">
+                        <thead className="md:sticky md:top-0 md:z-10">
                             {table.getHeaderGroups().map(hdGroup =>
-                                <tr key={hdGroup.id} className='border-b border-[var(--selago)] bg-[var(--selago)]'>
+                                <tr key={hdGroup.id} className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
                                     {hdGroup.headers.map(
                                         header =>
-                                            <th key={header.id} className="relative px-6 py-2.5 text-left text-sm font-semibold text-[var(--port-gore)] uppercase bg-[var(--selago)]">
+                                            <th key={header.id} className="relative px-6 py-3 text-left text-sm font-semibold text-white uppercase">
                                                 {header.column.getCanSort() ?
                                                     <div onClick={header.column.getToggleSortingHandler()} className="table-caption cursor-pointer items-center gap-1 text-xs
                                                     font-semibold">
@@ -101,13 +101,13 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
 
                                                         {
                                                             {
-                                                                asc: <TbSortAscending className="text-[var(--endeavour)] scale-125" />,
-                                                                desc: <TbSortDescending className="text-[var(--endeavour)] scale-125" />
+                                                                asc: <TbSortAscending className="text-white scale-125" />,
+                                                                desc: <TbSortDescending className="text-white scale-125" />
                                                             }[header.column.getIsSorted()]
                                                         }
                                                     </div>
                                                     :
-                                                    <span className="text-xs py-1  font-medium">{header.column.columnDef.header}</span>
+                                                    <span className="text-xs py-1 font-medium text-white">{header.column.columnDef.header}</span>
                                                 }
                                                 {header.column.getCanFilter() ? (
                                                     <div>

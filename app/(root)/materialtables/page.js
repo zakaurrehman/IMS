@@ -196,16 +196,16 @@ const MaterialTables = () => {
             {Object.keys(settings).length === 0 ? <Spinner /> :
                 <>
                     <Toast />
-                    <div className="border border-slate-200 rounded-xl p-4 mt-8 shadow-md relative">
+                    <div className="border border-[var(--selago)] rounded-xl p-4 mt-8 shadow-lg bg-white relative">
                         <div className='flex items-center justify-between flex-wrap pb-2'>
-                            <div className="text-3xl p-1 pb-2 text-slate-500"> {getTtl('Material Tables', ln)} </div>
+                            <div className="text-3xl p-1 pb-2 text-[var(--port-gore)] font-semibold"> {getTtl('Material Tables', ln)} </div>
                         </div>
 
                         <div className="flex gap-4">
-                            <Button className='bg-gray-500' onClick={addTable}>
+                            <Button className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] hover:opacity-90' onClick={addTable}>
                                 Add Table
                             </Button>
-                            <Button className='bg-white border-slate-400' variant='outline' onClick={saveTable}>
+                            <Button className='bg-white border-[var(--rock-blue)] text-[var(--port-gore)]' variant='outline' onClick={saveTable}>
                                 Save
                             </Button>
                         </div>

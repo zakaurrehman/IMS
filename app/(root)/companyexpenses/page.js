@@ -210,9 +210,9 @@ const Expenses = () => {
                 <>
                     <Toast />
                     {loading && <Spin />}
-                    <div className="border border-slate-200 rounded-xl p-4 mt-8 shadow-md relative">
+                    <div className="border border-[var(--selago)] rounded-xl p-4 mt-8 shadow-lg bg-white relative">
                         <div className='flex items-center justify-between flex-wrap pb-2'>
-                            <div className="text-3xl p-1 pb-2 text-slate-500">{getTtl('Company Expenses', ln)}</div>
+                            <div className="text-3xl p-1 pb-2 text-[var(--port-gore)] font-semibold">{getTtl('Company Expenses', ln)}</div>
                             <div className='flex group'>
                                 <DateRangePicker />
                                 <Tooltip txt='Select Dates Range' />
@@ -235,7 +235,7 @@ const Expenses = () => {
                                 <button
                                     type="button"
                                     onClick={addNewExpense}
-                                    className="text-white bg-slate-500 hover:bg-slate-400 focus:outline-none font-medium rounded-lg 
+                                    className="text-white bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] hover:opacity-90 focus:outline-none font-medium rounded-lg 
 													 text-sm px-4 py-3 text-center drop-shadow-xl gap-1.5 items-center flex"
                                 >
                                     <TbLayoutGridAdd className="scale-110" />

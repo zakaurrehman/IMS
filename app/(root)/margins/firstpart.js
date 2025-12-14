@@ -4,11 +4,11 @@ import React from 'react'
 const FirstPart = ({ incoming, outStandingShip, purchase, totalMargin, shipped, }) => {
     return (
         <div className="w-full p-2">
-            <div className="w-full max-w-7xl  rounded-xl border border-slate-600 p-2">
+            <div className="w-full max-w-7xl rounded-xl border border-[var(--rock-blue)] p-2">
 
                 <div className='grid grid-cols-5 gap-4 '>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem]  flex flex-col'>
-                        <label className="border-b border-slate-400 font-semibold">Incoming:</label>
+                        <label className="border-b border-[var(--rock-blue)] font-semibold text-[var(--port-gore)]">Incoming:</label>
                         <label>{
                             <NumericFormat
                                 value={incoming}
@@ -23,7 +23,7 @@ const FirstPart = ({ incoming, outStandingShip, purchase, totalMargin, shipped, 
                         }</label>
                     </div>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem] flex flex-col'>
-                        <label className="border-b border-slate-400 font-semibold">Outstanding shipment:</label>
+                        <label className="border-b border-[var(--rock-blue)] font-semibold text-[var(--port-gore)]">Outstanding shipment:</label>
                         <label>
                             {<NumericFormat
                                 value={outStandingShip}
@@ -37,7 +37,7 @@ const FirstPart = ({ incoming, outStandingShip, purchase, totalMargin, shipped, 
                         </label>
                     </div>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem] flex flex-col'>
-                        <label className="border-b border-slate-400 font-semibold">Quantity (MT):</label>
+                        <label className="border-b border-[var(--rock-blue)] font-semibold text-[var(--port-gore)]">Quantity (MT):</label>
                         <label> {<NumericFormat
                             value={purchase}
                             displayType="text"
@@ -49,7 +49,7 @@ const FirstPart = ({ incoming, outStandingShip, purchase, totalMargin, shipped, 
                         />}</label>
                     </div>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem] flex flex-col'>
-                        <label className="border-b border-slate-400 font-semibold">Profits:</label>
+                        <label className="border-b border-[var(--rock-blue)] font-semibold text-[var(--port-gore)]">Profits:</label>
                         <label>{
                             <NumericFormat
                                 value={totalMargin}
@@ -64,7 +64,7 @@ const FirstPart = ({ incoming, outStandingShip, purchase, totalMargin, shipped, 
                         }</label>
                     </div>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem] flex flex-col'>
-                        <label className="border-b border-slate-400 font-semibold">Shipped:</label>
+                        <label className="border-b border-[var(--rock-blue)] font-semibold text-[var(--port-gore)]">Shipped:</label>
                         <label>{
                             <NumericFormat
                                 value={shipped}

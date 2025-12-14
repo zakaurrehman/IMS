@@ -9,7 +9,7 @@ export default function NavbarLinks() {
   const links = [
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About' },
-    { href: '/pricing', label: 'Pricing' },
+    // { href: '/pricing', label: 'Pricing' },
     { href: '/features', label: 'Features' },
     { href: '/blog', label: 'Blog' },
     // { href: '/overview', label: 'Overview' },

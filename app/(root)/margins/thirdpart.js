@@ -5,23 +5,23 @@ const ThirdPart = ({ data, remaining, outStandingShip, purchase, totalMargin, yr
     return (
 
         <div className="w-full p-2 mt-6">
-            <h1 className="font-bold text-lg mb-2">{title}:</h1>
-            <div className="w-full max-w-xl divide-y  rounded-xl">
-                <div className='grid grid-cols-5 gap-2 p-1 '>
+            <h1 className="font-bold text-lg mb-2 text-[var(--port-gore)]">{title}:</h1>
+            <div className="w-full max-w-xl divide-y divide-[var(--selago)] rounded-xl border border-[var(--rock-blue)]">
+                <div className='grid grid-cols-5 gap-2 p-1 bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] rounded-t-xl'>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem]  flex gap-4'>
-                        <label className="font-semibold">Months</label>
+                        <label className="font-semibold text-white">Months</label>
                     </div>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem]  flex gap-4'>
-                        <label className="font-semibold">Purchased quantity (MT)</label>
+                        <label className="font-semibold text-white">Purchased quantity (MT)</label>
                     </div>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem]  flex gap-4'>
-                        <label className="font-semibold">Profit</label>
+                        <label className="font-semibold text-white">Profit</label>
                     </div>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem]  flex gap-4'>
-                        <label className="font-semibold">Outstanding shipment</label>
+                        <label className="font-semibold text-white">Outstanding shipment</label>
                     </div>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem]  flex gap-4'>
-                        <label className="font-semibold">Remaining</label>
+                        <label className="font-semibold text-white">Remaining</label>
                     </div>
                 </div>
                 {data.map((z, i) => {
@@ -88,9 +88,9 @@ const ThirdPart = ({ data, remaining, outStandingShip, purchase, totalMargin, yr
                         </div>
                     )
                 })}
-                <div className='grid grid-cols-5 gap-2 p-1 '>
+                <div className='grid grid-cols-5 gap-2 p-1 bg-[var(--rock-blue)]/50 rounded-b-xl'>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem]  flex gap-4'>
-                        <label className="font-semibold">Total</label>
+                        <label className="font-semibold text-[var(--port-gore)]">Total</label>
                     </div>
                     <div className='col-span-5 md:col-span-1 text-[0.8rem]  flex gap-4'>
                         <label className="font-semibold">{

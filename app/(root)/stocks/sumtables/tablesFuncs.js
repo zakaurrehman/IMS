@@ -10,22 +10,22 @@ export const detailsToolTip = (row, data, settings, dataTable,) => {
     let filteredArr = dataTable.filter(z => z.stock === id)
 
     return (
-        <div className="bg-customBlue max-h-[28rem] overflow-y-auto">
+        <div className="bg-[var(--selago)] max-h-[28rem] overflow-y-auto rounded-lg">
             <table>
                 <thead>
-                    <tr className="border border-slate-300 p-2">
-                        <th className="text-left p-2">PO#</th>
-                        <th className="text-left p-2">Supplier</th>
-                        <th className="text-left p-2">Description</th>
-                        <th className="text-left p-2">Quantity</th>
-                        <th className="text-left p-2">Unit Price</th>
-                        <th className="text-left p-2">Total</th>
+                    <tr className="border border-[var(--rock-blue)] p-2 bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
+                        <th className="text-left p-2 text-white">PO#</th>
+                        <th className="text-left p-2 text-white">Supplier</th>
+                        <th className="text-left p-2 text-white">Description</th>
+                        <th className="text-left p-2 text-white">Quantity</th>
+                        <th className="text-left p-2 text-white">Unit Price</th>
+                        <th className="text-left p-2 text-white">Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredArr.map((z, i) => {
                         return (
-                            <tr className="border border-slate-300 p-2" key={i}>
+                            <tr className="border border-[var(--rock-blue)]/50 p-2 hover:bg-[var(--rock-blue)]/30" key={i}>
                                 <td className="text-left p-2">{z.order}</td>
                                 <td className="text-left p-2">{settings.Supplier.Supplier.find(q => q.id === z.supplier)?.nname}</td>
                                 <td className="text-left p-2" >{z.descriptionName}</td>

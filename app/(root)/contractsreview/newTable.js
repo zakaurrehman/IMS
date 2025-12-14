@@ -74,32 +74,31 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, se
                     resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
                 />
 
-                <div className=" overflow-x-auto border-x">
+                <div className="overflow-x-auto border-x border-[var(--selago)] md:max-h-[400px] 2xl:max-h-[550px]">
                     <table className="w-full">
-                        <thead className="bg-gray-50 divide-y divide-gray-200 ">
+                        <thead className="md:sticky md:top-0 md:z-10">
                             {table.getHeaderGroups().map((hdGroup, i) =>
                                 <Fragment key={hdGroup.id}>
-                                    <tr className="border-b cursor-pointer bg-blue-200 ">
+                                    <tr className="cursor-pointer bg-[var(--rock-blue)]/50">
                                         {hdGroup.headers.map(
                                             header =>
-                                                <th key={header.id} className="text-dark font-medium table_cell py-2 text-xs text-left">
+                                                <th key={header.id} className="text-[var(--port-gore)] font-semibold table_cell py-2 text-xs text-left">
                                                     {header.column.columnDef.ttl}
                                                 </th>
                                         )}
                                     </tr>
-                                    <tr key={hdGroup.id + '-row'} className='border-b'>
+                                    <tr key={hdGroup.id + '-row'} className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
                                         {hdGroup.headers.map(
                                             header =>
-                                                <th key={header.id + '-header'} className="relative px-6 py-2 text-left text-sm font-medium text-gray-500 uppercase
-                                     dark:text-gray-400 border-b">
+                                                <th key={header.id + '-header'} className="relative px-6 py-3 text-left text-sm font-semibold text-white uppercase">
                                                     {header.column.getCanSort() ?
 
                                                         <div onClick={header.column.getToggleSortingHandler()} className="table-caption text-xs cursor-pointer items-center gap-1">
                                                             {header.column.columnDef.header}
                                                             {
                                                                 {
-                                                                    asc: <TbSortAscending className="text-slate-600 scale-125" />,
-                                                                    desc: <TbSortDescending className="text-slate-600 scale-125" />
+                                                                    asc: <TbSortAscending className="text-white scale-125" />,
+                                                                    desc: <TbSortDescending className="text-white scale-125" />
                                                                 }[header.column.getIsSorted()]
                                                             }
                                                         </div>
@@ -117,11 +116,11 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, se
                                 </Fragment>
                             )}
                         </thead>
-                        <tbody className="divide-y divide-gray-200 ">
+                        <tbody className="divide-y divide-[var(--selago)] bg-white">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer hover:bg-slate-200' onDoubleClick={() => SelectRow(row.original)}>
+                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--selago)]/50 transition-colors' onDoubleClick={() => SelectRow(row.original)}>
                                     {row.getVisibleCells().map(cell => (
-                                        <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
+                                        <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs text-[var(--port-gore)] ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     ))}
@@ -130,8 +129,8 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, se
                         </tbody>
                     </table>
                 </div>
-                <div className="flex p-2 border-t flex-wrap bg-slate-50 border rounded-b-xl">
-                    <div className="hidden lg:flex text-gray-600 text-sm w-48 xl:w-96 p-2 items-center">
+                <div className="flex p-2 border-t border-[var(--selago)] flex-wrap bg-[var(--selago)]/50 rounded-b-xl">
+                    <div className="hidden lg:flex text-[var(--port-gore)] text-sm w-48 xl:w-96 p-2 items-center">
                         {`${getTtl('Showing', ln)} ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
                             (table.getFilteredRowModel().rows.length ? 1 : 0)}-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
                             ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}

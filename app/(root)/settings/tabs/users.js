@@ -105,9 +105,9 @@ const Users = () => {
 
 
   return (
-    <div className='border border-slate-300 p-4 rounded-lg flex flex-col w-full gap-4 '>
+    <div className='border border-[var(--rock-blue)] p-4 rounded-lg flex flex-col w-full gap-4 '>
 
-      <p className='w-full flex items-center text-sm font-medium pl-2 text-slate-700 whitespace-nowrap'>{getTtl('Users', ln)}</p>
+      <p className='w-full flex items-center text-sm font-medium pl-2 text-[var(--port-gore)] whitespace-nowrap'>{getTtl('Users', ln)}</p>
 
       <div className='max-w-6xl z-0'>
         <Customtable data={data} columns={propDefaults} SelectRow={() => { }}
@@ -118,8 +118,7 @@ const Users = () => {
         <button
           type="button"
           onClick={addNewUser}
-          className="text-white bg-slate-500 hover:bg-slate-400 focus:outline-none font-medium rounded-lg 
-													 text-xs px-3 py-2 text-center drop-shadow-xl gap-1.5 items-center flex"
+          className="blackButton focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center drop-shadow-xl gap-1.5 items-center flex"
         >
           <TbLayoutGridAdd className="scale-110" />
           Add New User

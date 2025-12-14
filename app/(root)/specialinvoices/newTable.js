@@ -122,16 +122,16 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                     resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
                 />
 
-                <div className=" overflow-x-auto border-x md:max-h-[310px] 2xl:max-h-[550px]">
+                <div className=" overflow-x-auto border-x border-[var(--selago)] md:max-h-[310px] 2xl:max-h-[550px]">
                     <table className="w-full">
-                        <thead className="bg-gray-50 divide-y divide-gray-200 md:sticky md:top-0 md:z-10 ">
+                        <thead className="md:sticky md:top-0 md:z-10">
                             {table.getHeaderGroups().map(hdGroup =>
                                 <Fragment key={hdGroup.id}>
-                                    <tr className="cursor-pointer bg-blue-200 ">
+                                    <tr className="cursor-pointer bg-[var(--rock-blue)]/50">
                                         {hdGroup.headers.map(
                                             header => {
                                                 return (
-                                                    <th key={header.id} className="text-dark font-medium table_cell text-xs py-1.5 text-left">
+                                                    <th key={header.id} className="text-[var(--port-gore)] font-medium table_cell text-xs py-1.5 text-left">
                                                         {header.id === 'compName' ? 'Total $:' :
                                                             header.id === 'total' ? totalUSD :
                                                                 header.id === 'qnty' ? qntyUSD * 1 === 0 ? '0' : qntyUSD : ''}
@@ -141,36 +141,36 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
 
                                         )}
                                     </tr>
-                                    <tr className="cursor-pointer bg-blue-200 ">
+                                    <tr className="cursor-pointer bg-[var(--rock-blue)]/50">
                                         {hdGroup.headers.map(
                                             header =>
-                                                <th key={header.id} className="text-dark font-medium table_cell text-xs py-1.5 text-left">
+                                                <th key={header.id} className="text-[var(--port-gore)] font-medium table_cell text-xs py-1.5 text-left">
                                                     {header.id === 'compName' ? 'Total €:' :
                                                         header.id === 'total' ? totalEUR :
                                                             header.id === 'qnty' ? qntyEur * 1 === 0 ? '0' : qntyEur : ''}
                                                 </th>
                                         )}
                                     </tr>
-                                    <tr key={hdGroup.id} className='border-b'>
+                                    <tr key={hdGroup.id} className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
                                         {hdGroup.headers.map(
                                             header =>
-                                                <th key={header.id} className="relative px-6 py-2 text-left text-sm font-medium text-gray-500 uppercase">
+                                                <th key={header.id} className="relative px-6 py-3 text-left text-sm font-semibold text-white uppercase">
                                                     {header.column.getCanSort() ?
                                                         <div onClick={header.column.getToggleSortingHandler()} className="table-caption cursor-pointer items-center gap-1 text-xs
-                                                    font-medium">
+                                                    font-semibold">
                                                             {/* <Tltip direction='top' tltpText='sdsd ffgf'> */}
                                                             {header.column.columnDef.header}
                                                             {/* </Tltip> */}
 
                                                             {
                                                                 {
-                                                                    asc: <TbSortAscending className="text-slate-600 scale-125" />,
-                                                                    desc: <TbSortDescending className="text-slate-600 scale-125" />
+                                                                    asc: <TbSortAscending className="text-white scale-125" />,
+                                                                    desc: <TbSortDescending className="text-white scale-125" />
                                                                 }[header.column.getIsSorted()]
                                                             }
                                                         </div>
                                                         :
-                                                        <span className="text-xs py-1  font-medium">{header.column.columnDef.header}</span>
+                                                        <span className="text-xs py-1 font-medium text-white">{header.column.columnDef.header}</span>
                                                     }
                                                     {header.column.getCanFilter() ? (
                                                         <div>
@@ -182,9 +182,9 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                                     </tr>
                                 </Fragment>)}
                         </thead>
-                        <tbody className="divide-y divide-gray-200 ">
+                        <tbody className="divide-y divide-[var(--selago)]">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer hover:bg-slate-200 ' onDoubleClick={() => SelectRow(row.original)}>
+                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--selago)]/50 transition-colors' onDoubleClick={() => SelectRow(row.original)}>
 
                                     {row.getVisibleCells().map(cell => (
                                         <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
@@ -197,7 +197,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                         </tbody>
                     </table>
                 </div>
-                <div className="flex p-2 border-t flex-wrap bg-slate-50 border rounded-b-xl">
+                <div className="flex p-2.5 border-t border-[var(--selago)] flex-wrap bg-white rounded-b-2xl">
                     <div className="hidden lg:flex text-gray-600 text-sm w-48 xl:w-96 p-2 items-center">
                         {`${getTtl('Showing', ln)} ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
                             (table.getFilteredRowModel().rows.length ? 1 : 0)}-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}

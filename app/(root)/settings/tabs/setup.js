@@ -37,7 +37,7 @@ const Setup = () => {
 
 
   return (
-    <div className='flex w-full border border-slate-300 py-1 md:py-4  rounded-lg mt-1'>
+    <div className='flex w-full border border-[var(--rock-blue)] py-1 md:py-4  rounded-lg mt-1'>
       <div className='flex w-full flex-col md:flex-row p-2 md:p-0'>
 
         <div className='px-1 md:px-10'>
@@ -47,8 +47,8 @@ const Setup = () => {
               return (
                 <li key={i} onClick={() => showList(x)}
                   className={` justify-between inline-flex items-center gap-x-2 py-1.5 px-4
-                   text-[0.8rem] text-slate-700 cursor-pointer ${x === keyName && 'font-bold bg-slate-100 '} 
-                    hover:bg-slate-50 whitespace-nowrap`
+                   text-[0.8rem] text-[var(--port-gore)] cursor-pointer ${x === keyName && 'font-bold bg-[var(--selago)] '} 
+                    hover:bg-[var(--selago)] whitespace-nowrap`
                   }>
                   {x !== 'Hs' ? getTtl(x, ln) : x}
                 </li>
@@ -58,10 +58,10 @@ const Setup = () => {
           </ul>
         </div>
 
-        <div className="hidden sm:inline-block h-full min-h-[1em] w-px self-stretch bg-slate-200"></div>
+        <div className="hidden sm:inline-block h-full min-h-[1em] w-px self-stretch bg-[var(--rock-blue)]"></div>
 
         <div className='w-full  px-1 md:px-10 md:max-w-xl pt-4 md:pt-0'>
-          <div className='border border-slate-300 p-4 rounded-lg mt-1 shadow-md '>
+          <div className='border border-[var(--rock-blue)] p-4 rounded-lg mt-1 shadow-md '>
             <List list={list} ttl={keyName} updateList={updateList} name={list['name']} />
           </div>
         </div>

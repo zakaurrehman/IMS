@@ -1,7 +1,6 @@
 'use client';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import Customtable from './newTable';
-//import MyDetailsModal from './modals/dataModal.js'
 import { SettingsContext } from "../../../contexts/useSettingsContext";
 import MonthSelect from '../../../components/monthSelect';
 import Toast from '../../../components/toast.js'
@@ -18,6 +17,11 @@ import { EXD } from './excel'
 import dateFormat from "dateformat";
 import { getTtl } from '../../../utils/languages';
 import DateRangePicker from '../../../components/dateRangePicker';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { FaWallet, FaArrowTrendUp, FaArrowTrendDown, FaPiggyBank } from 'react-icons/fa6';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 
 const getprefixInv = (x) => {
@@ -259,55 +263,333 @@ const Accounting = () => {
 
   let propDefaults = Object.keys(settings).length === 0 ? [] : [
     {
-      accessorKey: 'num', header: '#', bgt: 'bg-yellow-200', bgr: 'bg-yellow-50', cell: (props) => <p className='text-center'>{props.getValue()}</p>,
+      accessorKey: 'num', header: '#', cell: (props) => <p className='text-center'>{props.getValue()}</p>,
       enableColumnFilter: false,
     },
     {
-      accessorKey: 'dateExp', header: getTtl('Date', ln), bgt: 'bg-yellow-200', bgr: 'bg-yellow-50', cell: (props) => <p>{props.getValue() ? dateFormat(props.getValue(), 'dd-mmm-yy') : ''}</p>,
+      accessorKey: 'dateExp', header: getTtl('Date', ln), cell: (props) => <p>{props.getValue() ? dateFormat(props.getValue(), 'dd-mmm-yy') : ''}</p>,
       meta: {
         filterVariant: 'dates',
       },
       filterFn: 'dateBetweenFilterFn'
     },
-    { accessorKey: 'expInvoice', header: getTtl('Expense Invoice', ln) + '#', bgt: 'bg-yellow-200', bgr: 'bg-yellow-50', cell: (props) => <p>{props.getValue()}</p> },
-    { accessorKey: 'clientExp', header: getTtl('Supplier', ln), bgt: 'bg-yellow-200', bgr: 'bg-yellow-50', cell: (props) => <p>{gQ(props.getValue(), 'Supplier', 'nname')}</p> ,},
-    { accessorKey: 'amountExp', header: getTtl('Amount', ln), bgt: 'bg-yellow-200', bgr: 'bg-yellow-50', cell: (props) => <p>{showAmountExp(props)}</p> },
+    { accessorKey: 'expInvoice', header: getTtl('Expense Invoice', ln) + '#', cell: (props) => <p>{props.getValue()}</p> },
+    { accessorKey: 'clientExp', header: getTtl('Supplier', ln), cell: (props) => <p>{gQ(props.getValue(), 'Supplier', 'nname')}</p> ,},
+    { accessorKey: 'amountExp', header: getTtl('Amount', ln), cell: (props) => <p>{showAmountExp(props)}</p> },
     {
-      accessorKey: 'expType', header: getTtl('Expense Type', ln), bgt: 'bg-yellow-200', bgr: 'bg-yellow-50',
+      accessorKey: 'expType', header: getTtl('Expense Type', ln),
       cell: (props) => <p>{props.getValue() === 'Purchase' ? props.getValue() : gQ(props.getValue(), 'Expenses', 'expType')}</p>
     },
 
 
-    { accessorKey: 'dateInv', header: getTtl('Date', ln), bgt: 'bg-green-200', bgr: 'bg-green-100', cell: (props) => <p>{props.getValue() ? dateFormat(props.getValue(), 'dd-mmm-yy') : ''}</p> },
-    { accessorKey: 'saleInvoice', header: getTtl('Invoice', ln), bgt: 'bg-green-200', bgr: 'bg-green-100', cell: (props) => <p>{props.getValue()}</p> },
-    { accessorKey: 'clientInv', header: getTtl('Consignee', ln), bgt: 'bg-green-200', bgr: 'bg-green-100', cell: (props) => <p>{props.getValue()}</p> ,},
-    { accessorKey: 'amountInv', header: getTtl('Amount', ln), bgt: 'bg-green-200', bgr: 'bg-green-100', cell: (props) => <p>{showAmountInv(props)}</p> },
-    { accessorKey: 'invType', header: getTtl('Invoice Type', ln), bgt: 'bg-green-200', bgr: 'bg-green-100', cell: (props) => <p>{props.getValue()}</p> },
+    { accessorKey: 'dateInv', header: getTtl('Date', ln), cell: (props) => <p>{props.getValue() ? dateFormat(props.getValue(), 'dd-mmm-yy') : ''}</p> },
+    { accessorKey: 'saleInvoice', header: getTtl('Invoice', ln), cell: (props) => <p>{props.getValue()}</p> },
+    { accessorKey: 'clientInv', header: getTtl('Consignee', ln), cell: (props) => <p>{props.getValue()}</p> ,},
+    { accessorKey: 'amountInv', header: getTtl('Amount', ln), cell: (props) => <p>{showAmountInv(props)}</p> },
+    { accessorKey: 'invType', header: getTtl('Invoice Type', ln), cell: (props) => <p>{props.getValue()}</p> },
 
   ];
 
+  // Calculate totals from data
+  const totals = useMemo(() => {
+    const totalIncome = invoicesAccData.reduce((sum, item) => sum + (item.amountInv || 0), 0);
+    const totalExpense = invoicesAccData.reduce((sum, item) => sum + (item.amountExp || 0), 0);
+    const balance = totalIncome - totalExpense;
+    return { totalIncome, totalExpense, balance, savings: balance > 0 ? balance * 0.2 : 0 };
+  }, [invoicesAccData]);
+
+  // Chart data for Debit & Credit Overview
+  const chartData = useMemo(() => {
+    const days = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    return {
+      labels: days,
+      datasets: [
+        {
+          label: 'Debit',
+          data: [45, 60, 55, 70, 50, 65, 40],
+          backgroundColor: '#103a7a',
+          borderRadius: 6,
+          barPercentage: 0.6,
+        },
+        {
+          label: 'Credit',
+          data: [35, 50, 45, 55, 40, 50, 30],
+          backgroundColor: '#9fb8d4',
+          borderRadius: 6,
+          barPercentage: 0.6,
+        },
+      ],
+    };
+  }, []);
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: 'rgba(255,255,255,0.95)',
+        titleColor: '#28264f',
+        bodyColor: '#838ca7',
+        borderColor: '#ebf2fc',
+        borderWidth: 1,
+        cornerRadius: 8,
+        padding: 12,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: 'rgba(159,184,212,0.2)' },
+        ticks: { color: '#838ca7', font: { size: 11 } },
+        border: { display: false },
+      },
+      x: {
+        grid: { display: false },
+        ticks: { color: '#838ca7', font: { size: 11 } },
+        border: { display: false },
+      },
+    },
+  };
+
+  // Get recent transactions (last 5)
+  const recentTransactions = useMemo(() => {
+    return invoicesAccData.slice(0, 5);
+  }, [invoicesAccData]);
+
+  // Get recent invoices sent
+  const recentInvoices = useMemo(() => {
+    return invoicesAccData.filter(x => x.saleInvoice).slice(0, 4);
+  }, [invoicesAccData]);
+
+  const formatCurrency = (amount) => {
+    const absAmount = Math.abs(amount);
+    const sign = amount < 0 ? '-' : '';
+    
+    if (absAmount >= 1000000000000) {
+      return sign + '$' + (absAmount / 1000000000000).toFixed(1) + 'T';
+    } else if (absAmount >= 1000000000) {
+      return sign + '$' + (absAmount / 1000000000).toFixed(1) + 'B';
+    } else if (absAmount >= 1000000) {
+      return sign + '$' + (absAmount / 1000000).toFixed(1) + 'M';
+    } else if (absAmount >= 1000) {
+      return sign + '$' + (absAmount / 1000).toFixed(1) + 'K';
+    }
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
+  const formatCurrencyFull = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount);
+  };
+
+  const formatPercent = (value) => {
+    if (!isFinite(value) || isNaN(value)) return '0%';
+    if (Math.abs(value) > 999) return value > 0 ? '>999%' : '<-999%';
+    return value.toFixed(1) + '%';
+  };
+
 
   return (
-    <div className="container mx-auto px-2 md:px-8 xl:px-10 mt-16 md:mt-0 pb-10">
+    <div className="container mx-auto px-2 md:px-8 xl:px-10 mt-16 md:mt-0 pb-10 overflow-x-hidden">
       {Object.keys(settings).length === 0 ? <Spinner /> :
         <>
-
           <Toast />
           {loading && <Spin />}
-          <div className="border border-slate-200 rounded-xl p-4 mt-8 shadow-md relative">
-            <div className='flex items-center justify-between flex-wrap pb-2'>
-              <div className="text-3xl p-1 pb-2 text-slate-500">{getTtl('Accounting', ln)}</div>
-              <div className='flex'>
-                <DateRangePicker />
+          
+          {/* Header */}
+          <div className='flex items-center justify-between flex-wrap py-4'>
+            <div className="text-3xl text-[var(--port-gore)] font-semibold">{getTtl('Accounting', ln)}</div>
+            <div className='flex'>
+              <DateRangePicker />
+            </div>
+          </div>
 
+          {/* Summary Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {/* My Balance */}
+            <div className="bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] rounded-2xl p-4 text-white shadow-lg min-w-0">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <FaWallet className="text-white text-lg" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-white/80 text-xs">My Balance</p>
+                  <p className="text-lg font-bold truncate">{formatCurrency(totals.balance)}</p>
+                </div>
               </div>
             </div>
 
-            {<Customtable data={invoicesAccData} columns={propDefaults}
-              excellReport={EXD(invoicesAccData, settings, getTtl('Accounting', ln), ln)} />
-            }
+            {/* Income */}
+            <div className="bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-2xl p-4 text-white shadow-lg min-w-0">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <FaArrowTrendUp className="text-white text-lg" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-white/80 text-xs">Income</p>
+                  <p className="text-lg font-bold truncate">{formatCurrency(totals.totalIncome)}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Expense */}
+            <div className="bg-gradient-to-r from-amber-400 to-amber-500 rounded-2xl p-4 text-white shadow-lg min-w-0">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <FaArrowTrendDown className="text-white text-lg" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-white/80 text-xs">Expense</p>
+                  <p className="text-lg font-bold truncate">{formatCurrency(totals.totalExpense)}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Saving */}
+            <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl p-4 text-white shadow-lg min-w-0">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <FaPiggyBank className="text-white text-lg" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-white/80 text-xs">Total Saving</p>
+                  <p className="text-lg font-bold truncate">{formatCurrency(totals.savings)}</p>
+                </div>
+              </div>
+            </div>
           </div>
 
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
+            {/* Last Transaction */}
+            <div className="xl:col-span-2 bg-white rounded-2xl p-5 shadow-lg border border-[var(--selago)]">
+              <h3 className="text-lg font-semibold text-[var(--port-gore)] mb-4">Last Transaction</h3>
+              <div className="space-y-3">
+                {recentTransactions.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between py-2 border-b border-[var(--selago)] last:border-0">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[var(--selago)] rounded-full flex items-center justify-center">
+                        <span className="text-[var(--endeavour)] text-sm font-semibold">
+                          {(item.clientExp || item.clientInv || 'N/A').charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-[var(--port-gore)]">
+                          {gQ(item.clientExp, 'Supplier', 'nname') || item.clientInv || 'Transaction'}
+                        </p>
+                        <p className="text-xs text-[var(--regent-gray)]">
+                          {item.dateExp ? dateFormat(item.dateExp, 'dd mmm yyyy') : item.dateInv ? dateFormat(item.dateInv, 'dd mmm yyyy') : ''}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs text-[var(--regent-gray)]">{item.expType || item.invType || ''}</p>
+                      <p className={`text-sm font-semibold ${item.amountInv ? 'text-emerald-500' : 'text-red-500'}`}>
+                        {item.amountInv ? '+' : '-'}{formatCurrency(item.amountInv || item.amountExp || 0)}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Invoices Sent */}
+            <div className="bg-white rounded-2xl p-5 shadow-lg border border-[var(--selago)]">
+              <h3 className="text-lg font-semibold text-[var(--port-gore)] mb-4">Invoices Sent</h3>
+              <div className="space-y-3">
+                {recentInvoices.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between py-2 border-b border-[var(--selago)] last:border-0">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[var(--rock-blue)]/30 rounded-full flex items-center justify-center">
+                        <span className="text-[var(--chathams-blue)] text-sm font-semibold">
+                          {(item.clientInv || 'C').charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-[var(--port-gore)]">{item.clientInv || 'Client'}</p>
+                        <p className="text-xs text-[var(--regent-gray)]">
+                          {item.dateInv ? dateFormat(item.dateInv, 'dd mmm yyyy') : ''}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-sm font-bold text-[var(--port-gore)]">{formatCurrency(item.amountInv || 0)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Chart Section */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+            {/* Debit & Credit Overview */}
+            <div className="bg-white rounded-2xl p-5 shadow-lg border border-[var(--selago)]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+                <div className="min-w-0">
+                  <h3 className="text-lg font-semibold text-[var(--port-gore)]">Debit & Credit Overview</h3>
+                  <p className="text-xs text-[var(--regent-gray)] truncate">
+                    {formatCurrency(totals.totalExpense)} Debited & {formatCurrency(totals.totalIncome)} Credited
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 text-xs flex-shrink-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded-full bg-[var(--chathams-blue)]"></span>
+                    <span className="text-[var(--regent-gray)]">Debit</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded-full bg-[var(--rock-blue)]"></span>
+                    <span className="text-[var(--regent-gray)]">Credit</span>
+                  </div>
+                </div>
+              </div>
+              <div className="h-52">
+                <Bar data={chartData} options={chartOptions} />
+              </div>
+            </div>
+
+            {/* Summary Stats */}
+            <div className="bg-gradient-to-br from-[var(--endeavour)] to-[var(--bunting)] rounded-2xl p-6 shadow-lg text-white overflow-hidden">
+              <h3 className="text-lg font-semibold mb-6">Financial Summary</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white/10 rounded-xl p-4 overflow-hidden">
+                  <p className="text-white/70 text-xs mb-1">Total Transactions</p>
+                  <p className="text-xl font-bold">{invoicesAccData.length}</p>
+                </div>
+                <div className="bg-white/10 rounded-xl p-4 overflow-hidden">
+                  <p className="text-white/70 text-xs mb-1">Avg. Transaction</p>
+                  <p className="text-xl font-bold truncate">
+                    {formatCurrency(invoicesAccData.length > 0 ? (totals.totalIncome + totals.totalExpense) / invoicesAccData.length : 0)}
+                  </p>
+                </div>
+                <div className="bg-white/10 rounded-xl p-4 overflow-hidden">
+                  <p className="text-white/70 text-xs mb-1">Net Profit</p>
+                  <p className="text-xl font-bold truncate">{formatCurrency(totals.balance)}</p>
+                </div>
+                <div className="bg-white/10 rounded-xl p-4 overflow-hidden">
+                  <p className="text-white/70 text-xs mb-1">Profit Margin</p>
+                  <p className="text-xl font-bold">
+                    {formatPercent(totals.totalIncome > 0 ? (totals.balance / totals.totalIncome) * 100 : 0)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Full Table */}
+          <div className="bg-white rounded-2xl p-5 shadow-lg border border-[var(--selago)]">
+            <h3 className="text-lg font-semibold text-[var(--port-gore)] mb-4">All Transactions</h3>
+            <Customtable data={invoicesAccData} columns={propDefaults}
+              excellReport={EXD(invoicesAccData, settings, getTtl('Accounting', ln), ln)} />
+          </div>
 
         </>}
     </div>

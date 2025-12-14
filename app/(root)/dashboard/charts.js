@@ -217,6 +217,75 @@ export const GroupedBarChart = (data1, data2) => {
     return { obj, options };
 };
 
+// Small Line Chart for stat cards - animated thick line
+export const LineChartSmall = (data, color) => {
+    const obj = {
+        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+        datasets: [
+            {
+                data: data,
+                borderColor: color,
+                backgroundColor: 'transparent',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: false,
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                pointHoverBackgroundColor: color,
+                pointHoverBorderColor: '#fff',
+                pointHoverBorderWidth: 2,
+            },
+        ]
+    };
+
+    const options = {
+        animation: {
+            duration: 1500,
+            easing: 'easeInOutQuart',
+        },
+        plugins: {
+            title: {
+                display: false,
+            },
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                titleColor: '#28264f',
+                bodyColor: '#28264f',
+                borderColor: '#ebf2fc',
+                borderWidth: 1,
+                cornerRadius: 8,
+                padding: 10,
+                callbacks: {
+                    label: function (context) {
+                        return '$' + addCommas(context.parsed.y.toString())
+                    }
+                },
+                titleFont: { family: 'Poppins', weight: 'bold' },
+                bodyFont: { family: 'Poppins' },
+            },
+        },
+        maintainAspectRatio: false,
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        },
+        scales: {
+            y: {
+                display: false,
+                beginAtZero: true,
+            },
+            x: {
+                display: false,
+            }
+        },
+    };
+
+    return { obj, options };
+};
+
 export const BarChart = (data, color) => {
 
     const obj = {
@@ -225,30 +294,43 @@ export const BarChart = (data, color) => {
             {
                 //label: 2021,//date.year,
                 backgroundColor: color,
+                hoverBackgroundColor: '#0366ae',
                 data: data,
-                //   borderRadius: 5,
-                //     borderSkipped: 'start',
+                borderRadius: 4,
+                borderSkipped: false,
             },
         ]
     };
 
     const options = {
+        animation: {
+            duration: 1200,
+            easing: 'easeOutQuart',
+            delay: (context) => {
+                return context.dataIndex * 60;
+            },
+        },
         plugins: {
             title: {
                 display: false,
             },
             legend: {
                 display: false,
-                //	position: 'bottom',
-                //	labels: {font: {family: 'Poppins'}},
             },
             tooltip: {
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                titleColor: '#28264f',
+                bodyColor: '#28264f',
+                borderColor: '#ebf2fc',
+                borderWidth: 1,
+                cornerRadius: 8,
+                padding: 10,
                 callbacks: {
                     label: function (context) {
                         return '$' + addCommas(context.parsed.y.toString())
                     }
                 },
-                titleFont: { family: 'Poppins' },
+                titleFont: { family: 'Poppins', weight: 'bold' },
                 bodyFont: { family: 'Poppins' },
             },
         },
@@ -256,28 +338,29 @@ export const BarChart = (data, color) => {
         scales: {
             y: {
                 border: {
-                    color: 'silver',
+                    display: false,
                 },
                 beginAtZero: true,
                 ticks: {
                     callback: function (value, index, values) {
                         const YesNo = checkIfInArray(values)
-                        return YesNo ? 0 : value / 1000000;    //addCommas(value/1000); //(value/1000).toFixed(1) //
+                        return YesNo ? 0 : value / 1000000;
                     },
-                    font: { family: 'Poppins' },
-                    color: 'gray'
+                    font: { family: 'Poppins', size: 11 },
+                    color: '#838ca7'
                 },
                 grid: {
-                    display: false
+                    color: 'rgba(159, 184, 212, 0.2)',
+                    drawBorder: false,
                 }
             },
             x: {
-                ticks: { font: { family: 'Poppins' }, color: 'gray' },
+                ticks: { font: { family: 'Poppins', size: 11 }, color: '#838ca7' },
                 grid: {
                     display: false
                 },
                 border: {
-                    color: 'silver',
+                    display: false,
                 }
             }
         },
@@ -294,38 +377,52 @@ export const BarChartContracts = (data, data1, color, color1) => {
             {
                 stack: 'Stack 0',
                 backgroundColor: color,
-                data: data,//Object.values(dtCrnt),
-                //    borderRadius: 5,
-                //    borderSkipped: false,
+                hoverBackgroundColor: '#0366ae',
+                data: data,
+                borderRadius: 4,
+                borderSkipped: false,
             },
             {
                 stack: 'Stack 0',
                 backgroundColor: color1,
+                hoverBackgroundColor: '#9fb8d4',
                 data: data1,
-                //     borderRadius: 5,
-                //     borderSkipped: 'start',
+                borderRadius: 4,
+                borderSkipped: 'start',
             },
 
         ]
     };
 
     const options = {
+        animation: {
+            duration: 1200,
+            easing: 'easeOutQuart',
+            delay: (context) => {
+                return context.dataIndex * 60;
+            },
+        },
         plugins: {
             title: {
                 display: false,
             },
             legend: {
                 display: false,
-                //	position: 'bottom',
-                //	labels: {font: {family: 'Poppins'}},
             },
             tooltip: {
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                titleColor: '#28264f',
+                bodyColor: '#28264f',
+                borderColor: '#ebf2fc',
+                borderWidth: 1,
+                cornerRadius: 8,
+                padding: 10,
                 callbacks: {
                     label: function (context) {
                         return '$' + addCommas(context.parsed.y.toString())
                     }
                 },
-                titleFont: { family: 'Poppins' },
+                titleFont: { family: 'Poppins', weight: 'bold' },
                 bodyFont: { family: 'Poppins' },
             },
         },
@@ -333,28 +430,29 @@ export const BarChartContracts = (data, data1, color, color1) => {
         scales: {
             y: {
                 border: {
-                    color: 'silver',
+                    display: false,
                 },
                 beginAtZero: true,
                 ticks: {
                     callback: function (value, index, values) {
                         const YesNo = checkIfInArray(values)
-                        return YesNo ? 0 : value / 1000000;    //addCommas(value/1000); //(value/1000).toFixed(1) //
+                        return YesNo ? 0 : value / 1000000;
                     },
-                    font: { family: 'Poppins' },
-                    color: 'gray'
+                    font: { family: 'Poppins', size: 11 },
+                    color: '#838ca7'
                 },
                 grid: {
-                    display: false
+                    color: 'rgba(159, 184, 212, 0.2)',
+                    drawBorder: false,
                 }
             },
             x: {
-                ticks: { font: { family: 'Poppins' }, color: 'gray' },
+                ticks: { font: { family: 'Poppins', size: 11 }, color: '#838ca7' },
                 grid: {
                     display: false
                 },
                 border: {
-                    color: 'silver',
+                    display: false,
                 }
             }
         },
@@ -374,50 +472,62 @@ export const HorizontalBar = (arr, text) => {
         arrNames = []
     }
 
-
-    const getRandomColor = () => {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        return `rgba(${r}, ${g}, ${b}, 0.7)`; // 0.7 = transparency
-    };
-
-    const generateRandomColors = (length) => {
-        return Array.from({ length }, getRandomColor);
+    // Generate gradient colors based on site color palette
+    const generateGradientColors = (length) => {
+        const colors = [
+            '#103a7a', // chathams-blue
+            '#0366ae', // endeavour
+            '#9fb8d4', // rock-blue
+            '#28264f', // port-gore
+            '#1c134d', // bunting
+            '#838ca7', // regent-gray
+        ];
+        return Array.from({ length }, (_, i) => colors[i % colors.length]);
     };
 
     const obj = {
         labels: arrNames,
         datasets: [{
             data: arrNums,
-            borderRadius: 5,
+            borderRadius: 8,
             borderSkipped: false,
-            backgroundColor: generateRandomColors(arrNums.length),
+            backgroundColor: generateGradientColors(arrNums.length),
+            hoverBackgroundColor: '#0366ae',
         }]
     };
 
 
     const options = {
         indexAxis: 'y',
+        animation: {
+            duration: 1200,
+            easing: 'easeOutQuart',
+            delay: (context) => {
+                return context.dataIndex * 100;
+            },
+        },
         plugins: {
             title: {
                 display: false,
-                //     text: text,
-                //    font: { size: 16, family: 'Poppins' },
             },
             legend: {
                 display: false,
-                //     position: 'left',
-                //     labels: { font: { family: 'Poppins' } },
             },
 
             tooltip: {
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                titleColor: '#28264f',
+                bodyColor: '#838ca7',
+                borderColor: '#ebf2fc',
+                borderWidth: 1,
+                cornerRadius: 10,
+                padding: 12,
                 callbacks: {
                     label: function (context) {
                         return context.label + ': $' + addCommas(context.parsed.x.toString())
                     },
                 },
-                titleFont: { family: 'Poppins' },
+                titleFont: { family: 'Poppins', weight: 'bold' },
                 bodyFont: { family: 'Poppins' },
             }
         },
@@ -425,28 +535,35 @@ export const HorizontalBar = (arr, text) => {
         scales: {
             y: {
                 border: {
-                    color: 'silver',
+                    display: false,
                 },
                 beginAtZero: true,
-                // ticks: {
-                //     callback: function (value, index, values) {
-                //         const YesNo = checkIfInArray(values)
-                //         return YesNo ? 0 : value / 1000;    //addCommas(value/1000); //(value/1000).toFixed(1) //
-                //     },
-                //     font: { family: 'Poppins' },
-                //     color: 'gray'
-                // },
+                ticks: {
+                    font: { family: 'Poppins', size: 11 },
+                    color: '#28264f'
+                },
                 grid: {
                     display: false
                 }
             },
             x: {
-                ticks: { font: { family: 'Poppins' }, color: 'gray' },
+                ticks: { 
+                    font: { family: 'Poppins', size: 11 }, 
+                    color: '#838ca7',
+                    callback: function (value) {
+                        if (value >= 1000000) {
+                            return (value / 1000000).toFixed(1) + 'M';
+                        } else if (value >= 1000) {
+                            return (value / 1000).toFixed(0) + 'K';
+                        }
+                        return value;
+                    }
+                },
                 grid: {
-                    display: false
+                    color: 'rgba(159, 184, 212, 0.2)',
                 },
                 border: {
-                    color: 'silver',
+                    display: false,
                 }
             }
         },

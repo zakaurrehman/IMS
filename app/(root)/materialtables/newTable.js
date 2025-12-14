@@ -74,17 +74,17 @@ const Customtable = ({ data, columns, excellReport, addMaterial, editCell, table
                 //  resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
                 />
 
-                <div className=" overflow-x-auto border-x md:max-h-[310px] 2xl:max-h-[550px]">
+                <div className=" overflow-x-auto border-x border-[var(--selago)] md:max-h-[310px] 2xl:max-h-[550px]">
                     <table className="w-full">
-                        <thead className="bg-gray-50 divide-y divide-gray-200 md:sticky md:top-0 md:z-10 ">
+                        <thead className="divide-y divide-[var(--selago)] md:sticky md:top-0 md:z-10 ">
                             {table.getHeaderGroups().map(hdGroup =>
-                                <tr key={hdGroup.id} className='border border-b-black'>
+                                <tr key={hdGroup.id} className='border border-b-[var(--endeavour)] bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
                                     {hdGroup.headers.map(
                                         header =>
 
                                             <th key={header.id}
-                                                className={`relative px-4 py-2  text-sm 
-                                            ${header.id === 'material' || header.id === 'kgs' ? 'bg-[#A6C9EC] font-bold ' : 'bg-[#F7C7AC]'}
+                                                className={`relative px-4 py-2 text-sm text-white
+                                            ${header.id === 'material' || header.id === 'kgs' ? 'bg-[var(--chathams-blue)] font-bold ' : 'bg-[var(--endeavour)]/80'}
                                             ${header.id === 'material' ? 'w-96' : 'w-3'}
                                             `}>
                                                 {header.column.getCanSort() ?
@@ -96,13 +96,13 @@ const Customtable = ({ data, columns, excellReport, addMaterial, editCell, table
 
                                                         {
                                                             {
-                                                                asc: <TbSortAscending className="text-slate-600 scale-125" />,
-                                                                desc: <TbSortDescending className="text-slate-600 scale-125" />
+                                                                asc: <TbSortAscending className="text-white scale-125" />,
+                                                                desc: <TbSortDescending className="text-white scale-125" />
                                                             }[header.column.getIsSorted()]
                                                         }
                                                     </div>
                                                     :
-                                                    <span className="text-xs py-1  font-medium">{header.column.columnDef.header}</span>
+                                                    <span className="text-xs py-1 font-medium text-white">{header.column.columnDef.header}</span>
                                                 }
                                                 {header.column.getCanFilter() ? (
                                                     <div>
@@ -113,9 +113,9 @@ const Customtable = ({ data, columns, excellReport, addMaterial, editCell, table
                                     )}
                                 </tr>)}
                         </thead>
-                        <tbody className="divide-y divide-black ">
+                        <tbody className="divide-y divide-[var(--selago)] ">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer divide-gray-500'>
+                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--selago)]/30'>
 
                                     {row.getVisibleCells().map(cell => {
                                         let isInFirstTwoColumns = cell.column.id === 'material' || cell.column.id === 'kgs';
@@ -136,18 +136,18 @@ const Customtable = ({ data, columns, excellReport, addMaterial, editCell, table
 
                                         return (
                                             <td key={cell.id} data-label={cell.column.columnDef.header}
-                                                className={`table_cell text-xs text-center p-1  w-20 ${isInFirstTwoColumns ? 'bg-[#A6C9EC] font-bold' : ''}`}>
+                                                className={`table_cell text-xs text-center p-1  w-20 ${isInFirstTwoColumns ? 'bg-[var(--rock-blue)]/50 font-bold' : ''}`}>
                                                 {cell.column.id !== 'del' ?
                                                     <input
                                                         type={isInFirstTwoColumns ? 'text' : 'number'}
-                                                        className={`text-center indent-0 input h-8 border-none font-bold ${cell.column.id === 'material' || cell.column.id === 'kgs' ? 'bg-[#A6C9EC] font-bold' : ''}
+                                                        className={`text-center indent-0 input h-8 border-none font-bold ${cell.column.id === 'material' || cell.column.id === 'kgs' ? 'bg-[var(--rock-blue)]/50 font-bold' : ''}
                                                     ${cell.column.id === 'material' ? ' w-80' : 'w-20'}`}
                                                         onChange={(e) => editCell(table1, e, cell)}
                                                         value={cell.column.id === 'kgs' ? showAmount(cell.getContext().getValue()) : cell.getContext().getValue()} />
 
                                                     :
                                                     <div className="flex justify-center">
-                                                        <MdDeleteOutline className='text-slate-600 cursor-pointer scale-[1.8]' onClick={() => delMaterial(table1, cell)} />
+                                                        <MdDeleteOutline className='text-[var(--endeavour)] cursor-pointer scale-[1.8]' onClick={() => delMaterial(table1, cell)} />
                                                     </div>
                                                 }
                                             </td>
@@ -157,8 +157,8 @@ const Customtable = ({ data, columns, excellReport, addMaterial, editCell, table
                                 </tr>
                             ))}
                         </tbody>
-                        <tfoot className="bg-gray-100 font-bold ">
-                            <tr className="border border-y-black">
+                        <tfoot className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] font-bold ">
+                            <tr className="border border-y-[var(--endeavour)]">
                                 {table.getHeaderGroups()[0].headers.map((header) => {
                                     const columnId = header.id;
                                     const isNumeric = columnId !== "material"; // Adjust based on numeric columns
@@ -177,8 +177,8 @@ const Customtable = ({ data, columns, excellReport, addMaterial, editCell, table
                                             }, 0) / totalKGS).toFixed(2);
 
                                     return (
-                                        <td key={columnId} className={`px-2 py-1  w-20 text-sm text-center ${!isNumeric ? 'font-normal' :
-                                            columnId === 'kgs' ? 'bg-[#A6C9EC] font-bold border  border-y-black' : 'bg-[#F7C7AC] '}`}>
+                                        <td key={columnId} className={`px-2 py-1 w-20 text-sm text-center text-white ${!isNumeric ? 'font-normal' :
+                                            columnId === 'kgs' ? 'bg-[var(--chathams-blue)] font-bold border border-y-[var(--endeavour)]' : 'bg-[var(--endeavour)]/80 '}`}>
                                             {header.id !== 'del' ? isNumeric ? total != 'NaN' ? total.toLocaleString() : '' : total : ''}
                                         </td>
                                     );

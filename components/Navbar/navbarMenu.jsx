@@ -8,11 +8,12 @@ export default function NavbarMenu({ isMenuOpen }) {
   const links = [
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About' },
-    { href: '/pricing', label: 'Pricing' },
+    // { href: '/pricing', label: 'Pricing' },
      { href: '/contact', label: 'Contact' },
-    { href: '/features', label: 'Blog' },
-    { href: '/features', label: 'Features' },
-    { href: '/features', label: 'Overview' },
+  { href: '/features', label: 'Features' },
+    { href: '/blog', label: 'Blog' },
+    // { href: '/overview', label: 'Overview' },
+      { href: '/dashboard', label: 'Dashboard' },
   ];
 
   return (

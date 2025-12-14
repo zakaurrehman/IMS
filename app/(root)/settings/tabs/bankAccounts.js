@@ -83,17 +83,17 @@ const BankAccount = () => {
 
 
     return (
-        <div className='border border-slate-300 p-4 rounded-lg flex flex-col md:flex-row w-full gap-4 '>
-            <div className='border border-slate-300 p-4 rounded-lg mt-1 shadow-md  min-w-xl'>
-                <p className='flex items-center text-sm font-medium pl-2 text-slate-700 whitespace-nowrap'>{getTtl('Bank Account', ln)}:</p>
+        <div className='border border-[var(--rock-blue)] p-4 rounded-lg flex flex-col md:flex-row w-full gap-4 '>
+            <div className='border border-[var(--rock-blue)] p-4 rounded-lg mt-1 shadow-md  min-w-xl'>
+                <p className='flex items-center text-sm font-medium pl-2 text-[var(--port-gore)] whitespace-nowrap'>{getTtl('Bank Account', ln)}:</p>
 
 
                 <ul className="flex flex-col mt-1 overflow-auto max-h-80 ring-1 ring-black/5 rounded-lg divide-y" >
                    {(settings['Bank Account']?.['Bank Account'] || []).filter(x => !x.deleted).map((x, i) => {
                         return (
                             <li key={i} onClick={() => SelectBank(x)}
-                                className={`whitespace-nowrap cursor-pointer flex items-center gap-x-2 py-2 px-4 text-xs text-slate-800
-                                ${value.id === x.id && 'font-medium bg-slate-50'}`}>
+                                className={`whitespace-nowrap cursor-pointer flex items-center gap-x-2 py-2 px-4 text-xs text-[var(--port-gore)]
+                                ${value.id === x.id && 'font-medium bg-[var(--selago)]'}`}>
                                 {x.bankNname}
 
                             </li>
@@ -103,7 +103,7 @@ const BankAccount = () => {
 
             </div>
             <div className='flex flex-col'>
-                <div className='border border-slate-300 p-4 rounded-lg mt-1 shadow-md  w-full gap-4 flex flex-wrap h-fit'>
+                <div className='border border-[var(--rock-blue)] p-4 rounded-lg mt-1 shadow-md  w-full gap-4 flex flex-wrap h-fit'>
                     <Tltip direction='top' tltpText='Add new bank'>
                         <button className={`blackButton py-1 ${disabledButton ? 'cursor-not-allowed' : ''}`} disabled={disabledButton}
                             onClick={addItem}>
@@ -130,7 +130,7 @@ const BankAccount = () => {
                         </button>
                     </Tltip>
                 </div>
-                <div className='border border-slate-300 p-4 rounded-lg mt-1 shadow-md  w-full gap-4 flex flex-wrap h-fit'>
+                <div className='border border-[var(--rock-blue)] p-4 rounded-lg mt-1 shadow-md  w-full gap-4 flex flex-wrap h-fit'>
                     <div className='grid grid-cols-4 flex items-center gap-4 w-full'>
                         <div className='col-span-12 md:col-span-2 w-full'>
                             <p className='text-xs'>{getTtl('Bank', ln)}:</p>

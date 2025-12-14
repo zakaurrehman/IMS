@@ -31,26 +31,26 @@ const Customtable = ({ data, columns, expensesData, settings }) => {
 
     return (
         <div className={`flex flex-col relative max-w-[540px]`}>
-            <div className="border rounded-xl">
-                <div className="justify-between flex p-2 flex-wrap bg-gray-50 rounded-t-xl border-b">
-                    <p className="text-slate-700">Summary</p>
+            <div className="border border-[var(--selago)] rounded-xl">
+                <div className="justify-between flex p-2 flex-wrap bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] rounded-t-xl border-b border-[var(--selago)]">
+                    <p className="text-white font-semibold">Summary</p>
                 </div>
 
                 <div className=" overflow-x-auto ">
                     <table className="w-full">
-                        <thead className="bg-gray-50 divide-y divide-gray-200">
+                        <thead className="bg-[var(--rock-blue)]/50 divide-y divide-[var(--selago)]">
                             {table1.getHeaderGroups().map(hdGroup =>
-                                <tr key={hdGroup.id} className='border-b '>
+                                <tr key={hdGroup.id} className='border-b border-[var(--selago)]'>
                                     {hdGroup.headers.map(
                                         header =>
-                                            <th key={header.id} className="relative px-6 py-2 text-left text-sm font-medium text-gray-500 uppercase w-10">
+                                            <th key={header.id} className="relative px-6 py-2 text-left text-sm font-medium text-[var(--port-gore)] uppercase w-10">
                                                 {header.column.getCanSort() ?
                                                     <div onClick={header.column.getToggleSortingHandler()} className="text-xs flex cursor-pointer items-center gap-1">
                                                         {header.column.columnDef.header}
                                                         {
                                                             {
-                                                                asc: <TbSortAscending className="text-slate-600 scale-125" />,
-                                                                desc: <TbSortDescending className="text-slate-600 scale-125" />
+                                                                asc: <TbSortAscending className="text-[var(--endeavour)] scale-125" />,
+                                                                desc: <TbSortDescending className="text-[var(--endeavour)] scale-125" />
                                                             }[header.column.getIsSorted()]
                                                         }
                                                     </div>
@@ -61,7 +61,7 @@ const Customtable = ({ data, columns, expensesData, settings }) => {
                                     )}
                                 </tr>)}
                         </thead>
-                        <tbody className="divide-y divide-gray-200 ">
+                        <tbody className="divide-y divide-[var(--selago)]">
                             {table1.getRowModel().rows.map(row => (
                                 <tr key={row.id} className='cursor-pointer'>
 
@@ -80,17 +80,17 @@ const Customtable = ({ data, columns, expensesData, settings }) => {
                             ))}
                         </tbody>
                         <tfoot>
-                            <tr className="border-t bg-slate-100">
-                                <th className="relative px-6 py-2 text-left text-[0.8rem] font-medium text-gray-500 uppercase                                  ">
+                            <tr className="border-t border-[var(--selago)] bg-[var(--rock-blue)]/50">
+                                <th className="relative px-6 py-2 text-left text-[0.8rem] font-medium text-[var(--port-gore)] uppercase                                  ">
                                     Total
                                 </th>
-                                <th className="relative px-6 py-2 text-left text-[0.8rem] font-medium text-gray-500 uppercase">
+                                <th className="relative px-6 py-2 text-left text-[0.8rem] font-medium text-[var(--port-gore)] uppercase">
                                     {showAmount(data.reduce((sum, item) => sum + item.poWeight * 1, 0))}
                                 </th>
-                                <th className="relative px-6 py-2 text-left text-[0.8rem] font-medium text-gray-500 uppercase">
+                                <th className="relative px-6 py-2 text-left text-[0.8rem] font-medium text-[var(--port-gore)] uppercase">
                                     {showAmount(data.reduce((sum, item) => sum + item.shiipedWeight * 1, 0))}
                                 </th>
-                                <th className="relative px-6 py-2 text-left text-[0.8rem] font-medium text-gray-500 uppercase">
+                                <th className="relative px-6 py-2 text-left text-[0.8rem] font-medium text-[var(--port-gore)] uppercase">
                                     {showAmount(data.reduce((sum, item) => sum + item.remaining * 1, 0))}
                                 </th>
                             </tr>

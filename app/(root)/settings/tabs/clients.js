@@ -93,17 +93,17 @@ const Clients = () => {
     }
 
     return (
-        <div className='border border-slate-300 p-4 rounded-lg flex flex-col md:flex-row w-full gap-4 '>
-            <div className='border border-slate-300 p-4 rounded-lg mt-1 shadow-md  min-w-xl'>
-                <p className='flex items-center text-sm font-medium pl-2 text-slate-700'>{getTtl('Clients', ln)}:</p>
+        <div className='border border-[var(--rock-blue)] p-4 rounded-lg flex flex-col md:flex-row w-full gap-4 '>
+            <div className='border border-[var(--rock-blue)] p-4 rounded-lg mt-1 shadow-md  min-w-xl'>
+                <p className='flex items-center text-sm font-medium pl-2 text-[var(--port-gore)]'>{getTtl('Clients', ln)}:</p>
 
 
                 <ul className="flex flex-col mt-1 overflow-auto max-h-80 ring-1 ring-black/5 rounded-lg divide-y" >
                    {sortArr((settings.Client?.Client || []).filter(q => !q.deleted), 'client').map((x, i) => {
                         return (
                             <li key={i} onClick={() => SelectClient(x)}
-                                className={`whitespace-nowrap cursor-pointer flex items-center gap-x-2 py-2 px-4 text-xs text-slate-800
-                                ${value.id === x.id && 'font-medium bg-slate-50'}`}>
+                                className={`whitespace-nowrap cursor-pointer flex items-center gap-x-2 py-2 px-4 text-xs text-[var(--port-gore)]
+                                ${value.id === x.id && 'font-medium bg-[var(--selago)]'}`}>
                                 {x.client}
 
                             </li>
@@ -113,7 +113,7 @@ const Clients = () => {
 
             </div>
             <div className='flex flex-col  md:w-7/12'>
-                <div className='border border-slate-300 p-4 rounded-lg mt-1 shadow-md  w-full gap-4 flex flex-wrap'>
+                <div className='border border-[var(--rock-blue)] p-4 rounded-lg mt-1 shadow-md  w-full gap-4 flex flex-wrap'>
                     <Tltip direction='top' tltpText='Add new client'>
                         <button className={`blackButton py-1 ${disabledButton ? 'cursor-not-allowed' : ''}`} disabled={disabledButton}
                             onClick={addItem}>
@@ -140,7 +140,7 @@ const Clients = () => {
                         </button>
                     </Tltip>
                 </div>
-                <div className='border border-slate-300 p-4 rounded-lg mt-1 shadow-md  w-full gap-4 flex flex-wrap h-fit'>
+                <div className='border border-[var(--rock-blue)] p-4 rounded-lg mt-1 shadow-md  w-full gap-4 flex flex-wrap h-fit'>
                     <div className='grid md:max-lg:grid-cols-1  sm:grid-cols-2 grid-rows-3 gap-2 w-full'>
                         <div className='cols-span-12 lg:cols-span-1'>
                             <p className='text-xs'>{getTtl('Name', ln)}:</p>

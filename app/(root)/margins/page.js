@@ -383,9 +383,9 @@ const Margins = () => {
                 <>
                     <Toast />
                     {loading && <Spin />}
-                    <div className="border border-slate-200 rounded-xl p-4 mt-8 shadow-md relative">
+                    <div className="border border-[var(--selago)] rounded-xl p-4 mt-8 shadow-lg bg-white relative">
                         <div className='flex items-center justify-between flex-wrap'>
-                            <div className="text-3xl p-1 pb-2 text-slate-500">{getTtl('Margins', ln)}</div>
+                            <div className="text-3xl p-1 pb-2 text-[var(--port-gore)] font-semibold">{getTtl('Margins', ln)}</div>
 
                             <div className="flex group w-16">
                                 <YearSelect yr={yr} setYr={setYr} />
@@ -406,11 +406,11 @@ const Margins = () => {
 
                         {/*******Second Part */}
                         <div className="p-2 flex gap-4">
-                            <button className="blackButton" disabled={data.length >= 12}
+                            <button className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] text-white px-4 py-2 rounded-lg hover:opacity-90 font-medium" disabled={data.length >= 12}
                                 onClick={addMonth}>
                                 Add month
                             </button>
-                            <button className="whiteButton"
+                            <button className="bg-white border border-[var(--rock-blue)] text-[var(--port-gore)] px-4 py-2 rounded-lg hover:bg-[var(--selago)]/30 font-medium"
                                 onClick={saveData}>
                                 Save
                             </button>

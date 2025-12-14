@@ -63,15 +63,14 @@ const Customtable = ({ data, columns, invisible, excellReport }) => {
                     resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
                 />
 
-                <div className=" overflow-x-auto border-x">
+                <div className="overflow-x-auto border-x border-[var(--selago)] md:max-h-[400px] 2xl:max-h-[550px]">
                     <table className="w-full">
-                        <thead className="bg-gray-50 divide-y divide-gray-200 ">
+                        <thead className="md:sticky md:top-0 md:z-10">
                             {table.getHeaderGroups().map(hdGroup =>
-                                <tr key={hdGroup.id} className='border border-slate-400'>
+                                <tr key={hdGroup.id} className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
                                     {hdGroup.headers.map(
                                         header =>
-                                            <th key={header.id} className={`relative px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase
-                                     dark:text-gray-400 border-b border-slate-400 ${header.column.columnDef.bgt}`}>
+                                            <th key={header.id} className={`relative px-6 py-3 text-left text-xs font-semibold text-white uppercase`}>
                                                 <span className="table-caption">{header.column.columnDef.header}</span>
                                                 {header.column.getCanFilter() ? (
                                                     <div>
@@ -82,13 +81,14 @@ const Customtable = ({ data, columns, invisible, excellReport }) => {
                                     )}
                                 </tr>)}
                         </thead>
-                        <tbody className="border-r border-slate-400">
+                        <tbody className="border-r border-[var(--selago)] bg-white">
                             {table.getRowModel().rows.map((row, rowIndex) => {
                                 let bottomRow = table.getRowModel().rows[rowIndex]?.original.invoice * 1 !== table.getRowModel().rows[rowIndex + 1]?.original.invoice * 1
 
                                 return (
                                     <tr key={row.id} className={`
-                                    ${bottomRow ? 'border-b border-slate-400' : 'border-b  border-slate-200'}
+                                    ${bottomRow ? 'border-b border-[var(--rock-blue)]' : 'border-b border-[var(--selago)]'}
+                                    hover:bg-[var(--selago)]/50 transition-colors
                                     `}>
                                         {row.getVisibleCells().map(cell => {
                                             let hideTD = !row.original.span && cell.column?.id === 'num';
@@ -99,8 +99,7 @@ const Customtable = ({ data, columns, invisible, excellReport }) => {
                                                 !hideTD &&
                                                 <td rowSpan={cell.column?.id === 'num' && row.original?.span ? row.original.span : null}
                                                     key={cell.id} data-label={cell.column.columnDef.header}
-                                                    className={`table_cell text-xs md:py-2 ${brdr ? 'border border-slate-400' : ''}
-                                                    ${cell.column.columnDef.bgr}`}>
+                                                    className={`table_cell text-xs md:py-2 text-[var(--port-gore)] ${brdr ? 'border border-[var(--rock-blue)] bg-[var(--selago)]/30' : ''}`}>
                                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                 </td>
 
@@ -114,8 +113,8 @@ const Customtable = ({ data, columns, invisible, excellReport }) => {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex p-2 border-t flex-wrap bg-slate-50 border rounded-b-xl">
-                    <div className="hidden lg:flex text-gray-600 text-sm w-48 xl:w-96 p-2 items-center">
+                <div className="flex p-2 border-t border-[var(--selago)] flex-wrap bg-[var(--selago)]/50 rounded-b-xl">
+                    <div className="hidden lg:flex text-[var(--port-gore)] text-sm w-48 xl:w-96 p-2 items-center">
                         {`${getTtl('Showing', ln)} ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
                             (table.getFilteredRowModel().rows.length ? 1 : 0)}-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
                             ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}

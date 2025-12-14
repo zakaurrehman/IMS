@@ -65,32 +65,32 @@ const Customtable = ({ data, columns }) => {
             <div >
 
 
-                <div className=" overflow-x-auto border-x md:max-h-[310px] 2xl:max-h-[550px]">
+                <div className=" overflow-x-auto border-x border-[var(--selago)] md:max-h-[310px] 2xl:max-h-[550px]">
                     <table className="w-full">
-                        <thead className="bg-gray-50 divide-y divide-gray-200 md:sticky md:top-0 md:z-10 ">
+                        <thead className="divide-y divide-[var(--selago)] md:sticky md:top-0 md:z-10 ">
                             {table.getHeaderGroups().map(hdGroup =>
-                                <tr key={hdGroup.id}>
+                                <tr key={hdGroup.id} className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
                                     {hdGroup.headers.map(
                                         header =>
                                             <th key={header.id}
-                                                className={`relative px-4 ${header.id === 'material' ? 'w-96' : 'w-3'}
+                                                className={`relative px-4 py-2 text-white text-xs font-bold text-center ${header.id === 'material' ? 'w-96' : 'w-3'}
                                             `}>
-
+                                                {header.column.columnDef.header}
 
                                             </th>
                                     )}
                                 </tr>)}
                         </thead>
-                        <tbody className="divide-y divide-black ">
+                        <tbody className="divide-y divide-[var(--selago)] ">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer divide-gray-500'>
+                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--selago)]/30'>
                                     {row.getVisibleCells().map(cell =>
 
                                         <td key={cell.id} data-label={cell.column.columnDef.header}
-                                            className={`table_cell text-sm text-center p-1 w-20 ${cell.column.id === 'material' ? 'bg-[#FFFFFF]' : 'bg-[#F2CEEF]'} font-bold`}>
+                                            className={`table_cell text-sm text-center p-1 w-20 ${cell.column.id === 'material' ? 'bg-[#FFFFFF]' : 'bg-[var(--rock-blue)]/50'} font-bold`}>
                                             {cell.column.id !== 'del' ?
                                                 <div
-                                                    className={`indent-0 input h-8 border-none text-black font-bold items-center text-sm
+                                                    className={`indent-0 input h-8 border-none text-[var(--port-gore)] font-bold items-center text-sm
                                                     ${cell.column.id === 'material' ? 'w-80' : 'w-20'} flex justify-center`}
                                                 >
                                                     {cell.column.id !== 'material' ?

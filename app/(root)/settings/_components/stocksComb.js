@@ -25,12 +25,12 @@ const StockComb = ({ value, setValue }) => {
       <Listbox value={selected} onChange={e=> setSelection(e)}>
         <div className="relative ">
           <ListboxButton className='cursor-default rounded-md
-                     focus:outline-none text-xs border border-slate-400 
-                   pl-3 pr-10 text-slate-500 h-7 max-w-3xl w-full text-left'>
+                     focus:outline-none text-xs border border-[var(--rock-blue)] 
+                   pl-3 pr-10 text-[var(--port-gore)] h-7 max-w-3xl w-full text-left'>
             <span className="block truncate">{value.sType === '' ? selected?.sType : value?.sType}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <HiChevronUpDown
-                className="size-5 text-gray-400"
+                className="size-5 text-[var(--regent-gray)]"
                 aria-hidden="true"
               />
             </span>
@@ -46,7 +46,7 @@ const StockComb = ({ value, setValue }) => {
                 <ListboxOption
                   key={personIdx}
                   className={({ active }) =>
-                    `text-xs relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-slate-400 text-white' : 'text-slate-600'
+                    `text-xs relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-[var(--endeavour)] text-white' : 'text-[var(--port-gore)]'
                     }`
                   }
                   value={tp}
@@ -61,7 +61,7 @@ const StockComb = ({ value, setValue }) => {
                       </span>
                       {selected ? (
                         <span className={`absolute inset-y-0 left-0 flex items-center pl-3
-                        ${active ? 'text-white' : 'text-teal-600'} `}
+                        ${active ? 'text-white' : 'text-[var(--endeavour)]'} `}
                         >
                           <AiOutlineCheck className="size-5" aria-hidden="true" />
                         </span>

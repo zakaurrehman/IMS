@@ -78,17 +78,16 @@ const Customtable = ({ data, columns, invisible, excellReport, ln, setFilteredDa
                     tableModes={tableModes} type={type}
                 />
 
-                <div className=" overflow-x-auto border-x">
+                <div className=" overflow-x-auto border-x border-[var(--selago)]">
                     <table className="w-full relative z-0">
-                        <thead className="bg-gray-50 divide-y divide-gray-200 ">
+                        <thead className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] divide-y divide-[var(--selago)]">
                             {table.getHeaderGroups().map(hdGroup =>
-                                <tr key={hdGroup.id} className='border-b'>
+                                <tr key={hdGroup.id} className='border-b border-[var(--selago)]'>
                                     {hdGroup.headers.map(header =>
 
                                     (
-                                        <th key={header.id} className={` px-6 py-2 text-left text-sm font-medium text-gray-500 uppercase
-                                     dark:text-gray-400
-                                        ${header.id === 'expander' ? 'sticky z-10 left-0 bg-slate-50' : 'relative'}
+                                        <th key={header.id} className={` px-6 py-2 text-left text-sm font-medium text-white uppercase
+                                        ${header.id === 'expander' ? 'sticky z-10 left-0 bg-[var(--endeavour)]' : 'relative'}
                                      `}
                                         >
                                             {header.column.getCanSort() ?
@@ -96,8 +95,8 @@ const Customtable = ({ data, columns, invisible, excellReport, ln, setFilteredDa
                                                     {header.column.columnDef.header}
                                                     {
                                                         {
-                                                            asc: <TbSortAscending className="text-slate-600 scale-125" />,
-                                                            desc: <TbSortDescending className="text-slate-600 scale-125" />
+                                                            asc: <TbSortAscending className="text-white scale-125" />,
+                                                            desc: <TbSortDescending className="text-white scale-125" />
                                                         }[header.column.getIsSorted()]
                                                     }
                                                 </div>
@@ -114,9 +113,9 @@ const Customtable = ({ data, columns, invisible, excellReport, ln, setFilteredDa
                                     )}
                                 </tr>)}
                         </thead>
-                        <tbody className="divide-y divide-gray-200 ">
+                        <tbody className="divide-y divide-[var(--selago)]">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className="hover:bg-slate-200 cursor-pointer"
+                                <tr key={row.id} className="hover:bg-[var(--selago)]/30 cursor-pointer"
                                     onClick={() => row.getCanExpand() && row.toggleExpanded()}
                                 >
                                     {row.getVisibleCells().map((cell, i) =>
@@ -136,8 +135,8 @@ const Customtable = ({ data, columns, invisible, excellReport, ln, setFilteredDa
                         </tbody>
                     </table>
                 </div>
-                <div className="flex p-2 border-t flex-wrap bg-slate-50 border rounded-b-xl">
-                    <div className="hidden lg:flex text-gray-600 text-sm w-48 xl:w-96 p-2 items-center">
+                <div className="flex p-2 border-t flex-wrap bg-[var(--selago)]/50 border border-[var(--selago)] rounded-b-xl">
+                    <div className="hidden lg:flex text-[var(--port-gore)] text-sm w-48 xl:w-96 p-2 items-center">
                         {`${getTtl('Showing', ln)} ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
                             (table.getFilteredRowModel().rows.length ? 1 : 0)}-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
                             ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}

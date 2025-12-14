@@ -318,9 +318,9 @@ const Stocks = () => {
         <>
           <Toast />
           {loading && <Spin />}
-          <div className="border border-slate-200 rounded-xl p-4 mt-8 shadow-md relative">
+          <div className="border border-[var(--selago)] rounded-xl p-4 mt-8 shadow-lg bg-white relative">
             <div className='flex items-center justify-between flex-wrap'>
-              <div className="text-3xl p-1 pb-2 text-slate-500">{getTtl('Stocks', ln)} </div>
+              <div className="text-3xl p-1 pb-2 text-[var(--port-gore)] font-semibold">{getTtl('Stocks', ln)} </div>
             </div>
 
 

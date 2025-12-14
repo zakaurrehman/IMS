@@ -34,7 +34,7 @@ const MyComboboxSelectStock = ({ data, setValue, value, idx, name, classes, disa
             <Combobox by="id" value={selected} onChange={(e) => setSelection(e)} disabled={disabled}>
                 <div className="relative">
                     <div className={`relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left 
-                     focus:outline-none sm:text-sm border border-slate-400 ${classes} items-center flex`}>
+                     focus:outline-none sm:text-sm border border-[var(--rock-blue)] ${classes} items-center flex`}>
                         <ComboboxInput
                             className={cn('w-full pl-3 pr-10 text-md leading-5  focus:outline-none',
                                 selected[name] !== plcHolder ? 'text-slate-900' : 'text-slate-400')}
@@ -68,9 +68,9 @@ const MyComboboxSelectStock = ({ data, setValue, value, idx, name, classes, disa
                                     <ComboboxOption
                                         key={x.id}
                                         className={cn(
-                                            'relative cursor-default select-none py-1 text-xs pl-10 pr-4 text-gray-900 hover:bg-gray-200',
+                                            'relative cursor-default select-none py-1 text-xs pl-10 pr-4 text-gray-900 hover:bg-[var(--selago)]',
                                             selected.id === x.id
-                                                ? 'bg-slate-400 text-white hover:bg-slate-400'
+                                                ? 'bg-[var(--rock-blue)] text-white hover:bg-[var(--rock-blue)]'
                                                 : ''
                                         )}
                                         value={x}
