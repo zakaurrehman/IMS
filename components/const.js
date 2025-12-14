@@ -33,8 +33,8 @@ export const sideBar = () => {
                     hasDropdown: true,
                     subItems: [
                         { item: 'Message', img: <BiMessageRoundedDetail />, page: 'apps/message' },
-                        { item: 'Call', img: <BiPhone />, page: 'apps/call' },
-                        { item: 'Calendar', img: <BiCalendar />, page: 'apps/calendar' },
+                        // { item: 'Call', img: <BiPhone />, page: 'apps/call' },
+                        // { item: 'Calendar', img: <BiCalendar />, page: 'apps/calendar' },
                     ]
                 }
 
