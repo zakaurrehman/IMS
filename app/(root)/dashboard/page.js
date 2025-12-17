@@ -136,7 +136,7 @@ const Dash = () => {
           {loading && <Spin />}
           
           {/* Header Section */}
-          <div className="pt-8 pb-6">
+          <div className="pt-16 pb-6">
             <div className='flex items-center justify-between flex-wrap gap-4'>
               <div className="flex items-center gap-4">
                 <div className="w-1.5 h-12 bg-gradient-to-b from-[var(--endeavour)] to-[var(--chathams-blue)] rounded-full"></div>
