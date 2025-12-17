@@ -1,5 +1,6 @@
 import './globals.css';
 import { Poppins} from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import Provider from './providers'
 
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
 				<Provider>
 					<div>{children}</div>
 				</Provider>
+				<Analytics />
 			</body>
 		</html>
 	);
