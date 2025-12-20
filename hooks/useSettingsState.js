@@ -1,0 +1,54 @@
+
+import { useState, useMemo } from 'react';
+import { saveDataSettings } from '../utils/utils';
+
+// You can expand this hook with your actual settings logic as needed
+
+
+function useSettingsState() {
+    const [settings, setSettings] = useState({});
+    const [compData, setCompData] = useState({ lng: 'English' });
+    const [loading, setLoading] = useState(false);
+
+    // Computed language value for easy access
+    const ln = useMemo(() => compData?.lng || 'English', [compData?.lng]);
+
+    // Date range state for date picker components
+    const currentYear = new Date().getFullYear();
+    const defaultDateSelect = {
+        start: `${currentYear}-01-01`,
+        end: `${currentYear}-12-31`
+    };
+    const [dateSelect, setDateSelect] = useState(defaultDateSelect);
+
+    // Setter for updating settings
+    const updateSettings = (newSettings) => {
+        setSettings((prev) => ({ ...prev, ...newSettings }));
+    };
+
+    // Setter for updating compData (language, etc.)
+    const updateCompData = (newData) => {
+        setCompData((prev) => ({ ...prev, ...newData }));
+    };
+
+    // Save company data to Firestore
+    const updateCompanyData = async (uidCollection) => {
+        if (!uidCollection) return;
+        await saveDataSettings(uidCollection, 'cmpnyData', compData);
+    };
+    return {
+        settings,
+        updateSettings,
+        compData,
+        setCompData: updateCompData,
+        updateCompanyData,
+        loading,
+        setLoading,
+        dateSelect,
+        setDateSelect,
+        ln, // Computed language value for easy access
+    };
+}
+
+export default useSettingsState;
+
