@@ -16,15 +16,16 @@ export default function QuickSumControl({
   setEnabled,
   selectedColumnIds,
   setSelectedColumnIds,
-  rowCount
 }) {
   const [open, setOpen] = useState(false);
 
+  // Get row count to trigger re-detection when data changes
+  const currentRowCount = table.getRowModel().rows.length;
+
   const numericCols = useMemo(() => {
     // detect columns whenever table changes (filters/sorts can affect sample rows)
-    const rowCount = table.getRowModel().rows.length;
     return detectNumericCols({ table, sampleSize: 60, exclude: ['select'] });
-  }, [table,rowCount]);
+  }, [table, currentRowCount]);
 
   // auto-select first numeric col when turning on (if none selected)
   useEffect(() => {
