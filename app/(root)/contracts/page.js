@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import Customtable from './newTable';
 import { TbLayoutGridAdd } from 'react-icons/tb';
 import { IoAnalyticsOutline } from "react-icons/io5";
@@ -11,6 +11,8 @@ import { InvoiceContext } from "../../../contexts/useInvoiceContext";
 import MonthSelect from '../../../components/monthSelect';
 import Toast from '../../../components/toast.js'
 import ModalCopyInvoice from '../../../components/modalCopyInvoice';
+import EditableCell from '../../../components/table/EditableCell';
+import useInlineEdit from '../../../hooks/useInlineEdit';
 
 import { loadData, sortArr, getD, saveDataSettings } from '../../../utils/utils'
 import Spinner from '../../../components/spinner';
@@ -22,7 +24,7 @@ import { getTtl } from '../../../utils/languages';
 import DateRangePicker from '../../../components/dateRangePicker';
 
 import Tooltip from '../../../components/tooltip';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Modal from '../../../components/modal';
 import DlayedResponse from './modals/delayedResponse';
 import Image from 'next/image';
@@ -38,9 +40,38 @@ const Contracts = () => {
 	const { blankExpense } = useContext(ExpensesContext);
 	const { uidCollection } = UserAuth();
 	const router = useRouter();
+	const searchParams = useSearchParams();
 	const [alertArr, setAlertArr] = useState([]);
 	const [openAlert, setOpenAlert] = useState(true)
 	const [filteredData, setFilteredData] = useState([])
+	const [highlightId, setHighlightId] = useState(null)
+
+	// Inline editing hook
+	const { updateField } = useInlineEdit('contracts', setContractsData);
+
+	// Handle inline cell save
+	const handleCellSave = useCallback(async (rowData, field, value) => {
+		// Find original data (not formatted)
+		const originalItem = contractsData.find(c => c.id === rowData.id);
+		if (originalItem) {
+			await updateField(originalItem, field, value);
+		}
+	}, [contractsData, updateField]);
+
+	// Handle openId from URL (from global search) - highlight row only
+	useEffect(() => {
+		const openId = searchParams.get('openId');
+		if (openId && contractsData.length > 0) {
+			const item = contractsData.find(c => c.id === openId);
+			if (item) {
+				// Highlight the row
+				setHighlightId(openId);
+				setTimeout(() => setHighlightId(null), 3000);
+				// Clear the URL parameter
+				router.replace('/contracts', { scroll: false });
+			}
+		}
+	}, [searchParams, contractsData]);
 
 	useEffect(() => {
 
@@ -98,7 +129,10 @@ const Contracts = () => {
 	let propDefaults = Object.keys(settings).length === 0 ? [] : [
 		{ accessorKey: 'opDate', header: getTtl('Operation Time', ln), cell: (props) => <p>{dateFormat(props.getValue(), 'dd-mmm-yy HH:MM')}</p> },
 		{ accessorKey: 'lstSaved', header: getTtl('Last Saved', ln), cell: (props) => <p>{dateFormat(props.getValue(), 'dd-mmm-yy HH:MM')}</p> },
-		{ accessorKey: 'order', header: getTtl('PO', ln) + '#' },
+		{
+			accessorKey: 'order', header: getTtl('PO', ln) + '#',
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
 		{
 			accessorKey: 'date', header: getTtl('Date', ln), cell: (props) => <p>{dateFormat(props.getValue(), 'dd-mmm-yy')}</p>,
 			meta: {
@@ -116,12 +150,30 @@ const Contracts = () => {
 		{ accessorKey: 'shpType', header: getTtl('Shipment', ln) },
 		{ accessorKey: 'origin', header: getTtl('Origin', ln) },
 		{ accessorKey: 'delTerm', header: getTtl('Delivery Terms', ln) },
-		{ accessorKey: 'pol', header: getTtl('POL', ln) },
-		{ accessorKey: 'pod', header: getTtl('POD', ln) },
-		{ accessorKey: 'packing', header: getTtl('Packing', ln) },
-		{ accessorKey: 'contType', header: getTtl('Container Type', ln) },
-		{ accessorKey: 'size', header: getTtl('Size', ln) },
-		{ accessorKey: 'deltime', header: getTtl('Delivery Time', ln), cell: (props) => <span className='text-wrap w-40 flex '>{props.getValue()}</span> },
+		{
+			accessorKey: 'pol', header: getTtl('POL', ln),
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
+		{
+			accessorKey: 'pod', header: getTtl('POD', ln),
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
+		{
+			accessorKey: 'packing', header: getTtl('Packing', ln),
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
+		{
+			accessorKey: 'contType', header: getTtl('Container Type', ln),
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
+		{
+			accessorKey: 'size', header: getTtl('Size', ln),
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
+		{
+			accessorKey: 'deltime', header: getTtl('Delivery Time', ln),
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
 		{ accessorKey: 'cur', header: getTtl('Currency', ln) },
 		{ accessorKey: 'qTypeTable', header: getTtl('QTY', ln), cell: (props) => <span>{showQTY(props)}</span> },
 		{
@@ -220,7 +272,8 @@ const Contracts = () => {
 							invisible={invisible}
 							excellReport={EXD(contractsData.filter(x => filteredData.map(z => z.id).includes(x.id)),
 								settings, getTtl('Contracts', ln), ln)}
-							setFilteredData={setFilteredData} />
+							setFilteredData={setFilteredData}
+							highlightId={highlightId} />
 					</div>
 					<div className="text-left pt-6 flex gap-4">
 						<Tltip direction='bottom' tltpText='Create new Contract'>

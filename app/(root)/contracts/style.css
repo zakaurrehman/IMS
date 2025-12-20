@@ -73,3 +73,17 @@
     width: 100%;
   }
   */
+
+/* Highlight animation for rows from global search */
+@keyframes highlight-fade {
+  0% {
+    background-color: #fef08a;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.animate-highlight-row {
+  animation: highlight-fade 2s ease-out forwards;
+}

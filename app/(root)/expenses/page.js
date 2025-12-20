@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import Customtable from './newTable';
 import TableTotals from './totals/tableTotals';
 import MyDetailsModal from './modals/dataModal.js'
@@ -18,6 +18,9 @@ import dateFormat from "dateformat";
 import { getTtl } from '../../../utils/languages';
 import DateRangePicker from '../../../components/dateRangePicker';
 import Tooltip from '../../../components/tooltip';
+import EditableCell from '../../../components/table/EditableCell';
+import useInlineEdit from '../../../hooks/useInlineEdit';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 
 
@@ -26,9 +29,38 @@ const Expenses = () => {
 	const { settings, dateSelect, setDateYr, loading, setLoading, ln } = useContext(SettingsContext);
 	const { expensesData, valueExp, setValueExp, setIsOpen, isOpen, setExpensesData } = useContext(ExpensesContext);
 	const { uidCollection } = UserAuth();
+	const router = useRouter();
+	const searchParams = useSearchParams();
 	const [totals, setTotals] = useState([])
 	const [totalsAll, setTotalsAll] = useState([])
 	const [filteredId, setFilteredId] = useState([])
+	const [highlightId, setHighlightId] = useState(null)
+
+	// Inline editing hook
+	const { updateField } = useInlineEdit('expenses', setExpensesData);
+
+	// Handle inline cell save
+	const handleCellSave = useCallback(async (rowData, field, value) => {
+		const originalItem = expensesData.find(e => e.id === rowData.id);
+		if (originalItem) {
+			await updateField(originalItem, field, value);
+		}
+	}, [expensesData, updateField]);
+
+	// Handle openId from URL (from global search) - highlight row only
+	useEffect(() => {
+		const openId = searchParams.get('openId');
+		if (openId && expensesData.length > 0) {
+			const item = expensesData.find(e => e.id === openId);
+			if (item) {
+				// Highlight the row
+				setHighlightId(openId);
+				setTimeout(() => setHighlightId(null), 3000);
+				// Clear the URL parameter
+				router.replace('/expenses', { scroll: false });
+			}
+		}
+	}, [searchParams, expensesData]);
 
 	useEffect(() => {
 
@@ -134,7 +166,10 @@ const Expenses = () => {
 			},
 			filterFn: 'dateBetweenFilterFn'
 		},
-		{ accessorKey: 'salesInv', header: getTtl('SalesInvoices', ln) },
+		{
+			accessorKey: 'salesInv', header: getTtl('SalesInvoices', ln),
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
 		{ accessorKey: 'poSupplierOrder', header: getTtl('PoOrderNo', ln) },
 		{ accessorKey: 'cur', header: getTtl('Currency', ln) },
 		{
@@ -142,7 +177,10 @@ const Expenses = () => {
 				filterVariant: 'range',
 			},
 		},
-		{ accessorKey: 'expense', header: getTtl('Expense Invoice', ln) + '#' },
+		{
+			accessorKey: 'expense', header: getTtl('Expense Invoice', ln) + '#',
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
 		{ accessorKey: 'expType', header: getTtl('Expense Type', ln) },
 		{
 			accessorKey: 'paid', header: getTtl('Paid / Unpaid', ln), meta: {
@@ -150,7 +188,10 @@ const Expenses = () => {
 			},
 			filterFn: caseInsensitiveEquals,
 		},
-		{ accessorKey: 'comments', header: getTtl('Comments', ln) },
+		{
+			accessorKey: 'comments', header: getTtl('Comments', ln),
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
 	];
 
 	let invisible = ['lstSaved', 'comments'].reduce((acc, key) => {
@@ -217,6 +258,7 @@ const Expenses = () => {
 							excellReport={EXD(expensesData.filter(x => filteredId.includes(x.id)).map(x => ({ ...x, poSupplierOrder: x.poSupplier?.order })),
 								settings, getTtl('Expenses', ln), ln)}
 							setFilteredId={setFilteredId}
+							highlightId={highlightId}
 						/>
 
 

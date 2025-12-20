@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import Customtable from '../contracts/newTable';
 import MyDetailsModal from './modals/dataModal.js'
 import { SettingsContext } from "../../../contexts/useSettingsContext";
@@ -20,6 +20,9 @@ import Modal from '../../../components/modal';
 import DlayedResponse from './modals/delayedResponse';
 import Image from 'next/image';
 import Tooltip from '../../../components/tooltip';
+import EditableCell from '../../../components/table/EditableCell';
+import useInlineEdit from '../../../hooks/useInlineEdit';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 
 const Invoices = () => {
@@ -29,9 +32,38 @@ const Invoices = () => {
 	const { blankExpense } = useContext(ExpensesContext);
 	const { uidCollection } = UserAuth();
 	const { setValueCon } = useContext(ContractsContext);
+	const router = useRouter();
+	const searchParams = useSearchParams();
 	const [alertArr, setAlertArr] = useState([]);
 	const [openAlert, setOpenAlert] = useState(true)
 	const [filteredData, setFilteredData] = useState([])
+	const [highlightId, setHighlightId] = useState(null)
+
+	// Inline editing hook
+	const { updateField } = useInlineEdit('invoices', setInvoicesData);
+
+	// Handle inline cell save
+	const handleCellSave = useCallback(async (rowData, field, value) => {
+		const originalItem = invoicesData.find(i => i.id === rowData.id);
+		if (originalItem) {
+			await updateField(originalItem, field, value);
+		}
+	}, [invoicesData, updateField]);
+
+	// Handle openId from URL (from global search) - highlight row only
+	useEffect(() => {
+		const openId = searchParams.get('openId');
+		if (openId && invoicesData.length > 0) {
+			const item = invoicesData.find(i => i.id === openId);
+			if (item) {
+				// Highlight the row
+				setHighlightId(openId);
+				setTimeout(() => setHighlightId(null), 3000);
+				// Clear the URL parameter
+				router.replace('/invoices', { scroll: false });
+			}
+		}
+	}, [searchParams, invoicesData]);
 
 	useEffect(() => {
 
@@ -160,7 +192,10 @@ const Invoices = () => {
 				filterVariant: 'range',
 			},
 		},
-		{ accessorKey: 'container', header: getTtl('Container No', ln), cell: (props) => <span className='text-wrap w-40 md:w-64 flex'>{props.getValue()}</span> },
+		{
+			accessorKey: 'container', header: getTtl('Container No', ln),
+			cell: (props) => <EditableCell value={props.getValue()} row={props.row} column={props.column} onSave={handleCellSave} />
+		},
 		{
 			accessorKey: 'etd', header: 'ETD', cell: (props) => <span>{props.row.original.shipData?.etd?.startDate ?
 				dateFormat(props.row.original.shipData?.etd?.startDate, 'dd-mmm-yy') : ''}</span>
@@ -280,6 +315,7 @@ const Invoices = () => {
 							excellReport={EXD(invoicesData.filter(x => filteredData.map(z => z.id).includes(x.id)),
 								settings, getTtl('Invoices', ln), ln)}
 							setFilteredData={setFilteredData}
+							highlightId={highlightId}
 						/>
 
 					</div>

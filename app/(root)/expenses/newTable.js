@@ -26,7 +26,7 @@ import dateBetweenFilterFn from '../../../components/table/filters/date-between-
 import { Filter } from "../../../components/table/filters/filterFunc";
 
 
-const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFilteredId }) => {
+const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFilteredId, highlightId }) => {
 
 
 
@@ -210,7 +210,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                         </thead>
                         <tbody className="divide-y divide-[var(--selago)]">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--selago)]/50 transition-colors' onDoubleClick={() => SelectRow(row.original)}>
+                                <tr key={row.id} className={`cursor-pointer hover:bg-[var(--selago)]/50 transition-colors ${highlightId === row.original.id ? 'animate-highlight-row bg-yellow-100' : ''}`} onDoubleClick={() => SelectRow(row.original)}>
 
                                     {row.getVisibleCells().map(cell => (
                                         <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
