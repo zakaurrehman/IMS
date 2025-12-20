@@ -1,0 +1,217 @@
+
+/* Site Color Palette as CSS Variables */
+:root {
+  --endeavour: #0366ae;
+  --rock-blue: #9fb8d4;
+  --selago: #ebf2fc;
+  --port-gore: #28264f;
+  --bunting: #1c134d;
+  --chathams-blue: #103a7a;
+  --regent-gray: #838ca7;
+}
+
+/* Example usage:
+   background: var(--endeavour);
+   color: var(--selago);
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html,
+body,
+:root {
+  height: 100%;
+}
+
+@layer components {
+  .table_cell {
+    @apply px-6 py-3 whitespace-nowrap text-sm text-[var(--port-gore)] leading-4;
+  }
+
+  .paginator_arrow {
+    @apply text-[var(--regent-gray)] hover:text-[var(--endeavour)] font-medium cursor-pointer transition-colors;
+  }
+
+  .input {
+    @apply w-full border rounded-lg border-[var(--rock-blue)] h-10 focus:outline-0 focus:border-[var(--endeavour)] indent-1.5 text-sm text-[var(--port-gore)];
+  }
+
+  .dashBox {
+    @apply col-span-12 md:col-span-1 border border-[var(--selago)] rounded-2xl bg-white justify-center flex shadow-lg text-[15px] flex-col p-4;
+  }
+
+  .dashCard {
+    @apply rounded-2xl bg-white shadow-lg p-5 border border-[var(--selago)];
+  }
+
+  .dashStatCard {
+    @apply rounded-2xl p-5 flex flex-col justify-between min-h-[120px] shadow-lg;
+  }
+
+  .blackButton {
+    @apply bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 text-white flex items-center gap-2 justify-center rounded-xl border-0 px-3 py-2 text-sm font-medium focus:outline-none shadow-lg transition-all
+  }
+
+  .whiteButton {
+    @apply bg-white border-[var(--rock-blue)] hover:bg-[var(--selago)] text-[var(--port-gore)] flex items-center gap-2 justify-center rounded-xl border px-3 py-2 text-sm font-medium focus:outline-none shadow-md transition-colors
+  }
+}
+
+@layer components {
+  .title_style {
+    @apply text-[var(--port-gore)] border-b border-[var(--rock-blue)] items-center flex justify-center text-[0.75rem] font-semibold;
+  }
+
+  .input_style {
+    @apply text-[0.75rem] py-0.5 text-center border-0 rounded-none w-full focus:outline-0 focus:border-[var(--endeavour)] text-[var(--port-gore)];
+  }
+}
+
+@layer app {
+  .responsiveText {
+    @apply text-[0.70rem] 2xl:text-[0.8rem];
+  }
+
+  .responsiveTextTitle {
+    @apply text-[0.75rem] 2xl:text-sm;
+  }
+
+  .responsiveTextTotal {
+    @apply text-[0.70rem] 2xl:text-[0.77rem] font-semibold;
+  }
+
+  .responsiveTextTable {
+    @apply text-[0.68rem] 2xl:text-[0.75rem];
+  }
+
+  .responsiveTextTable1 {
+    @apply text-[0.56rem] 2xl:text-[0.75rem];
+  }
+
+  .responsiveTextInput {
+    @apply text-[0.72rem] 2xl:text-[0.8rem];
+  }
+}
+
+
+/******** checkbox ****/
+.checkbox:checked,
+.checkbox[checked=true],
+.checkbox[aria-checked=true] {
+  --chkbg: 157 32% 25%;
+  --chkfg: 0 0% 100%;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--chkbg) / var(--tw-bg-opacity));
+  background-repeat: no-repeat;
+  /*    animation: checkmark var(--animation-input, .2s) ease-in-out; */
+  background-image: linear-gradient(-45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);
+
+
+}
+
+@keyframes checkmark {
+  0% {
+    background-position-y: 5px
+  }
+
+  50% {
+    background-position-y: -2px
+  }
+
+  to {
+    background-position-y: 0
+  }
+}
+
+/******** toast ****/
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeInToast {
+  animation: fadeIn 1s;
+}
+
+/******** toast ****/
+
+/******** expenses ****/
+
+@keyframes enlargeDiv {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+
+  }
+}
+
+.animated-div {
+  animation: enlargeDiv 0.7s forwards;
+}
+
+.dnd {
+  height: 100px !important;
+  outline: 0 !important;
+}
+
+/*******************/
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*******************/
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+.dropDownHeight {
+  max-height: 15rem !important;
+  overflow-y: visible !important;
+}
+
+
+/* Chrome, Safari, Edge, Opera  Remove arrows from input type=number*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/******************************************/
+/* Only target disabled buttons inside the datepicker wrapper */
+.datepicker-wrapper button[disabled] {
+  @apply cursor-not-allowed relative text-xs text-[var(--regent-gray)];
+}
+
+/* Scope to datepicker only */
+.datepicker-wrapper button[disabled],
+.datepicker-wrapper button[disabled] span {
+  text-decoration: none !important;
+  /* remove line */
+}
+
+/******************************************/
