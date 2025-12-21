@@ -111,6 +111,10 @@ export const groupedArrayInvoice = (arrD) => {
 };
 
 export const sortArr = (arr, name) => {
+  if (!Array.isArray(arr)) {
+    console.error("sortArr: Expected an array, but received:", arr);
+    return []; // Return an empty array if the input is not valid
+  }
 
   return arr.sort((a, b) => {
     const A = a[name]?.toString()?.toLowerCase(); // Convert to lowercase for case-insensitive sorting

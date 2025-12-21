@@ -8,7 +8,10 @@ const { getAuth } = require('firebase-admin/auth');
 
 const serviceAccount = {
     type: process.env.FIREBASE_TYPE,
-    project_id: process.env.FIREBASE_PROJECT_ID,
+    project_id: process.env.FIREBASE_PROJECT_ID || (() => {
+        console.error("Missing FIREBASE_PROJECT_ID environment variable.");
+        return ""; // Provide a fallback or empty string
+    })(),
     private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
     private_key: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
     client_email: process.env.FIREBASE_CLIENT_EMAIL,
@@ -20,10 +23,14 @@ const serviceAccount = {
     universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN,
 };
 
+if (!serviceAccount.project_id) {
+    throw new Error("Service account object must contain a valid 'project_id' property.");
+}
+
 if (admin.apps.length === 0) {
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
-    })
+    });
 }
 
 /****************************** */

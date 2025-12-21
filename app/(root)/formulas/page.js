@@ -33,20 +33,84 @@ const Page = () => {
 	const removeNonNumeric = (num) => num.toString().replace(/[^0-9.-]/g, "");
 	const [focusedField, setFocusedField] = useState(null);
 
-	useEffect(() => {
-		const loadData = async () => {
-			let data = await loadDataSettings(uidCollection, 'formulasCalc')
-			let rate = await getCur(dateFormat(new Date(), 'yyyy-mm-dd'));
+// SOLUTION 1: Always set value, even if rate fails
+useEffect(() => {
+  const loadData = async () => {
+    try {
+      let data = await loadDataSettings(uidCollection, 'formulasCalc')
+      let rate = await getCur(dateFormat(new Date(), 'yyyy-mm-dd'));
+      
+      // Set rate if available, otherwise keep existing or set default
+      if (rate) {
+        data.general.euroRate = rate;
+      } else {
+        // Keep existing rate or set a default
+        data.general.euroRate = data.general.euroRate || 1.0;
+      }
+      
+      // ✅ ALWAYS set the value
+      setValue(data)
+    } catch (error) {
+      console.error('Error loading data:', error);
+      // Set empty data to stop loader
+      setValue({ general: {} });
+    }
+  }
+  loadData()
+}, [])
 
-			data.general.euroRate = rate;
-			if (rate) {
-				setValue(data)
-			}
-		}
+// SOLUTION 2: Add loading state for better control
+const [loading, setLoading] = useState(true);
 
-		loadData()
-	}, [])
+useEffect(() => {
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      let data = await loadDataSettings(uidCollection, 'formulasCalc')
+      let rate = await getCur(dateFormat(new Date(), 'yyyy-mm-dd'));
+      
+      if (rate) {
+        data.general.euroRate = rate;
+      }
+      
+      setValue(data)
+    } catch (error) {
+      console.error('Error loading data:', error);
+      setValue({ general: {} });
+    } finally {
+      setLoading(false); // ✅ Always stop loading
+    }
+  }
+  loadData()
+}, [])
 
+// Then use: {loading && <Spinner/>}
+
+// SOLUTION 3: Add timeout fallback
+useEffect(() => {
+  const loadData = async () => {
+    let data = await loadDataSettings(uidCollection, 'formulasCalc')
+    
+    // Set a timeout to stop loader if API takes too long
+    const timeoutId = setTimeout(() => {
+      if (!value.general) {
+        setValue({ general: {} });
+      }
+    }, 5000); // 5 second timeout
+    
+    try {
+      let rate = await getCur(dateFormat(new Date(), 'yyyy-mm-dd'));
+      data.general.euroRate = rate || data.general.euroRate || 1.0;
+      setValue(data)
+    } catch (error) {
+      console.error('Error:', error);
+      setValue(data); // Set data even without rate
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+  loadData()
+}, [])
 
 	const handleChange = (e, type) => {
 		const { name, value: inputValue } = e.target;
