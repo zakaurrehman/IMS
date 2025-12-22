@@ -1,4 +1,5 @@
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useState, useRef, useEffect } from 'react'
+import { useGlobalSearch } from '../../../contexts/useGlobalSearchContext'
 import imsLogo from '../../../public/logo/logoNew.svg';
 import Image from 'next/image'
 import { BiLogOutCircle,BiSearch } from 'react-icons/bi';
@@ -20,45 +21,99 @@ const SideBarMini = () => {
   const { SignOut, user } = UserAuth();
   const { setDates, compData } = useContext(SettingsContext);
   const ln = compData?.lng || 'English';
-    const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchRef = useRef(null);
+  const { query, setQuery, items } = useGlobalSearch();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const LogOut = async () => {
     router.push("/");
     await SignOut();
   }
 
+
+  // Close dropdown/search when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSearchOpen(false);
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const normalizedQuery = (query || '').trim().toLowerCase();
+  const searchResults =
+    normalizedQuery.length < 2
+      ? []
+      : items
+          .filter((x) => (x.searchText || '').toLowerCase().includes(normalizedQuery))
+          .slice(0, 10);
+
+  const onPickResult = (item) => {
+    setSearchOpen(false);
+    setShowDropdown(false);
+    setQuery('');
+    router.push(`${item.route}?focus=${encodeURIComponent(item.rowId)}`);
+  };
+
   return (
-    <nav className="w-full h-fit flex shadow-sm bg-gradient-to-br from-white via-[var(--endeavour)] to-[var(--port-gore)]" >
-   <div className='flex w-full justify-between items-center'>
+    <nav className="w-full h-fit flex shadow-sm bg-gradient-to-br from-white via-[var(--endeavour)] to-[var(--port-gore)]">
+      <div className='flex w-full justify-between items-center'>
         {/* Logo and Search Icon */}
         <div className='flex items-center'>
-       
- <div className='p-2'>
-          <Image
-            src={imsLogo}
-            className='overflow-hidden transition-all w-12'
-            alt="IMS Logo"
-            priority
-          />
-        </div>
-            <BiSearch
-            className="text-xl text-white cursor-pointer ml-4"
-            onClick={() => setSearchOpen(!searchOpen)}
-          />
-
-        </div>
-            {searchOpen && (
-          <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-3/4">
-            <input
-              type="text"
-              placeholder={getTtl('Search anything...', ln)}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-4 pr-10 py-2.5 rounded-lg bg-gray-50 border border-transparent focus:border-[var(--rock-blue)] focus:bg-white focus:outline-none text-sm text-gray-600 placeholder-gray-400 transition-all"
+          <div className='p-2'>
+            <Image
+              src={imsLogo}
+              className='overflow-hidden transition-all w-12'
+              alt="IMS Logo"
+              priority
             />
           </div>
-        )}
+          <div className='relative' ref={searchRef}>
+            <BiSearch
+              className="text-xl text-white cursor-pointer ml-4"
+              onClick={() => {
+                setSearchOpen((v) => !v);
+                setShowDropdown(true);
+              }}
+            />
+            {searchOpen && (
+              <div className="absolute top-12 left-0 w-72 z-[100]">
+                <input
+                  type="text"
+                  placeholder={getTtl('Search anything...', ln)}
+                  value={query}
+                  onFocus={() => setShowDropdown(true)}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    setShowDropdown(true);
+                  }}
+                  className="w-full pl-4 pr-10 py-2.5 rounded-lg bg-gray-50 border border-transparent focus:border-[var(--rock-blue)] focus:bg-white focus:outline-none text-sm text-gray-600 placeholder-gray-400 transition-all"
+                />
+                {/* Search Dropdown */}
+                {showDropdown && searchResults.length > 0 && (
+                  <div className='absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border border-[var(--selago)] z-[101] overflow-auto max-h-80 w-full min-w-[16rem]'>
+                    {searchResults.map((r) => (
+                      <button
+                        key={r.key}
+                        type='button'
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => onPickResult(r)}
+                        className='w-full text-left px-4 py-3 hover:bg-[var(--selago)] transition-all flex flex-col items-start'
+                      >
+                        <div className='text-sm font-semibold text-[var(--port-gore)] break-words'>{r.title}</div>
+                        <div className='text-xs text-gray-500 truncate w-full'>{r.subtitle}</div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
 
 
            <Menu as="div" className="relative inline-block text-left">
