@@ -139,7 +139,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, ln, se
                                     {hdGroup.headers.map(header => (
                                         <th
                                             key={header.id}
-                                            className="relative px-6 py-2 text-left text-sm font-medium text-white uppercase hover:bg-[var(--rock-blue)] hover:text-white "
+                                            className="relative px-6 py-2 text-left text-sm font-medium text-white uppercase hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] "
                                         >
                                             {header.column.getCanSort() ? (
                                                 <div
@@ -173,14 +173,14 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, ln, se
                             {table.getRowModel().rows.map(row => (
                                 <tr
                                     key={row.id}
-                                    className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-white '
+                                    className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] '
                                     onDoubleClick={() => SelectRow(row.original)}
                                 >
                                     {row.getVisibleCells().map(cell => (
                                         <td
                                             key={cell.id}
                                             data-label={cell.column.columnDef.header}
-                                            className={`table_cell text-xs md:py-2 items-center hover:bg-[var(--rock-blue)] hover:text-white`}
+                                            className={`table_cell text-xs md:py-2 items-center hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)]`}
                                         >
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>

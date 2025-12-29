@@ -108,7 +108,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, /*cb,*
                                     <tr className="cursor-pointer bg-[var(--rock-blue)]/50">
                                         {hdGroup.headers.map(
                                             header =>
-                                                <th key={header.id} className="text-[var(--port-gore)] font-semibold table_cell text-xs py-1.5 text-left hover:bg-[var(--rock-blue)] hover:text-white ">
+                                                <th key={header.id} className="text-[var(--port-gore)] font-semibold table_cell text-xs py-1.5 text-left hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] ">
                                                     {header.column.columnDef.ttlUS}
                                                 </th>
                                         )}
@@ -116,7 +116,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, /*cb,*
                                     <tr className="cursor-pointer bg-[var(--rock-blue)]/50">
                                         {hdGroup.headers.map(
                                             header =>
-                                                <th key={header.id} className="text-[var(--port-gore)] font-semibold table_cell text-xs py-1.5 text-left hover:bg-[var(--rock-blue)] hover:text-white ">
+                                                <th key={header.id} className="text-[var(--port-gore)] font-semibold table_cell text-xs py-1.5 text-left hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] ">
                                                     {header.column.columnDef.ttlEU}
                                                 </th>
                                         )}
@@ -124,7 +124,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, /*cb,*
                                     <tr key={hdGroup.id + '-row'} className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
                                         {hdGroup.headers.map(
                                             header =>
-                                                <th key={header.id + '-header'} className={`relative px-6 py-3 text-left text-sm font-semibold text-white uppercase hover:bg-[var(--rock-blue)] hover:text-white `}>
+                                                <th key={header.id + '-header'} className={`relative px-6 py-3 text-left text-sm font-semibold text-white uppercase hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] `}>
                                                     {header.column.getCanSort() ?
 
                                                         <div onClick={header.column.getToggleSortingHandler()}
@@ -153,9 +153,9 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, /*cb,*
                         </thead>
                         <tbody className="divide-y divide-[var(--selago)] bg-white">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-white ' onDoubleClick={() => SelectRow(row.original)}>
+                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] ' onDoubleClick={() => SelectRow(row.original)}>
                                     {row.getVisibleCells().map(cell => (
-                                        <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs text-[var(--port-gore)] md:py-3 hover:bg-[var(--rock-blue)] hover:text-white `}>
+                                        <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs text-[var(--port-gore)] md:py-3 hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] `}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     ))}

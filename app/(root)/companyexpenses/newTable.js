@@ -186,7 +186,7 @@ const Customtable = ({ data, columns, SelectRow, excellReport, setFilteredId, in
                             {table.getRowModel().rows.map(row => (
                                 <tr
                                     key={row.id}
-                                    className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-white '
+                                    className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] '
                                     onDoubleClick={() => SelectRow(row.original)}
                                 >
 

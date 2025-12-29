@@ -124,7 +124,7 @@ meta: {
                                 <tr key={hdGroup.id} className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
                                     {hdGroup.headers.map(
                                         header =>
-                                            <th key={header.id} className={`relative px-6 py-3 text-left text-xs font-semibold text-white uppercase hover:bg-[var(--rock-blue)] hover:text-white `}>
+                                            <th key={header.id} className={`relative px-6 py-3 text-left text-xs font-semibold text-white uppercase hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] `}>
                                                 <span className="table-caption">{header.column.columnDef.header}</span>
                                                 {header.column.getCanFilter() ? (
                                                     <div>
@@ -142,7 +142,7 @@ meta: {
                                 return (
                                     <tr key={row.id} className={`
                                     ${bottomRow ? 'border-b border-[var(--rock-blue)]' : 'border-b border-[var(--selago)]'}
-                                    hover:bg-[var(--rock-blue)] hover:text-white 
+                                    hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] 
                                     `}>
                                         {row.getVisibleCells().map(cell => {
                                             let hideTD = !row.original.span && cell.column?.id === 'num';
@@ -153,7 +153,7 @@ meta: {
                                                 !hideTD &&
                                                 <td rowSpan={cell.column?.id === 'num' && row.original?.span ? row.original.span : null}
                                                     key={cell.id} data-label={cell.column.columnDef.header}
-                                                    className={`table_cell text-xs md:py-2 text-[var(--port-gore)] hover:bg-[var(--rock-blue)] hover:text-white  ${brdr ? 'border border-[var(--rock-blue)] bg-[var(--selago)]/30' : ''}`}>
+                                                    className={`table_cell text-xs md:py-2 text-[var(--port-gore)] hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)]  ${brdr ? 'border border-[var(--rock-blue)] bg-[var(--selago)]/30' : ''}`}>
                                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                 </td>
 

@@ -48,7 +48,7 @@ const Page = () => {
                                             'ring-white ring-opacity-60 focus:outline-none focus:ring-1',
                                             selected
                                                 ? 'text-white bg-slate-500 shadow'
-                                                : 'text-slate-600 hover:bg-slate-400 hover:text-white border border-slate-400'
+                                                : 'text-slate-600 hover:bg-slate-400 hover:text-[var(--bunting)] border border-slate-400'
                                         )
                                     }
                                 >

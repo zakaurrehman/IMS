@@ -104,53 +104,63 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, se
                     setQuickSumColumns={setQuickSumColumns}
                 />
 
-                <div className="overflow-x-auto border-x border-[var(--selago)] md:max-h-[400px] 2xl:max-h-[550px]">
+                <div className="overflow-x-auto border-x border-[var(--selago)] max-h-[360px] md:max-h-[310px] 2xl:max-h-[550px]">
                     <table className="w-full">
                         <thead className="md:sticky md:top-0 md:z-10">
                             {table.getHeaderGroups().map((hdGroup, i) =>
                                 <Fragment key={hdGroup.id}>
-                                    <tr className="cursor-pointer bg-[var(--rock-blue)]/50">
-                                        {hdGroup.headers.map(
-                                            header =>
-                                                <th key={header.id} className="text-[var(--port-gore)] font-semibold table_cell py-2 text-xs text-left hover:bg-[var(--rock-blue)] hover:text-white ">
-                                                    {header.column.columnDef.ttl}
-                                                </th>
-                                        )}
-                                    </tr>
-                                    <tr key={hdGroup.id + '-row'} className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
-                                        {hdGroup.headers.map(
-                                            header =>
-                                                <th key={header.id + '-header'} className="relative px-6 py-3 text-left text-sm font-semibold text-white uppercase hover:bg-[var(--rock-blue)] hover:text-white ">
-                                                    {header.column.getCanSort() ?
-
-                                                        <div onClick={header.column.getToggleSortingHandler()} className="table-caption text-xs cursor-pointer items-center gap-1">
-                                                            {header.column.columnDef.header}
-                                                            {
-                                                                {
-                                                                    asc: <TbSortAscending className="text-white scale-125" />,
-                                                                    desc: <TbSortDescending className="text-white scale-125" />
-                                                                }[header.column.getIsSorted()]
-                                                            }
-                                                        </div>
-                                                        :
-                                                        <span className="text-xs table-caption">{header.column.columnDef.header}</span>
-                                                    }
-                                                    {header.column.getCanFilter() ? (
-                                                        <div>
-                                                            <Filter column={header.column} table={table} filterOn={filterOn} />
-                                                        </div>
-                                                    ) : null}
-                                                </th>
+                                    <tr key={hdGroup.id} className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
+                                        {hdGroup.headers.map(header =>
+                                            <th
+                                                key={header.id}
+                                                className="relative px-6 py-3 text-left text-sm text-white uppercase font-semibold hover:bg-[var(--rock-blue)]"
+                                            >
+                                                {header.column.getCanSort() ? (
+                                                    <div
+                                                        onClick={header.column.getToggleSortingHandler()}
+                                                        className="flex items-center gap-1 whitespace-nowrap cursor-pointer"
+                                                    >
+                                                        {header.column.columnDef.header}
+                                                        {{
+                                                            asc: <TbSortAscending className="scale-125" />,
+                                                            desc: <TbSortDescending className="scale-125" />
+                                                        }[header.column.getIsSorted()]}
+                                                    </div>
+                                                ) : (
+                                                    <span className="text-xs font-medium">
+                                                        {header.column.columnDef.header}
+                                                    </span>
+                                                )}
+                                                {header.column.getCanFilter() && filterOn && (
+                                                    <div className="mt-1 sm:mt-0 dropdown-left-space">
+                                                        <Filter column={header.column} table={table} filterOn={filterOn} />
+                                                    </div>
+                                                )}
+                                            </th>
                                         )}
                                     </tr>
                                 </Fragment>
                             )}
                         </thead>
-                        <tbody className="divide-y divide-[var(--selago)] bg-white">
+                        <tbody className="divide-y divide-[var(--selago)]">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className="hover:bg-[var(--rock-blue)] hover:text-white ">
+                                <tr
+                                    key={row.id}
+                                    className={`cursor-pointer ${row.getIsSelected() ? 'bg-blue-100' : ''} hover:bg-[var(--rock-blue)]`}
+                                    onDoubleClick={() => SelectRow(row.original)}
+                                >
                                     {row.getVisibleCells().map(cell => (
-                                        <td key={cell.id} className="table_cell text-xs md:py-2 text-[var(--port-gore)] hover:bg-[var(--rock-blue)] hover:text-white ">
+                                        <td
+                                            key={cell.id}
+                                            data-label={cell.column.columnDef.header}
+                                            className={`
+                                                table_cell
+                                                text-xs sm:text-sm
+                                                break-words whitespace-normal
+                                                max-w-full sm:max-w-none
+                                                hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)]
+                                            `}
+                                        >
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     ))}
@@ -159,11 +169,13 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, se
                         </tbody>
                     </table>
                 </div>
-                <div className="flex p-2 border-t border-[var(--selago)] flex-wrap bg-[var(--selago)]/50 rounded-b-xl">
-                    <div className="hidden lg:flex text-[var(--port-gore)] text-sm w-48 xl:w-96 p-2 items-center">
-                        {`${getTtl('Showing', ln)} ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
-                            (table.getFilteredRowModel().rows.length ? 1 : 0)}-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
-                            ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
+                <div className="table-toolbar flex p-2.5 border-t border-[var(--selago)] flex-wrap bg-white rounded-b-2xl">
+                    <div className="hidden lg:flex text-[var(--regent-gray)] text-sm w-48 xl:w-96 p-2">
+                        {`${getTtl('Showing', ln)} ${
+                            table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
+                            (table.getFilteredRowModel().rows.length ? 1 : 0)
+                        }-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
+                        ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
                     </div>
                     <Paginator table={table} />
                     <RowsIndicator table={table} />

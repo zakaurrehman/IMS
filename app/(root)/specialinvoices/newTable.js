@@ -174,7 +174,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                                     <tr className="cursor-pointer bg-[var(--rock-blue)]/50">
                                         {hdGroup.headers.map(
                                             header =>
-                                                <th key={header.id} className="text-[var(--port-gore)] font-medium table_cell text-xs py-1.5 text-left hover:bg-[var(--rock-blue)] hover:text-white ">
+                                                <th key={header.id} className="text-[var(--port-gore)] font-medium table_cell text-xs py-1.5 text-left hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] ">
                                                     {header.id === 'compName' ? 'Total €:' :
                                                         header.id === 'total' ? totalEUR :
                                                             header.id === 'qnty' ? qntyEur * 1 === 0 ? '0' : qntyEur : ''}
@@ -184,7 +184,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                                     <tr key={hdGroup.id} className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
                                         {hdGroup.headers.map(
                                             header =>
-                                                <th key={header.id} className="relative px-6 py-3 text-left text-sm font-semibold text-white uppercase hover:bg-[var(--rock-blue)] hover:text-white ">
+                                                <th key={header.id} className="relative px-6 py-3 text-left text-sm font-semibold text-white uppercase hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] ">
                                                     {header.column.getCanSort() ?
                                                         <div onClick={header.column.getToggleSortingHandler()} className="table-caption cursor-pointer items-center gap-1 text-xs font-semibold">
                                                             {header.column.columnDef.header}
@@ -210,10 +210,10 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                         </thead>
                         <tbody className="divide-y divide-[var(--selago)]">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-white ' onDoubleClick={() => SelectRow(row.original)}>
+                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] ' onDoubleClick={() => SelectRow(row.original)}>
 
                                     {row.getVisibleCells().map(cell => (
-                                        <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs hover:bg-[var(--rock-blue)] hover:text-white  ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
+                                        <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)]  ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     ))}

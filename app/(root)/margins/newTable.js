@@ -211,93 +211,127 @@ const Customtable = (props) => {
         >
             <div className="flex flex-col relative">
                 <div className="rounded-md border border-[var(--selago)] overflow-visible relative">
-
-                    <Table className="relative">
-                        <TableHeader className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
-                            {table.getHeaderGroups().map((headerGroup) => (
-
-                                <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => {
-                                        return (
-                                            <TableHead key={header.id} className={cn('p-1 h-8 font-bold text-xs text-white',
-                                                (header.column.id === 'margin' ? 'text-right px-6' :
-                                                    header.column.id === 'totalMargin' ? 'text-right px-2' :
-                                                        ''))}>
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : flexRender(header.column.columnDef.header, header.getContext())}
-                                            </TableHead>
-                                        );
-                                    })}
-                                </TableRow>
-                            ))}
-                        </TableHeader>
-                        <TableBody>
-                            <SortableContext
-                                items={dataIds(data)}
-                                strategy={verticalListSortingStrategy}
-                            >
-                                {table.getRowModel().rows.length > 0 ? (
-                                    table.getRowModel().rows.map((row) => (
-                                        <DraggableRow key={row.id} row={row} props={props} cName={cName} />
-                                    ))) :
-                                    (
-                                        <TableRow>
-                                            <TableCell colSpan={columns.length} className="h-24 text-center">
-                                                No results.
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                }
-                            </SortableContext>
-                        </TableBody>
-                        {data.length ? <TableFooter>
-                            {table.getFooterGroups().map((footerGroup) => (
-                                <TableRow key={footerGroup.id} className='bg-[var(--selago)]/50'>
-                                    {footerGroup.headers.map((footer) => {
-                                        const accessorKey = footer.column.columnDef.accessorKey;
-
-
-                                        // Calculate the total only for numeric columns
-                                        const total = data.reduce((sum, row) => {
-                                            const value = (accessorKey === 'totalMargin' || accessorKey === 'remaining') && row?.gis ?
-                                                row[accessorKey] / 2 : row[accessorKey];
-
-                                            return sum + (value * 1 || 0)
-                                        }, 0);
-                                        return (
-                                            <TableCell
-                                                key={`footer-${footer.id}`}
-                                                className={cn('p-1 text-left text-xs',
-                                                    ["totalMargin", "remaining", "purchase", "openShip"].includes(accessorKey) ?
-                                                        'border-t border-t-[var(--endeavour)]' : '')}
-                                            >
-                                                {
-                                                    ["totalMargin", "remaining", "purchase", "openShip"].includes(accessorKey) &&
-                                                    <NumericFormat
-                                                        value={total}
-                                                        displayType="text"
-                                                        thousandSeparator
-                                                        allowNegative={true}
-                                                        prefix={currs.includes(accessorKey) ? '$' : ''}
-                                                        decimalScale={currs.includes(accessorKey) ? '2' : '3'}
-                                                        fixedDecimalScale
-                                                        className={`text-[0.8rem] text-[var(--port-gore)] font-semibold
-                                                             ${accessorKey === 'totalMargin' ? 'flex justify-end px-1' : ''}`}
-                                                    />
-                                                }
-
-                                            </TableCell>
-                                        );
-                                    })}
-                                </TableRow>
-                            ))}
-                        </TableFooter>
-                            : ''}
-                    </Table>
+                    {/* Desktop Table */}
+                    <div className="overflow-x-auto hidden sm:block">
+                        <Table className="relative min-w-[900px]">
+                            <TableHeader className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <TableRow key={headerGroup.id}>
+                                        {headerGroup.headers.map((header) => {
+                                            return (
+                                                <TableHead key={header.id} className={cn('p-1 h-8 font-bold text-xs text-white',
+                                                    (header.column.id === 'margin' ? 'text-right px-6' :
+                                                        header.column.id === 'totalMargin' ? 'text-right px-2' :
+                                                            ''))}>
+                                                    {header.isPlaceholder
+                                                        ? null
+                                                        : flexRender(header.column.columnDef.header, header.getContext())}
+                                                </TableHead>
+                                            );
+                                        })}
+                                    </TableRow>
+                                ))}
+                            </TableHeader>
+                            <TableBody>
+                                <SortableContext
+                                    items={dataIds(data)}
+                                    strategy={verticalListSortingStrategy}
+                                >
+                                    {table.getRowModel().rows.length > 0 ? (
+                                        table.getRowModel().rows.map((row) => (
+                                            <DraggableRow key={row.id} row={row} props={props} cName={cName} />
+                                        ))) :
+                                        (
+                                            <TableRow>
+                                                <TableCell colSpan={columns.length} className="h-24 text-center">
+                                                    No results.
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    }
+                                </SortableContext>
+                            </TableBody>
+                            {data.length ? <TableFooter>
+                                {table.getFooterGroups().map((footerGroup) => (
+                                    <TableRow key={footerGroup.id} className='bg-[var(--selago)]/50'>
+                                        {footerGroup.headers.map((footer) => {
+                                            const accessorKey = footer.column.columnDef.accessorKey;
+                                            // Calculate the total only for numeric columns
+                                            const total = data.reduce((sum, row) => {
+                                                const value = (accessorKey === 'totalMargin' || accessorKey === 'remaining') && row?.gis ?
+                                                    row[accessorKey] / 2 : row[accessorKey];
+                                                return sum + (value * 1 || 0)
+                                            }, 0);
+                                            return (
+                                                <TableCell
+                                                    key={`footer-${footer.id}`}
+                                                    className={cn('p-1 text-left text-xs',
+                                                        ["totalMargin", "remaining", "purchase", "openShip"].includes(accessorKey) ?
+                                                            'border-t border-t-[var(--endeavour)]' : '')}
+                                                >
+                                                    {
+                                                        ["totalMargin", "remaining", "purchase", "openShip"].includes(accessorKey) &&
+                                                        <NumericFormat
+                                                            value={total}
+                                                            displayType="text"
+                                                            thousandSeparator
+                                                            allowNegative={true}
+                                                            prefix={currs.includes(accessorKey) ? '$' : ''}
+                                                            decimalScale={currs.includes(accessorKey) ? '2' : '3'}
+                                                            fixedDecimalScale
+                                                            className={`text-[0.8rem] text-[var(--port-gore)] font-semibold
+                                                                 ${accessorKey === 'totalMargin' ? 'flex justify-end px-1' : ''}`}
+                                                        />
+                                                    }
+                                                </TableCell>
+                                            );
+                                        })}
+                                    </TableRow>
+                                ))}
+                            </TableFooter>
+                                : ''}
+                        </Table>
+                    </div>
+                    {/* Mobile stacked card layout */}
+                    <div className="sm:hidden flex flex-col gap-4">
+                        {data.map((row, rowIdx) => (
+                            <div key={row.id || rowIdx} className="rounded-lg border border-[var(--selago)] bg-white p-2 flex flex-col shadow-sm">
+                                {columns.filter(col => col.accessorKey !== 'del' && col.accessorKey !== 'drag-handle').map((col, colIdx) => (
+                                    <div key={col.accessorKey || colIdx} className="flex justify-between items-center py-1 border-b last:border-b-0">
+                                        <span className="font-semibold text-xs text-[var(--port-gore)]">{typeof col.header === 'string' ? col.header : ''}</span>
+                                        {/* Render input/select/number/checkbox as per column type */}
+                                        {(() => {
+                                            if (col.accessorKey === 'date') {
+                                                return <DatePicker props={{ row: { original: row } }} handleChangeDate={props.handleChangeDate} month={row.month} handleCancelDate={props.handleCancelDate} />
+                                            }
+                                            if (col.accessorKey === 'supplier' || col.accessorKey === 'client') {
+                                                return <SelectEnt props={{ row: { original: row } }} data={col.accessorKey === 'supplier' ? props.settings.Supplier.Supplier : props.settings.Client.Client} handleChangeSelect={props.handleChangeSelect} month={row.month} name={col.accessorKey} plHolder={col.accessorKey === 'supplier' ? 'Select Supplier' : 'Select Client'} />
+                                            }
+                                            if (col.accessorKey === 'gis') {
+                                                return <CheckBox size='size-5' checked={row.gis ?? false} onChange={() => props.handleCheckBox(!row.gis, rowIdx, row.month)} />
+                                            }
+                                            if (['purchase', 'description', 'margin', 'shipped'].includes(col.accessorKey)) {
+                                                return <Input props={{ row: { original: row }, column: { id: col.accessorKey }, getValue: () => row[col.accessorKey] }} handleChange={props.handleChange} month={row.month} name={col.accessorKey} styles='w-full' addCur={currs.includes(col.accessorKey)} />
+                                            }
+                                            if (['totalMargin', 'remaining', 'openShip'].includes(col.accessorKey)) {
+                                                return <NumericFormat value={row[col.accessorKey]} displayType="text" thousandSeparator allowNegative={true} prefix={currs.includes(col.accessorKey) ? '$' : ''} decimalScale={currs.includes(col.accessorKey) ? '2' : '3'} fixedDecimalScale className='text-[0.8rem] text-[var(--port-gore)] text-right w-full' />
+                                            }
+                                            return <span className='text-xs'>{row[col.accessorKey]}</span>
+                                        })()}
+                                    </div>
+                                ))}
+                                {/* Delete button */}
+                                <div className="flex justify-end pt-2">
+                                    <button className="text-[var(--endeavour)]" onClick={e => props.deleteRow(e, rowIdx, row.month)}>
+                                        <MdDeleteOutline className="scale-125 cursor-pointer" />
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </DndContext >
+        </DndContext>
     );
 }
 

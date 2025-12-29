@@ -110,7 +110,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, ty
                                 <tr key={hdGroup.id} className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]'>
                                     {hdGroup.headers.map(
                                         header =>
-                                            <th key={header.id} className="relative px-4 py-3 text-left text-sm font-semibold text-white uppercase hover:bg-[var(--rock-blue)] hover:text-white ">
+                                            <th key={header.id} className="relative px-4 py-3 text-left text-sm font-semibold text-white uppercase hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] ">
                                                 {header.column.getCanSort() ?
                                                     <div onClick={header.column.getToggleSortingHandler()} className="text-xs table-caption cursor-pointer items-center gap-1">
                                                         {header.column.columnDef.header}
@@ -135,9 +135,9 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, ty
                         </thead>
                         <tbody className="divide-y divide-[var(--selago)]">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-white ' onDoubleClick={() => SelectRow(row.original)}>
+                                <tr key={row.id} className='cursor-pointer hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)] ' onDoubleClick={() => SelectRow(row.original)}>
                                     {row.getVisibleCells().map(cell => (
-                                        <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs px-4 hover:bg-[var(--rock-blue)] hover:text-white  ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
+                                        <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs px-4 hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)]  ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     ))}

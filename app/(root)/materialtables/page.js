@@ -191,59 +191,53 @@ const MaterialTables = () => {
 
 
     return (
-        <div className="container mx-auto px-0 pb-8 md:pb-0 mt-16 md:mt-0">
-      
+        <div className="w-full max-w-full px-2 sm:px-4 md:px-8 pb-8 md:pb-0 mt-8 md:mt-0 mx-auto">
             {Object.keys(settings).length === 0 ? <Spinner /> :
                 <>
                     <Toast />
-                    <div className="border border-[var(--selago)] rounded-xl p-4 mt-8 shadow-lg bg-white relative">
-                        <div className='flex items-center justify-between flex-wrap pb-2'>
-                            <div className="text-3xl p-1 pb-2 text-[var(--port-gore)] font-semibold"> {getTtl('Material Tables', ln)} </div>
+                    <div className="border border-[var(--selago)] rounded-xl p-2 sm:p-4 mt-4 shadow-lg bg-white relative max-w-7xl mx-auto">
+                        <div className="flex items-center justify-between flex-wrap pb-2">
+                            <div className="text-2xl sm:text-3xl p-1 pb-2 text-[var(--port-gore)] font-semibold">{getTtl('Material Tables', ln)}</div>
                         </div>
-
-                        <div className="flex gap-4">
-                            <Button className='bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] hover:opacity-90' onClick={addTable}>
+                        <div className="flex gap-2 sm:gap-4 flex-wrap">
+                            <Button className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] hover:opacity-90 min-w-[100px]" onClick={addTable}>
                                 Add Table
                             </Button>
-                            <Button className='bg-white border-[var(--rock-blue)] text-[var(--port-gore)]' variant='outline' onClick={saveTable}>
+                            <Button className="bg-white border-[var(--rock-blue)] text-[var(--port-gore)] min-w-[100px]" variant="outline" onClick={saveTable}>
                                 Save
                             </Button>
                         </div>
-                        <div className="max-w-7xl">
-                            {data.map(table => {
-                                return (
-                                    <Table data={table.data} key={table.id}
-                                        table1={table}
-                                        columns={propDefaults}
-                                        addMaterial={() => addMaterial(table)}
-                                        editCell={editCell}
-                                        delMaterial={delMaterial}
-                                        delTable={delTable}
-                                        runPdf={runPdf}
-                                        excellReport={EXD(table.data)}
-                                    />
-
-                                )
-                            })}
+                        <div className="w-full overflow-x-auto mt-4">
+                            {data.map(table => (
+                                <Table
+                                    data={table.data}
+                                    key={table.id}
+                                    table1={table}
+                                    columns={propDefaults}
+                                    addMaterial={() => addMaterial(table)}
+                                    editCell={editCell}
+                                    delMaterial={delMaterial}
+                                    delTable={delTable}
+                                    runPdf={runPdf}
+                                    excellReport={EXD(table.data)}
+                                />
+                            ))}
                         </div>
-
-                        {(data.length && !Object.values(totals).some(value => isNaN(value))) ? <div className="max-w-7xl pt-8">
-                            <TableTotals
-                                data={[totals]}
-                                columns={propDefaults}
-                                addMaterial={addMaterial}
-                                editCell={editCell}
-                                delMaterial={delMaterial}
-                                delTable={delTable}
-
-                            />
-                        </div>
-                            : null
-                        }
+                        {(data.length && !Object.values(totals).some(value => isNaN(value))) ? (
+                            <div className="w-full pt-8 overflow-x-auto">
+                                <TableTotals
+                                    data={[totals]}
+                                    columns={propDefaults}
+                                    addMaterial={addMaterial}
+                                    editCell={editCell}
+                                    delMaterial={delMaterial}
+                                    delTable={delTable}
+                                />
+                            </div>
+                        ) : null}
                     </div>
                 </>
-
-            } 
+            }
         </div>
 
     )

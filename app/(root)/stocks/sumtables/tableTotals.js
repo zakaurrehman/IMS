@@ -80,17 +80,17 @@ const Customtable = ({ data, columns, ln, ttl, settings, dataTable, rmrk }) => {
                         ))}
                     </tbody>
                     <tfoot>
-                        <tr className="border-t border-[var(--selako)] bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
-                            <td colSpan={columns.length} className="px-2 py-1 md:px-6 md:py-2">
-                                <div className="grid grid-cols-4 gap-2 md:gap-4 min-w-0">
-                                    <span className="text-[0.7rem] md:text-[0.8rem] font-medium text-white uppercase">Total $</span>
-                                    <span className="text-[0.7rem] md:text-[0.8rem] font-medium text-white uppercase"></span>
-                                    <span className="text-[0.7rem] md:text-[0.8rem] font-medium text-white uppercase">
+                        <tr className="border-t border-[var(--selako)] bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] z-[50] sticky bottom-0" style={{position:'sticky', zIndex:50, background:'#1751a1', marginBottom:'80px'}}>
+                            <td colSpan={columns.length} className="px-2 py-2 md:px-8 md:py-3 !pb-6">
+                                <div className="grid grid-cols-4 gap-2 md:gap-4 min-w-0 w-full" style={{minWidth:'320px'}}>
+                                    <span className="text-[0.8rem] md:text-[1rem] font-bold text-white uppercase break-words min-w-[60px]">Total $</span>
+                                    <span className="text-[0.8rem] md:text-[1rem] font-bold text-white uppercase break-words min-w-[30px]"></span>
+                                    <span className="text-[0.8rem] md:text-[1rem] font-bold text-white uppercase break-words min-w-[80px] text-right block">
                                         {showAmount1(data
                                             .filter(item => item.cur === "USD")
                                             .reduce((sum, item) => sum + item.qnty, 0))}
                                     </span>
-                                    <span className="text-[0.7rem] md:text-[0.8rem] font-medium text-white uppercase pr-8 text-right block break-words min-w-0">
+                                    <span className="text-[0.8rem] md:text-[1rem] font-bold text-white uppercase pr-24 md:pr-32 text-right block break-words min-w-[120px]" style={{paddingRight:'3.5rem', background:'#1751a1'}}>
                                         {showAmount(data
                                             .filter(item => item.cur === "USD")
                                             .reduce((sum, item) => sum + item.total, 0), 'usd')}
@@ -98,17 +98,17 @@ const Customtable = ({ data, columns, ln, ttl, settings, dataTable, rmrk }) => {
                                 </div>
                             </td>
                         </tr>
-                        <tr className="border-t border-[var(--selako)] bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
-                            <td colSpan={columns.length} className="px-2 py-1 md:px-6 md:py-2">
-                                <div className="grid grid-cols-4 gap-2 md:gap-4 min-w-0">
-                                    <span className="text-[0.7rem] md:text-[0.8rem] font-medium text-white uppercase">Total €</span>
-                                    <span className="text-[0.7rem] md:text-[0.8rem] font-medium text-white uppercase"></span>
-                                    <span className="text-[0.7rem] md:text-[0.8rem] font-medium text-white uppercase">
+                        <tr className="border-t border-[var(--selako)] bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] z-[50] sticky bottom-0" style={{position:'sticky', zIndex:50, background:'#1751a1', marginBottom:'80px'}}>
+                            <td colSpan={columns.length} className="px-2 py-2 md:px-8 md:py-3 !pb-6">
+                                <div className="grid grid-cols-4 gap-2 md:gap-4 min-w-0 w-full" style={{minWidth:'320px'}}>
+                                    <span className="text-[0.8rem] md:text-[1rem] font-bold text-white uppercase break-words min-w-[60px]">Total €</span>
+                                    <span className="text-[0.8rem] md:text-[1rem] font-bold text-white uppercase break-words min-w-[30px]"></span>
+                                    <span className="text-[0.8rem] md:text-[1rem] font-bold text-white uppercase break-words min-w-[80px] text-right block">
                                         {showAmount1(data
                                             .filter(item => item.cur === "EUR")
                                             .reduce((sum, item) => sum + item.qnty, 0))}
                                     </span>
-                                    <span className="text-[0.7rem] md:text-[0.8rem] font-medium text-white uppercase pr-8 text-right block break-words min-w-0">
+                                    <span className="text-[0.8rem] md:text-[1rem] font-bold text-white uppercase pr-24 md:pr-32 text-right block break-words min-w-[120px]" style={{paddingRight:'3.5rem', background:'#1751a1'}}>
                                         {showAmount(data
                                             .filter(item => item.cur === "EUR")
                                             .reduce((sum, item) => sum + item.total, 0), 'eur')}

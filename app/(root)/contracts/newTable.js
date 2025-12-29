@@ -225,9 +225,9 @@ const Customtable = ({
                     className={`
                       table_cell 
                       text-xs sm:text-sm
-                      truncate 
-                      max-w-[160px] sm:max-w-none
-                      hover:bg-[var(--rock-blue)] hover:text-white
+                      break-words whitespace-normal
+                      max-w-full sm:max-w-none
+                      hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)]
                       ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}
                     `}
                   >

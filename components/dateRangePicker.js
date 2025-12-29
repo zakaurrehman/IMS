@@ -1,3 +1,14 @@
+// Hook to detect if device is mobile (width < 768px)
+function useIsMobile() {
+    const [isMobile, setIsMobile] = React.useState(false);
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+    return isMobile;
+}
 import React, { useContext, useState, useEffect } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { SettingsContext } from "../contexts/useSettingsContext";
@@ -39,6 +50,7 @@ const DateRangePicker = () => {
         });
     };
 
+    const isMobile = useIsMobile();
     return (
         <Datepicker
             inputClassName='border border-[var(--rock-blue)]/50 text-sm/6 p-1.5 px-2 rounded-xl text-[var(--port-gore)] w-60
@@ -82,7 +94,7 @@ const DateRangePicker = () => {
                     },
                 }
             }}
-            containerClassName="z-[9999] relative"
+            containerClassName={isMobile ? "z-[10] relative" : "z-[1000] relative"}
         />
     );
 };
