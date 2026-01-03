@@ -13,7 +13,6 @@ import Toast from '../../../components/toast.js'
 import ModalCopyInvoice from '../../../components/modalCopyInvoice';
 //import EditableCell from '../../../components/table/EditableCell';
 import useInlineEdit from '../../../hooks/useInlineEdit';
-
 import { loadData, sortArr, getD, saveDataSettings } from '../../../utils/utils'
 import Spinner from '../../../components/spinner';
 import { UserAuth } from "../../../contexts/useAuthContext"
@@ -22,7 +21,6 @@ import { EXD } from './excel'
 import dateFormat from "dateformat";
 import { getTtl } from '../../../utils/languages';
 import DateRangePicker from '../../../components/dateRangePicker';
-
 import Tooltip from '../../../components/tooltip';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Modal from '../../../components/modal';
@@ -344,10 +342,12 @@ useEffect(() => {
 						<div className='flex items-center justify-between flex-wrap pb-2'>
 							<div className="text-2xl p-1 pb-2 font-semibold text-[var(--port-gore)]"> {getTtl('Contracts', ln)} </div>
 							<div className='flex group'>
-								<DateRangePicker />
+								  <div className="relative">
+									<DateRangePicker />
+								</div>
 								<Tooltip txt='Select Dates Range' />
 
-								{/*<MonthSelect />*/}
+								
 							</div>
 
 						</div>

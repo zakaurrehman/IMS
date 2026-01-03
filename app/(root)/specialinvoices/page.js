@@ -203,11 +203,15 @@ const Contracts = () => {
                             setFilteredData={setFilteredData}
                         />
 
-                        <div className='flex flex-col w-full gap-2'>
-                            <TableTotals data={totals} columns={colsTotals} expensesData={filteredData}
-                                settings={settings} title='Sumarry - Unpaid invoices' filt='reduced' />
-                            <TableTotals data={totalsAll} columns={colsTotals} expensesData={filteredData}
-                                settings={settings} title='Sumarry' filt='full' />
+                        <div className='flex flex-col md:flex-row w-full gap-4 mt-6'>
+                            <div className='w-full md:w-1/2'>
+                                <TableTotals data={totals} columns={colsTotals} expensesData={filteredData}
+                                    settings={settings} title='Sumarry - Unpaid invoices' filt='reduced' />
+                            </div>
+                            <div className='w-full md:w-1/2'>
+                                <TableTotals data={totalsAll} columns={colsTotals} expensesData={filteredData}
+                                    settings={settings} title='Sumarry' filt='full' />
+                            </div>
                         </div>
 
                     </div>

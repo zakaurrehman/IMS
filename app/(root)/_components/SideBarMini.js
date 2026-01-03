@@ -133,7 +133,7 @@ const SideBarMini = () => {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <MenuItems className="fixed right-2 mt-1 w-76 origin-top-left divide-y divide-[var(--rock-blue)]/30 rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none h-[450px] overflow-auto z-[99999]" style={{ background: 'linear-gradient(180deg, var(--endeavour) 0%, var(--chathams-blue) 100%)' }}>
+                <MenuItems className="fixed right-2 mt-1 w-76 origin-top-left divide-y divide-[var(--rock-blue)]/30 rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none h-[450px] overflow-auto z-[20000]" style={{ background: 'linear-gradient(180deg, var(--endeavour) 0%, var(--chathams-blue) 100%)' }}>
 
                 {/* Company selector removed, menu starts from Dashboard */}
                    <div className='px-4 py-3 border-b border-[var(--selago)]'>

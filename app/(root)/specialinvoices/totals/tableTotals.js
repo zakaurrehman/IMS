@@ -138,22 +138,21 @@ const Customtable = ({ data, columns, expensesData, settings, title, filt, headi
     }
 
     return (
-        <div className="w-full max-w-full flex flex-col items-stretch px-2 sm:px-0">
+        <div className="w-full max-w-full flex flex-col items-stretch px-2 sm:px-0 h-full">
             {title && (
                 <div className="text-xl sm:text-2xl font-bold text-[#1a3353] mb-3 pl-1 pt-2">
                     {title}
                 </div>
             )}
-            <div className="bg-white rounded-xl shadow-lg border border-[#e3eafc] p-2 sm:p-4 mb-6 w-full flex flex-col">
+            <div className="bg-white rounded-xl shadow-lg border border-[#e3eafc] p-2 sm:p-4 mb-6 w-full flex flex-col h-full">
                 {heading && (
                     <div className="text-base sm:text-lg font-semibold text-[#1a3353] mb-3 sm:mb-4 pl-1 pt-1">
                         {heading}
                     </div>
                 )}
-                
                 {/* Desktop Table View */}
-                <div className="hidden sm:block overflow-x-auto">
-                    <table className="w-full border-separate border-spacing-0 min-w-[600px]">
+                <div className="hidden sm:block overflow-hidden flex-1">
+                    <table className="w-full border-separate border-spacing-0">
                         <thead>
                             {table1.getHeaderGroups().map(hdGroup => (
                                 <tr key={hdGroup.id}>

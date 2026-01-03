@@ -200,7 +200,7 @@ const MaterialTables = () => {
                             <div className="text-2xl sm:text-3xl p-1 pb-2 text-[var(--port-gore)] font-semibold">{getTtl('Material Tables', ln)}</div>
                         </div>
                         <div className="flex gap-2 sm:gap-4 flex-wrap">
-                            <Button className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] hover:opacity-90 min-w-[100px]" onClick={addTable}>
+                            <Button className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] hover:opacity-90 min-w-[100px] text-white" onClick={addTable}>
                                 Add Table
                             </Button>
                             <Button className="bg-white border-[var(--rock-blue)] text-[var(--port-gore)] min-w-[100px]" variant="outline" onClick={saveTable}>

@@ -1,4 +1,3 @@
-// Hook to detect if device is mobile (width < 768px)
 function useIsMobile() {
     const [isMobile, setIsMobile] = React.useState(false);
     React.useEffect(() => {
@@ -94,7 +93,7 @@ const DateRangePicker = () => {
                     },
                 }
             }}
-            containerClassName={isMobile ? "z-[10] relative" : "z-[1000] relative"}
+           containerClassName="relative"
         />
     );
 };

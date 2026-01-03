@@ -1,3 +1,4 @@
+// 
 'use client'
 
 import { useContext, useState, useRef, useEffect } from 'react'
@@ -61,22 +62,23 @@ export const MainNav = () => {
       {/* Search Bar */}
       <div className='flex items-center flex-1 max-w-xl'>
         <div className='relative w-full' ref={searchRef}>
-          <BiSearch className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg' />
+          <BiSearch className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none z-10' />
           <input
             type='text'
-            placeholder={getTtl('Search anything...', ln)}
-            value={query}
+            placeholder={getTtl('Search anything...', ln) || 'Search anything...'}
+            value={query || ''}
             onFocus={() => setOpenSearch(true)}
             onChange={(e) => {
               setQuery(e.target.value)
               setOpenSearch(true)
             }}
-            className='w-full pl-10 pr-4 py-2 rounded-full bg-gray-50 border border-gray-200 shadow-sm focus:border-[var(--rock-blue)] focus:bg-white focus:outline-none text-sm text-gray-700 placeholder-gray-500 transition-all'
+            className='w-full pl-10 pr-4 py-2 rounded-full bg-gray-50 border border-gray-200 shadow-sm focus:border-[var(--rock-blue)] focus:bg-white focus:outline-none text-sm text-gray-700 placeholder:text-gray-400 placeholder:opacity-100 transition-all'
+            style={{ color: query ? '#374151' : undefined }}
           />
 
           {/* Search Dropdown */}
           {openSearch && searchResults.length > 0 && (
-            <div className='absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border border-[var(--selago)] z-50 overflow-hidden'>
+            <div className='absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border border-[var(--selago)] z-50 overflow-hidden max-h-96 overflow-y-auto'>
               {searchResults.map((r) => (
                 <button
                   key={r.key}
@@ -99,6 +101,7 @@ export const MainNav = () => {
         <button
           className='p-2.5 rounded-lg bg-white border border-gray-200 hover:bg-[var(--selago)] hover:border-[var(--rock-blue)] transition-all group'
           onClick={() => router.push('apps/Assistant')}
+          aria-label='Assistant'
         >
           <IoChatbubblesOutline className='text-xl text-gray-500 group-hover:text-[var(--endeavour)]' />
         </button>
@@ -107,6 +110,7 @@ export const MainNav = () => {
           <button
             onClick={() => setShowDropdown(!showDropdown)}
             className='flex items-center gap-2 p-1 rounded-lg hover:bg-[var(--selago)] transition-all'
+            aria-label='User menu'
           >
             <div className='w-10 h-10 rounded-full bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] flex items-center justify-center text-white font-semibold text-sm overflow-hidden border-2 border-white shadow-md'>
               {user?.email ? user.email.charAt(0).toUpperCase() : <FiUser />}
@@ -131,7 +135,7 @@ export const MainNav = () => {
                   className='w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-[var(--selago)] hover:text-[var(--endeavour)] transition-all'
                 >
                   <FiSettings className='text-lg' />
-                  {getTtl('Settings', ln)}
+                  {getTtl('Settings', ln) || 'Settings'}
                 </button>
 
                 <button
@@ -139,7 +143,7 @@ export const MainNav = () => {
                   className='w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-all'
                 >
                   <BiLogOutCircle className='text-lg' />
-                  {getTtl('Logout', ln)}
+                  {getTtl('Logout', ln) || 'Logout'}
                 </button>
               </div>
             </div>
