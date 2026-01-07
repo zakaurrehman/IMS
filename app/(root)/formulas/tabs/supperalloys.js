@@ -662,20 +662,20 @@ const SupperAlloys = ({ value, handleChange }) => {
 
     return value.supperalloys != null ? (
         <div className='w-full bg-white'>
-            <h3 className='text-base font-semibold text-gray-700 mb-4 text-center'>Cost</h3>
+            <h3 className='text-base font-semibold text-[var(--port-gore)] mb-3 text-center'>Cost</h3>
             
             {/* Composition Section */}
-            <p className='text-sm font-medium text-gray-600 mb-2 text-center'>Composition</p>
+            <p className='text-sm font-medium text-[var(--regent-gray)] mb-2 text-center'>Composition</p>
             <div className='overflow-x-auto mb-3'>
-                <div className='flex border border-gray-400 overflow-hidden' style={{minWidth: '700px'}}>
+                <div className='flex border border-[var(--rock-blue)] overflow-hidden' style={{minWidth: '700px'}}>
                     {elements.map((elem, idx) => (
                         <div key={elem} className={`flex-1 min-w-[70px] ${idx > 0 ? 'border-l border-gray-400' : ''}`}>
-                            <div className='bg-gray-200 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>
+                            <div className='bg-[var(--selago)] text-center py-1 text-xs font-semibold border-b border-[var(--rock-blue)]'>
                                 {elementLabels[idx]}
                             </div>
                             <input
                                 type="text"
-                                className={`w-full text-center py-2.5 text-sm font-medium border-0 ${elem === 'fe' ? 'bg-gray-100 cursor-not-allowed' : 'focus:outline-none focus:ring-1 focus:ring-blue-400'}`}
+                                className={`w-full text-center py-2 text-sm font-medium border-0 ${elem === 'fe' ? 'bg-[var(--selago)] cursor-not-allowed' : 'focus:outline-none focus:ring-1 focus:ring-[var(--endeavour)]'}`}
                                 name={elem}
                                 value={elem === 'fe' ? fe + '%' : (value.supperalloys?.[elem] || '0') + '%'}
                                 readOnly={elem === 'fe'}
@@ -707,7 +707,7 @@ const SupperAlloys = ({ value, handleChange }) => {
             </div>
 
             {/* Price/Lbs Section */}
-            <p className='text-sm font-medium text-gray-600 mb-2 text-center'>Price/Lbs</p>
+            <p className='text-sm font-medium text-[var(--regent-gray)] mb-2 text-center'>Price/Lbs</p>
             <div className='overflow-x-auto mb-6'>
                 <div className='flex border border-gray-400 overflow-hidden' style={{minWidth: '700px'}}>
                     {priceFields.map((field, idx) => {
@@ -730,7 +730,7 @@ const SupperAlloys = ({ value, handleChange }) => {
                                     className={`w-full text-center py-2.5 text-sm font-semibold border-0 ${
                                         isReadOnly 
                                         ? 'bg-gray-50 cursor-not-allowed' 
-                                        : 'text-red-600 focus:outline-none focus:ring-1 focus:ring-blue-400'
+                                        : 'text-[var(--endeavour)] focus:outline-none focus:ring-1 focus:ring-[var(--endeavour)]'
                                     }`}
                                     name={field}
                                     value={displayValue}
@@ -771,11 +771,11 @@ const SupperAlloys = ({ value, handleChange }) => {
             <div className="max-w-4xl mx-auto">
                 {/* Formula Intrinsic Boxes */}
                 <div className='flex gap-4 mb-6 justify-center flex-wrap'>
-                    <div className='bg-orange-300 rounded-lg p-4 w-full sm:w-auto sm:min-w-[200px]'>
+                    <div className='bg-[var(--selago)] rounded-lg p-3 w-full sm:w-auto sm:min-w-[200px]'>
                         <p className='text-sm font-semibold text-gray-800 mb-2 text-center'>Formula Intrinsic</p>
                         <input 
                             type='text' 
-                            className='w-full px-4 py-2.5 bg-orange-200 border-0 rounded text-center font-bold text-red-600 text-base focus:outline-none focus:ring-2 focus:ring-orange-500' 
+                            className='w-full px-4 py-2.5 bg-[var(--selago)] border-0 rounded text-center font-bold text-[var(--port-gore)] text-base focus:outline-none focus:ring-2 focus:ring-[var(--endeavour)]' 
                             value={(value?.supperalloys?.formulaIntsCost || '0') + '%'}
                             name='formulaIntsCost' 
                             onChange={(e) => handleChange(e, 'supperalloys')}
@@ -793,11 +793,11 @@ const SupperAlloys = ({ value, handleChange }) => {
                         />
                     </div>
 
-                    <div className='bg-orange-300 rounded-lg p-4 w-full sm:w-auto sm:min-w-[200px]'>
+                    <div className='bg-[var(--selago)] rounded-lg p-4 w-full sm:w-auto sm:min-w-[200px]'>
                         <p className='text-sm font-semibold text-gray-800 mb-2 text-center'>Formula Intrinsic</p>
                         <input 
                             type='text' 
-                            className='w-full px-4 py-2.5 bg-orange-200 border-0 rounded text-center font-bold text-red-600 text-base focus:outline-none focus:ring-2 focus:ring-orange-500' 
+                            className='w-full px-4 py-2.5 bg-[var(--selago)] border-0 rounded text-center font-bold text-[var(--port-gore)] text-base focus:outline-none focus:ring-2 focus:ring-[var(--endeavour)]' 
                             value={(value?.supperalloys?.formulaIntsPrice || '0') + '%'}
                             name='formulaIntsPrice' 
                             onChange={(e) => handleChange(e, 'supperalloys')}
@@ -817,30 +817,30 @@ const SupperAlloys = ({ value, handleChange }) => {
                 </div>
 
                 {/* Results Table */}
-                <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3'>
                     {/* Left Column Results */}
                     <div className='space-y-2'>
                         <div>
-                            <p className='text-xs text-gray-600 mb-1.5 font-medium'>Solids Price:</p>
-                            <div className='bg-purple-100 border border-purple-200 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <p className='text-xs text-[var(--regent-gray)] mb-1.5 font-medium'>Solids Price:</p>
+                            <div className='bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice * (value?.supperalloys?.formulaIntsCost || 0) / 100).toFixed(2))}
                             </div>
                         </div>
                         <div>
                             <p className='text-xs text-gray-600 mb-1.5 font-medium'>Price per MT:</p>
-                            <div className='bg-blue-100 border border-blue-200 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <div className='bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2.5 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice * (value?.supperalloys?.formulaIntsCost || 0) / 100 * value.general.mt).toFixed(2))}
                             </div>
                         </div>
                         <div>
                             <p className='text-xs text-gray-600 mb-1.5 font-medium'>Price/Euro:</p>
-                            <div className='bg-green-200 border border-green-300 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <div className='bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2.5 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice * (value?.supperalloys?.formulaIntsCost || 0) / 100 / value.general?.euroRate).toFixed(2), '€')}
                             </div>
                         </div>
                         <div>
                             <p className='text-xs text-gray-600 mb-1.5 font-medium'>Turnings Price:</p>
-                            <div className='bg-orange-100 border border-orange-200 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <div className='bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2.5 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice * (value?.supperalloys?.formulaIntsCost || 0) / 100 * 0.95).toFixed(2))}
                             </div>
                         </div>
@@ -850,32 +850,32 @@ const SupperAlloys = ({ value, handleChange }) => {
                     <div className='space-y-2'>
                         <div>
                             <p className='text-xs text-gray-600 mb-1.5 font-medium'>Solids Price:</p>
-                            <div className='bg-purple-100 border border-purple-200 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <div className='bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2.5 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice * (value?.supperalloys?.formulaIntsPrice || 0) / 100).toFixed(2))}
                             </div>
                         </div>
                         <div>
                             <p className='text-xs text-gray-600 mb-1.5 font-medium'>Price per MT:</p>
-                            <div className='bg-blue-100 border border-blue-200 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <div className='bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2.5 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice * (value?.supperalloys?.formulaIntsPrice || 0) / 100 * value.general.mt).toFixed(2))}
                             </div>
                         </div>
                         <div>
                             <p className='text-xs text-gray-600 mb-1.5 font-medium'>Price/Euro:</p>
-                            <div className='bg-green-200 border border-green-300 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <div className='bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2.5 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice * (value?.supperalloys?.formulaIntsPrice || 0) / 100 / value.general?.euroRate).toFixed(2), '€')}
                             </div>
                         </div>
                         <div>
                             <p className='text-xs text-gray-600 mb-1.5 font-medium'>Turnings Price:</p>
-                            <div className='bg-orange-100 border border-orange-200 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <div className='bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2.5 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice * (value?.supperalloys?.formulaIntsPrice || 0) / 100 * 0.95).toFixed(2))}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className='text-xs text-red-600 space-y-1 text-center sm:text-left'>
+                <div className='text-xs text-[var(--port-gore)] space-y-1 text-center sm:text-left'>
                     <p>* Fill in the red and + Formula Intrinsic</p>
                     <p>* Fe is calculated automatically</p>
                 </div>

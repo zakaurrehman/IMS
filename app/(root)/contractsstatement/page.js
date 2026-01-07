@@ -455,9 +455,15 @@ const Contracts = () => {
 
 	const TableModes = () => {
 		return (
-			<div className='flex items-center gap-2'>
-				<p>{enabledSwitch ? 'Expanded mode' : 'Table mode'}</p>
-				<Switch checked={enabledSwitch} onCheckedChange={() => setEnabledSwitch(prev => !prev)} />
+			<div className='flex items-center gap-3'>
+				<p className={`text-sm font-medium ${enabledSwitch ? 'text-[var(--bunting)]' : 'text-[var(--endeavour)]'}`}>
+					{enabledSwitch ? getTtl('Expanded mode', ln) : getTtl('Table mode', ln)}
+				</p>
+				<Switch
+					checked={enabledSwitch}
+					onCheckedChange={() => setEnabledSwitch(prev => !prev)}
+					className={`${enabledSwitch ? 'bg-[var(--endeavour)]' : 'bg-[var(--selago)]'} focus-visible:ring-2 focus-visible:ring-[var(--endeavour)]`}
+				/>
 			</div>
 		)
 	}

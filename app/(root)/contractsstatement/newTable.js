@@ -314,6 +314,8 @@ const Customtable = ({ data, columns, invisible, excellReport, ln, setFilteredDa
                     setQuickSumEnabled={setQuickSumEnabled}
                     quickSumColumns={quickSumColumns}
                     setQuickSumColumns={setQuickSumColumns}
+                    tableModes={tableModes}
+                    type={type}
                 />
             </div>
 

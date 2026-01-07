@@ -100,15 +100,12 @@ body,
 .checkbox:checked,
 .checkbox[checked=true],
 .checkbox[aria-checked=true] {
-  --chkbg: 157 32% 25%;
-  --chkfg: 0 0% 100%;
   --tw-bg-opacity: 1;
-  background-color: hsl(var(--chkbg) / var(--tw-bg-opacity));
+  background-color: var(--endeavour);
   background-repeat: no-repeat;
-  /*    animation: checkmark var(--animation-input, .2s) ease-in-out; */
-  background-image: linear-gradient(-45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);
-
-
+  /* keep the layered checkmark effect but use app blue and white for contrast */
+  background-image: linear-gradient(-45deg, transparent 65%, var(--endeavour) 65.99%), linear-gradient(45deg, transparent 75%, var(--endeavour) 75.99%), linear-gradient(-45deg, var(--endeavour) 40%, transparent 40.99%), linear-gradient(45deg, var(--endeavour) 30%, #ffffff 30.99%, #ffffff 40%, transparent 40.99%), linear-gradient(-45deg, #ffffff 50%, var(--endeavour) 50.99%);
+  border-color: var(--endeavour);
 }
 
 @keyframes checkmark {

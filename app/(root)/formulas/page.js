@@ -626,18 +626,18 @@ const Page = () => {
 	}
 
 	return (
-		<div className="container mx-auto px-4 pb-8 md:pb-0 mt-16 md:mt-0">
+		<div className="container mx-auto px-4 pb-6 md:pb-0 mt-6 md:mt-0">
 			{Object.keys(settings).length === 0 ? <Spinner /> :
 				<>
 					<Toast />
 					{loading && <Spinner />}
-					<div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mt-8">
-						<div className='pb-4'>
-							<div className="text-2xl font-semibold text-gray-700 mb-6">Formulas</div>
+					<div className="bg-white rounded-lg shadow-sm p-3 sm:p-5 mt-6">
+						<div className='pb-3'>
+							<div className="text-2xl font-semibold text-[var(--port-gore)] mb-4">Formulas</div>
 
 							<div className="w-full">
 								<TabGroup>
-									<TabList className="flex space-x-2 mb-6 border-b border-gray-200">
+									<TabList className="flex space-x-2 mb-4 border-b border-[var(--rock-blue)]">
 										{tabs.map((z) => (
 											<Tab
 												key={z}
@@ -646,8 +646,8 @@ const Page = () => {
 														'px-6 py-2.5 text-sm font-medium rounded-t-lg transition-colors',
 														'focus:outline-none',
 														selected
-															? 'bg-blue-500 text-white'
-															: 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+															? 'bg-[var(--endeavour)] text-[var(--selago)]'
+															: 'bg-[var(--selago)] text-[var(--regent-gray)] hover:bg-[var(--rock-blue)]'
 													)
 												}
 											>
@@ -657,13 +657,13 @@ const Page = () => {
 									</TabList>
 									
 									{value.general != null && !loading && (
-										<div className='bg-gray-50 rounded-lg p-4 mb-6'>
+										<div className='bg-[var(--selago)] rounded-lg p-3 mb-4'>
 											<div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3'>
 												<div className='flex flex-col'>
-													<span className='text-xs text-gray-600 mb-1.5 font-medium'>Ni LME</span>
+													<span className='text-xs text-[var(--regent-gray)] mb-1.5 font-medium'>Ni LME</span>
 													<input 
 														type='text' 
-														className='px-3 py-2.5 border border-gray-300 rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-blue-400' 
+														className='px-3 py-2 border border-[var(--rock-blue)] rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-[var(--endeavour)]' 
 														name='nilme'
 														onChange={(e) => handleChange(e, 'general')}
 														value={focusedField === 'nilme' ? value.general?.nilme || '' : addComma(value.general?.nilme || '0')}
@@ -673,10 +673,10 @@ const Page = () => {
 												</div>
 
 												<div className='flex flex-col'>
-													<span className='text-xs text-gray-600 mb-1.5 font-medium'>Mo Oxide - Lb</span>
+													<span className='text-xs text-[var(--regent-gray)] mb-1.5 font-medium'>Mo Oxide - Lb</span>
 													<input 
 														type='text' 
-														className='px-3 py-2.5 border border-gray-300 rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-blue-400'
+														className='px-3 py-2 border border-[var(--rock-blue)] rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-[var(--endeavour)]'
 														value={focusedField === 'MoOxideLb' ? value.general?.MoOxideLb || '' : addComma(value.general?.MoOxideLb || '0')}
 														name='MoOxideLb' 
 														onChange={(e) => handleChange(e, 'general')}
@@ -686,10 +686,10 @@ const Page = () => {
 												</div>
 
 												<div className='flex flex-col'>
-													<span className='text-xs text-gray-600 mb-1.5 font-medium'>Charge Cr - Lb</span>
+													<span className='text-xs text-[var(--regent-gray)] mb-1.5 font-medium'>Charge Cr - Lb</span>
 													<input 
 														type='text' 
-														className='px-3 py-2.5 border border-gray-300 rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-blue-400'
+														className='px-3 py-2 border border-[var(--rock-blue)] rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-[var(--endeavour)]'
 														name='chargeCrLb' 
 														onChange={(e) => handleChange(e, 'general')}
 														value={focusedField === 'chargeCrLb' ? value.general?.chargeCrLb || '' : addComma(value.general?.chargeCrLb || '0')}
@@ -699,10 +699,10 @@ const Page = () => {
 												</div>
 
 												<div className='flex flex-col'>
-													<span className='text-xs text-gray-600 mb-1.5 font-medium'>1 MT</span>
+													<span className='text-xs text-[var(--regent-gray)] mb-1.5 font-medium'>1 MT</span>
 													<input 
 														type='text' 
-														className='px-3 py-2.5 border border-gray-300 rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-blue-400' 
+														className='px-3 py-2 border border-[var(--rock-blue)] rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-[var(--endeavour)]'
 														value={(value.general?.mt || '0') + ' Lb'}
 														name='mt' 
 														onChange={(e) => handleChange(e, 'general')} 
@@ -710,10 +710,10 @@ const Page = () => {
 												</div>
 
 												<div className='flex flex-col'>
-													<span className='text-xs text-gray-600 mb-1.5 font-medium'>Euro / USD</span>
+													<span className='text-xs text-[var(--regent-gray)] mb-1.5 font-medium'>Euro / USD</span>
 													<input 
 														type='text' 
-														className='px-3 py-2.5 border border-gray-300 rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-blue-400' 
+														className='px-3 py-2 border border-[var(--rock-blue)] rounded text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-[var(--endeavour)]' 
 														value={(value.general?.euroRate || '0')}
 														name='euroRate' 
 														onChange={(e) => handleChange(e, 'general')} 
@@ -721,7 +721,7 @@ const Page = () => {
 												</div>
 
 												<Button 
-													className='px-6 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium text-sm mt-auto h-[42px]'
+													className='px-6 py-2 rounded bg-[var(--endeavour)] hover:bg-[var(--chathams-blue)] text-[var(--selago)] rounded font-medium text-sm mt-auto h-[40px]'
 													onClick={saveData}
 												>
 													Save

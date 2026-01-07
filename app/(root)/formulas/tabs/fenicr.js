@@ -918,20 +918,20 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
 
     return value.fenicr != null ? (
         <div className='w-full bg-white'>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                 {/* COST SECTION */}
                 <div className="w-full">
-                    <h3 className='text-base font-semibold text-gray-700 mb-3'>Cost</h3>
+                    <h3 className='text-base font-semibold text-[var(--port-gore)] mb-2'>Cost</h3>
                     
                     {/* Composition */}
                     <div className='mb-3'>
-                        <p className='text-sm font-medium text-gray-600 mb-2 text-center'>Composition</p>
-                        <div className='flex border border-gray-400 overflow-hidden'>
+                        <p className='text-sm font-medium text-[var(--regent-gray)] mb-2 text-center'>Composition</p>
+                        <div className='flex border border-[var(--rock-blue)] overflow-hidden'>
                             <div className='flex-1'>
-                                <div className='bg-gray-200 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Ni</div>
+                                <div className='bg-[var(--selago)] text-center py-1 text-xs font-semibold border-b border-[var(--rock-blue)]'>Ni</div>
                                 <input 
                                     type='text' 
-                                    className='w-full text-center py-2.5 text-sm font-medium border-0 focus:outline-none focus:ring-1 focus:ring-blue-400' 
+                                    className='w-full text-center py-2 text-sm font-medium border-0 focus:outline-none focus:ring-1 focus:ring-[var(--endeavour)]' 
                                     value={value?.fenicr?.ni + '%'}
                                     name='ni' 
                                     onChange={(e) => {
@@ -955,11 +955,11 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                                     }}
                                 />
                             </div>
-                            <div className='flex-1 border-l border-gray-400'>
-                                <div className='bg-gray-200 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Cr</div>
+                            <div className='flex-1 border-l border-[var(--rock-blue)]'>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Cr</div>
                                 <input 
                                     type='text' 
-                                    className='w-full text-center py-2.5 text-sm font-medium border-0 focus:outline-none focus:ring-1 focus:ring-blue-400' 
+                                    className='w-full text-center py-2 text-sm font-medium border-0 focus:outline-none focus:ring-1 focus:ring-[var(--endeavour)]' 
                                     value={value?.fenicr?.cr + '%'}
                                     name='cr' 
                                     onChange={(e) => {
@@ -983,11 +983,11 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                                     }}
                                 />
                             </div>
-                            <div className='flex-1 border-l border-gray-400'>
-                                <div className='bg-gray-200 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Mo</div>
+                            <div className='flex-1 border-l border-[var(--rock-blue)]'>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Mo</div>
                                 <input 
                                     type='text' 
-                                    className='w-full text-center py-2.5 text-sm font-medium border-0 focus:outline-none focus:ring-1 focus:ring-blue-400' 
+                                    className='w-full text-center py-2 text-sm font-medium border-0 focus:outline-none focus:ring-1 focus:ring-[var(--endeavour)]' 
                                     value={value?.fenicr?.mo + '%'}
                                     name='mo' 
                                     onChange={(e) => {
@@ -1011,8 +1011,8 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                                     }}
                                 />
                             </div>
-                            <div className='flex-1 border-l border-gray-400'>
-                                <div className='bg-gray-200 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Fe</div>
+                            <div className='flex-1 border-l border-[var(--rock-blue)]'>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Fe</div>
                                 <input 
                                     type='text' 
                                     className='w-full text-center py-2.5 text-sm font-medium bg-gray-100 border-0 cursor-not-allowed' 
@@ -1025,22 +1025,22 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
 
                     {/* Price Row */}
                     <div className='mb-3'>
-                        <p className='text-sm font-medium text-gray-600 mb-2 text-center'>Price</p>
-                        <div className='flex border border-gray-400 overflow-hidden'>
+                        <p className='text-sm font-medium text-[var(--regent-gray)] mb-2 text-center'>Price</p>
+                        <div className='flex border border-[var(--rock-blue)] overflow-hidden'>
                             <div className='flex-1'>
-                                <div className='bg-purple-100 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Ni</div>
+                                <div className='bg-[var(--selago)] text-center py-1 text-xs font-semibold border-b border-[var(--rock-blue)]'>Ni</div>
                                 <input 
                                     type='text' 
-                                    className='w-full text-center py-2.5 text-sm font-semibold bg-gray-50 border-0 cursor-not-allowed' 
+                                    className='w-full text-center py-2 text-sm font-semibold bg-[var(--selago)] border-0 cursor-not-allowed' 
                                     value={formatCurrency((value.general?.nilme * value.fenicr?.formulaNiCost / 100).toFixed(2))}
                                     readOnly 
                                 />
                             </div>
                             <div className='flex-1 border-l border-gray-400'>
-                                <div className='bg-purple-100 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Cr</div>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Cr</div>
                                 <input 
                                     type='text' 
-                                    className='w-full text-center py-2.5 text-sm font-semibold text-red-600 border-0 focus:outline-none focus:ring-1 focus:ring-blue-400'
+                                    className='w-full text-center py-2 text-sm font-semibold text-[var(--port-gore)] border-0 focus:outline-none focus:ring-1 focus:ring-[var(--endeavour)]'
                                     name='crPrice' 
                                     onChange={(e) => handleChange(e, 'fenicr')}
                                     value={focusedField === 'crPrice' ? value.fenicr?.crPrice : formatCurrency(value.fenicr?.crPrice)}
@@ -1059,11 +1059,11 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                                     }}
                                 />
                             </div>
-                            <div className='flex-1 border-l border-gray-400'>
-                                <div className='bg-purple-100 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Mo</div>
+                            <div className='flex-1 border-l border-[var(--rock-blue)]'>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Mo</div>
                                 <input 
                                     type='text' 
-                                    className='w-full text-center py-2.5 text-sm font-semibold text-red-600 border-0 focus:outline-none focus:ring-1 focus:ring-blue-400'
+                                    className='w-full text-center py-2 text-sm font-semibold text-[var(--endeavour)] border-0 focus:outline-none focus:ring-1 focus:ring-[var(--endeavour)]'
                                     name='moPrice' 
                                     onChange={(e) => handleChange(e, 'fenicr')}
                                     value={focusedField === 'moPrice' ? value.fenicr?.moPrice : formatCurrency(value.fenicr?.moPrice)}
@@ -1083,10 +1083,10 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                                 />
                             </div>
                             <div className='flex-1 border-l border-gray-400'>
-                                <div className='bg-purple-100 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Fe</div>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Fe</div>
                                 <input 
                                     type='text' 
-                                    className='w-full text-center py-2.5 text-sm font-semibold text-red-600 border-0 focus:outline-none focus:ring-1 focus:ring-blue-400'
+                                    className='w-full text-center py-2 text-sm font-semibold text-[var(--endeavour)] border-0 focus:outline-none focus:ring-1 focus:ring-[var(--endeavour)]'
                                     name='fePrice' 
                                     onChange={(e) => handleChange(e, 'fenicr')}
                                     value={focusedField === 'fePrice' ? value.fenicr?.fePrice : formatCurrency(value.fenicr?.fePrice)}
@@ -1109,11 +1109,11 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                     </div>
 
                     {/* Formula x Ni */}
-                    <div className='bg-orange-300 rounded p-3 mb-4'>
-                        <p className='text-sm font-semibold text-gray-800 mb-2'>Formula x Ni</p>
+                    <div className='bg-[var(--selago)] rounded p-2 mb-3'>
+                        <p className='text-sm font-semibold text-[var(--port-gore)] mb-2'>Formula x Ni</p>
                         <input 
                             type='text' 
-                            className='w-full px-3 py-2.5 bg-orange-200 border-0 rounded text-center font-bold text-red-600 focus:outline-none focus:ring-2 focus:ring-orange-400' 
+                            className='w-full px-3 py-2 bg-[var(--selago)] border-0 rounded text-center font-bold text-[var(--port-gore)] focus:outline-none focus:ring-2 focus:ring-[var(--endeavour)]' 
                             value={value?.fenicr?.formulaNiCost + '%'}
                             name='formulaNiCost' 
                             onChange={(e) => handleChange(e, 'fenicr')}
@@ -1134,26 +1134,26 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                     {/* Results */}
                     <div className='space-y-2 mb-4'>
                         <div className='flex items-center gap-3'>
-                            <span className='text-sm font-medium text-gray-700 w-32'>Solids Price:</span>
-                            <div className='flex-1 bg-orange-100 border border-orange-200 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <span className='text-sm font-medium text-[var(--port-gore)] w-32'>Solids Price:</span>
+                            <div className='flex-1 bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2 text-center font-bold text-base'>
                                 {formatCurrency(solidsPrice.toFixed(2))}
                             </div>
                         </div>
                         <div className='flex items-center gap-3'>
-                            <span className='text-sm font-medium text-gray-700 w-32'>Turnings Price:</span>
-                            <div className='flex-1 bg-gray-100 border border-gray-300 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <span className='text-sm font-medium text-[var(--port-gore)] w-32'>Turnings Price:</span>
+                            <div className='flex-1 bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice * 0.92).toFixed(2))}
                             </div>
                         </div>
                         <div className='flex items-center gap-3'>
-                            <span className='text-sm font-medium text-gray-700 w-32'>Price/Euro:</span>
-                            <div className='flex-1 bg-green-200 border border-green-300 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <span className='text-sm font-medium text-[var(--port-gore)] w-32'>Price/Euro:</span>
+                            <div className='flex-1 bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice / value.general?.euroRate).toFixed(2), '€')}
                             </div>
                         </div>
                     </div>
 
-                    <div className='text-xs text-red-600 space-y-1'>
+                    <div className='text-xs text-[var(--port-gore)] space-y-1'>
                         <p>* Fill in the red and + Formula x Ni</p>
                         <p>* Fe is calculated automatically</p>
                     </div>
@@ -1166,9 +1166,9 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                     {/* Composition (Read-only) */}
                     <div className='mb-3'>
                         <p className='text-sm font-medium text-gray-600 mb-2 text-center'>Composition</p>
-                        <div className='flex border border-gray-400 overflow-hidden'>
+                        <div className='flex border border-[var(--rock-blue)] overflow-hidden'>
                             <div className='flex-1'>
-                                <div className='bg-gray-200 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Ni</div>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Ni</div>
                                 <input 
                                     type='text' 
                                     className='w-full text-center py-2.5 text-sm font-medium bg-gray-100 border-0 cursor-not-allowed'
@@ -1209,9 +1209,9 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                     {/* Price Row */}
                     <div className='mb-1'>
                         <p className='text-sm font-medium text-gray-600 mb-2 text-center'>Price</p>
-                        <div className='flex border border-gray-400 overflow-hidden'>
+                        <div className='flex border border-[var(--rock-blue)] overflow-hidden'>
                             <div className='flex-1'>
-                                <div className='bg-purple-100 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Ni</div>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Ni</div>
                                 <input 
                                     type='text' 
                                     className='w-full text-center py-2.5 text-sm font-semibold bg-gray-50 border-0 cursor-not-allowed' 
@@ -1219,8 +1219,8 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                                     readOnly 
                                 />
                             </div>
-                            <div className='flex-1 border-l border-gray-400'>
-                                <div className='bg-purple-100 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Cr</div>
+                            <div className='flex-1 border-l border-[var(--rock-blue)]'>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Cr</div>
                                 <input 
                                     type='text' 
                                     className='w-full text-center py-2.5 text-sm font-semibold bg-gray-50 border-0 cursor-not-allowed'
@@ -1228,8 +1228,8 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                                     readOnly 
                                 />
                             </div>
-                            <div className='flex-1 border-l border-gray-400'>
-                                <div className='bg-purple-100 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Mo</div>
+                            <div className='flex-1 border-l border-[var(--rock-blue)]'>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Mo</div>
                                 <input 
                                     type='text' 
                                     className='w-full text-center py-2.5 text-sm font-semibold bg-gray-50 border-0 cursor-not-allowed'
@@ -1237,11 +1237,11 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                                     readOnly 
                                 />
                             </div>
-                            <div className='flex-1 border-l border-gray-400'>
-                                <div className='bg-purple-100 text-center py-1.5 text-xs font-semibold border-b border-gray-400'>Fe</div>
+                            <div className='flex-1 border-l border-[var(--rock-blue)]'>
+                                <div className='bg-[var(--selago)] text-center py-1.5 text-xs font-semibold border-b border-[var(--rock-blue)]'>Fe</div>
                                 <input 
                                     type='text' 
-                                    className='w-full text-center py-2.5 text-sm font-semibold text-red-600 border-0 focus:outline-none focus:ring-1 focus:ring-blue-400'
+                                    className='w-full text-center py-2 text-sm font-semibold text-[var(--endeavour)] border-0 focus:outline-none focus:ring-1 focus:ring-[var(--endeavour)]'
                                     name='fePrice1' 
                                     onChange={(e) => handleChange(e, 'fenicr')}
                                     value={focusedField === 'fePrice1' ? value.fenicr?.fePrice1 : formatCurrency(value.fenicr?.fePrice1)}
@@ -1268,21 +1268,21 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                         <div className='flex-1 text-center py-1 text-xs text-gray-500'>
                             Lb {formatCurrency(((value?.general?.nilme * value?.fenicr?.formulaNiPrice / 100) / (value?.general?.mt)).toFixed(2))}
                         </div>
-                        <div className='flex-1 text-center py-1 text-xs text-red-600 font-medium'>
+                        <div className='flex-1 text-center py-1 text-xs text-[var(--port-gore)] font-medium'>
                             Argus {value?.fenicr?.crPriceArgus}%
                         </div>
-                        <div className='flex-1 text-center py-1 text-xs text-red-600 font-medium'>
+                        <div className='flex-1 text-center py-1 text-xs text-[var(--port-gore)] font-medium'>
                             Argus {value?.fenicr?.moPriceArgus}%
                         </div>
                         <div className='flex-1'></div>
                     </div>
 
                     {/* Formula x Ni */}
-                    <div className='bg-orange-300 rounded p-3 mb-4'>
+                    <div className='bg-[var(--selago)] rounded p-3 mb-4'>
                         <p className='text-sm font-semibold text-gray-800 mb-2'>Formula x Ni</p>
                         <input 
                             type='text' 
-                            className='w-full px-3 py-2.5 bg-orange-200 border-0 rounded text-center font-bold text-red-600 focus:outline-none focus:ring-2 focus:ring-orange-400' 
+                            className='w-full px-3 py-2.5 bg-[var(--selago)] border-0 rounded text-center font-bold text-[var(--port-gore)] focus:outline-none focus:ring-2 focus:ring-[var(--endeavour)]' 
                             value={value?.fenicr?.formulaNiPrice + '%'}
                             name='formulaNiPrice' 
                             onChange={(e) => handleChange(e, 'fenicr')}
@@ -1304,7 +1304,7 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                     <div className='space-y-2 mb-4'>
                         <div className='flex items-center gap-3'>
                             <span className='text-sm font-medium text-gray-700 w-32'>Solids Price:</span>
-                            <div className='flex-1 bg-orange-100 border border-orange-200 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <div className='flex-1 bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2.5 text-center font-bold text-base'>
                                 {formatCurrency(solidsPrice1.toFixed(2))}
                             </div>
                         </div>
@@ -1316,13 +1316,13 @@ const Fenicr = ({ value, handleChange, focusedField, setFocusedField, addComma }
                         </div>
                         <div className='flex items-center gap-3'>
                             <span className='text-sm font-medium text-gray-700 w-32'>Price/Euro:</span>
-                            <div className='flex-1 bg-green-200 border border-green-300 rounded px-3 py-2.5 text-center font-bold text-base'>
+                            <div className='flex-1 bg-[var(--selago)] border border-[var(--rock-blue)] rounded px-3 py-2.5 text-center font-bold text-base'>
                                 {formatCurrency((solidsPrice1 / value.general?.euroRate).toFixed(2), '€')}
                             </div>
                         </div>
                     </div>
 
-                    <div className='text-xs text-red-600 space-y-1'>
+                    <div className='text-xs text-[var(--port-gore)] space-y-1'>
                         <p>* Fill in the red and + Formula x Ni</p>
                         <p>* Fe is calculated automatically</p>
                     </div>

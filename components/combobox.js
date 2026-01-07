@@ -109,7 +109,7 @@ const MyCombobox = ({ data, setValue, value, name, classes, disabled, classes1, 
                         afterLeave={() => setQuery('')}
                     >
                       
-                        <ComboboxOptions anchor="bottom" className={`w-[var(--input-width)] 
+                        <ComboboxOptions anchor="bottom" className={`absolute left-0 z-50 w-[var(--input-width)] 
                         [--anchor-gap:var(--spacing-1)] empty:hidden border boder-1 border-[var(--selago)]
                         mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg focus:outline-none 
                         sm:text-sm ${classes1} dropDownHeight`}>
@@ -131,10 +131,11 @@ const MyCombobox = ({ data, setValue, value, name, classes, disabled, classes1, 
                                         {({ selected, active }) => (
                                             <>
                                                 <span
-                                                    className={`block truncate ${selected ? 'font-bold' : 'font-normal'
+                                                    className={`block whitespace-normal  ${selected ? 'font-bold' : 'font-normal'
                                                         }
                                                         ${x.id === 'EditTextDelTime' || x.id === 'allStocks' ? 'font-semibold italic text-[var(--chathams-blue)]' : ''}
                                                         `}
+                                                    style={{ whiteSpace: 'normal' }}
                                                 >
                                                     {x[name]}
                                                 </span>

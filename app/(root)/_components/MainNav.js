@@ -100,10 +100,11 @@ export const MainNav = () => {
       <div className='flex items-center gap-3'>
         <button
           className='p-2.5 rounded-lg bg-white border border-gray-200 hover:bg-[var(--selago)] hover:border-[var(--rock-blue)] transition-all group'
-          onClick={() => router.push('apps/Assistant')}
-          aria-label='Assistant'
+          onClick={LogOut}
+          aria-label='Logout'
+          title={getTtl('Logout', ln) || 'Logout'}
         >
-          <IoChatbubblesOutline className='text-xl text-gray-500 group-hover:text-[var(--endeavour)]' />
+          <BiLogOutCircle className='text-xl text-gray-500 group-hover:text-[var(--endeavour)]' />
         </button>
 
         <div className='relative' ref={dropdownRef}>
