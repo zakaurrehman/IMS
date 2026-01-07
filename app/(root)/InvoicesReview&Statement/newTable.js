@@ -303,7 +303,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
             </div>
 
             {/* SCROLL CONTAINER */}
-            <div className="overflow-x-auto overflow-y-auto border-x border-[var(--selago)] md:max-h-[400px] 2xl:max-h-[550px] relative z-10">
+            <div className="overflow-x-auto overflow-y-auto border-x border-[var(--selago)] md:max-h-[400px] 2xl:max-h-[550px] relative ">
                 <table className="w-full border-collapse table-auto" style={{ minWidth: '100%' }}>
                     
                     {/* THEAD - Sticky with proper z-index */}

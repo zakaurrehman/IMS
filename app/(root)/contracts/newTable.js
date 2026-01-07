@@ -707,7 +707,7 @@ const Customtable = ({
 
       {/* ---------- SCROLL CONTAINER ---------- */}
       <div className="overflow-x-auto overflow-y-auto border-x border-[var(--selago)] 
-        max-h-[720px] md:max-h-[700px] 2xl:max-h-[900px] relative z-10">
+        max-h-[720px] md:max-h-[700px] 2xl:max-h-[900px] relative ">
 
         <table className="w-full border-collapse table-auto" style={{ minWidth: '100%' }}>
 
