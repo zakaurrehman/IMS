@@ -1,3 +1,4 @@
+
 // 'use client'
 
 // import Header from "../../../components/table/header";
@@ -94,19 +95,24 @@
 //     return (
 //         <div className="flex flex-col relative ">
 //             <div>
-//                 <Header globalFilter={globalFilter} setGlobalFilter={setGlobalFilter}
-//                     table={table} excellReport={excellReport} cb={cb}
-//                     filterIcon={FiltersIcon(ln, filterOn, setFilterOn)}
-//                     resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
-//                     quickSumEnabled={quickSumEnabled}
-//                     setQuickSumEnabled={setQuickSumEnabled}
-//                     quickSumColumns={quickSumColumns}
-//                     setQuickSumColumns={setQuickSumColumns}
-//                 />
+//                 {/* HEADER - Desktop: higher z-index + overflow visible, Mobile: normal */}
+//                 <div className="relative md:z-30 md:overflow-visible">
+//                     <Header globalFilter={globalFilter} setGlobalFilter={setGlobalFilter}
+//                         table={table} excellReport={excellReport} cb={cb}
+//                         filterIcon={FiltersIcon(ln, filterOn, setFilterOn)}
+//                         resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
+//                         quickSumEnabled={quickSumEnabled}
+//                         setQuickSumEnabled={setQuickSumEnabled}
+//                         quickSumColumns={quickSumColumns}
+//                         setQuickSumColumns={setQuickSumColumns}
+//                     />
+//                 </div>
 
-//                 <div className="overflow-x-auto border-x border-[var(--selago)] max-h-[360px] md:max-h-[310px] 2xl:max-h-[550px]">
+//                 {/* SCROLL CONTAINER - Desktop: lower z-index, Mobile: normal */}
+//                 <div className="overflow-x-auto border-x border-[var(--selago)] max-h-[360px] md:max-h-[310px] 2xl:max-h-[550px] relative md:z-10">
 //                     <table className="w-full">
-//                         <thead className="md:sticky md:top-0 md:z-10">
+//                         {/* THEAD - Desktop: lowest z-index, Mobile: normal */}
+//                         <thead className="md:sticky md:top-0 md:z-[5]">
 //                             {table.getHeaderGroups().map((hdGroup, i) =>
 //                                 <Fragment key={hdGroup.id}>
 //                                     <tr key={hdGroup.id} className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
@@ -212,7 +218,6 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, se
     const [columnVisibility, setColumnVisibility] = useState(invisible)
     const [filterOn, setFilterOn] = useState(false)
 
-
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 500 })
     const pagination = useMemo(() => ({ pageIndex, pageSize, }), [pageIndex, pageSize])
     const pathName = usePathname()
@@ -229,21 +234,33 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, se
         const selectCol = {
             id: "select",
             header: ({ table }) => (
-                <input type="checkbox" checked={table.getIsAllPageRowsSelected()}
+                <input 
+                    type="checkbox" 
+                    checked={table.getIsAllPageRowsSelected()}
                     ref={(el) => { if (el) el.indeterminate = table.getIsSomePageRowsSelected(); }}
-                    onChange={table.getToggleAllPageRowsSelectedHandler()} />
+                    onChange={table.getToggleAllPageRowsSelectedHandler()}
+                    className="qs-checkbox"
+                />
             ),
             cell: ({ row }) => (
-                <input type="checkbox" checked={row.getIsSelected()} disabled={!row.getCanSelect()}
-                    onChange={row.getToggleSelectedHandler()} />
+                <input 
+                    type="checkbox" 
+                    checked={row.getIsSelected()} 
+                    disabled={!row.getCanSelect()}
+                    onChange={row.getToggleSelectedHandler()}
+                    className="qs-checkbox"
+                />
             ),
-            enableSorting: false, enableColumnFilter: false, size: 40,
+            enableSorting: false, 
+            enableColumnFilter: false, 
+            size: 48,
         };
         return [selectCol, ...(columns || [])];
     }, [columns, quickSumEnabled]);
 
     const table = useReactTable({
-        columns: columnsWithSelection, data,
+        columns: columnsWithSelection, 
+        data,
         enableRowSelection: quickSumEnabled,
         getCoreRowModel: getCoreRowModel(),
         filterFns: {
@@ -257,7 +274,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, se
             rowSelection,
         },
         onRowSelectionChange: setRowSelection,
-        onColumnFiltersChange: setColumnFilters, ////Column filter
+        onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
         onGlobalFilterChange: setGlobalFilter,
         onColumnVisibilityChange: setColumnVisibility,
@@ -268,116 +285,141 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, se
 
     useEffect(() => {
         setFilteredData(table.getFilteredRowModel().rows.map(x => x.original))
-    }, [globalFilter])
-
-    useEffect(() => {
-        setFilteredData(table.getFilteredRowModel().rows.map(x => x.original))
-    }, [columnFilters])
-
+    }, [globalFilter, columnFilters])
 
     const resetTable = () => {
         table.resetColumnFilters()
     }
 
-
     return (
-        <div className="flex flex-col relative ">
-            <div>
-                {/* HEADER - Desktop: higher z-index + overflow visible, Mobile: normal */}
-                <div className="relative md:z-30 md:overflow-visible">
-                    <Header globalFilter={globalFilter} setGlobalFilter={setGlobalFilter}
-                        table={table} excellReport={excellReport} cb={cb}
-                        filterIcon={FiltersIcon(ln, filterOn, setFilterOn)}
-                        resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
-                        quickSumEnabled={quickSumEnabled}
-                        setQuickSumEnabled={setQuickSumEnabled}
-                        quickSumColumns={quickSumColumns}
-                        setQuickSumColumns={setQuickSumColumns}
-                    />
-                </div>
+        <div className="flex flex-col relative">
+            
+            {/* HEADER - Higher z-index to stay above everything */}
+            <div className="relative ">
+                <Header 
+                    globalFilter={globalFilter} 
+                    setGlobalFilter={setGlobalFilter}
+                    table={table} 
+                    excellReport={excellReport} 
+                    cb={cb}
+                    filterIcon={FiltersIcon(ln, filterOn, setFilterOn)}
+                    resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
+                    quickSumEnabled={quickSumEnabled}
+                    setQuickSumEnabled={setQuickSumEnabled}
+                    quickSumColumns={quickSumColumns}
+                    setQuickSumColumns={setQuickSumColumns}
+                />
+            </div>
 
-                {/* SCROLL CONTAINER - Desktop: lower z-index, Mobile: normal */}
-                <div className="overflow-x-auto border-x border-[var(--selago)] max-h-[360px] md:max-h-[310px] 2xl:max-h-[550px] relative md:z-10">
-                    <table className="w-full">
-                        {/* THEAD - Desktop: lowest z-index, Mobile: normal */}
-                        <thead className="md:sticky md:top-0 md:z-[5]">
-                            {table.getHeaderGroups().map((hdGroup, i) =>
-                                <Fragment key={hdGroup.id}>
-                                    <tr key={hdGroup.id} className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]">
-                                        {hdGroup.headers.map(header =>
-                                            <th
-                                                key={header.id}
-                                                className="relative px-6 py-3 text-left text-sm text-white uppercase font-semibold hover:bg-[var(--rock-blue)]"
-                                            >
-                                                {header.column.getCanSort() ? (
-                                                    <div
-                                                        onClick={header.column.getToggleSortingHandler()}
-                                                        className="flex items-center gap-1 whitespace-nowrap cursor-pointer"
-                                                    >
-                                                        {header.column.columnDef.header}
-                                                        {{
-                                                            asc: <TbSortAscending className="scale-125" />,
-                                                            desc: <TbSortDescending className="scale-125" />
-                                                        }[header.column.getIsSorted()]}
-                                                    </div>
-                                                ) : (
-                                                    <span className="text-xs font-medium">
-                                                        {header.column.columnDef.header}
-                                                    </span>
-                                                )}
-                                                {header.column.getCanFilter() && filterOn && (
-                                                    <div className="mt-1 sm:mt-0 dropdown-left-space">
-                                                        <Filter column={header.column} table={table} filterOn={filterOn} />
-                                                    </div>
-                                                )}
-                                            </th>
-                                        )}
-                                    </tr>
-                                </Fragment>
-                            )}
-                        </thead>
-                        <tbody className="divide-y divide-[var(--selago)]">
-                            {table.getRowModel().rows.map(row => (
-                                <tr
-                                    key={row.id}
-                                    className={`cursor-pointer ${row.getIsSelected() ? 'bg-blue-100' : ''} hover:bg-[var(--rock-blue)]`}
-                                    onDoubleClick={() => SelectRow(row.original)}
+            {/* SCROLL CONTAINER */}
+            <div className="overflow-x-auto overflow-y-auto border-x border-[var(--selago)] max-h-[360px] md:max-h-[310px] 2xl:max-h-[550px] relative z-10">
+                <table className="w-full border-collapse table-auto" style={{ minWidth: '100%' }}>
+                    
+                    {/* THEAD - Sticky with proper z-index */}
+                    <thead className="md:sticky md:top-0 md:z-20">
+                        {table.getHeaderGroups().map((hdGroup, i) =>
+                            <Fragment key={hdGroup.id}>
+                                {/* Header Row */}
+                                <tr 
+                                    key={hdGroup.id} 
+                                    className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]"
                                 >
-                                    {row.getVisibleCells().map(cell => (
-                                        <td
-                                            key={cell.id}
-                                            data-label={cell.column.columnDef.header}
-                                            className={`
-                                                table_cell
-                                                text-xs sm:text-sm
-                                                break-words whitespace-normal
-                                                max-w-full sm:max-w-none
-                                                hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)]
-                                            `}
+                                    {hdGroup.headers.map(header =>
+                                        <th
+                                            key={header.id}
+                                            className="relative px-5 py-3 text-left text-xs text-white uppercase font-semibold hover:bg-[var(--rock-blue)] whitespace-nowrap"
+                                            style={{ minWidth: '120px' }}
                                         >
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                        </td>
-                                    ))}
+                                            {header.column.getCanSort() ? (
+                                                <div
+                                                    onClick={header.column.getToggleSortingHandler()}
+                                                    className="flex items-center gap-2 cursor-pointer select-none"
+                                                >
+                                                    <span className="leading-tight">{header.column.columnDef.header}</span>
+                                                    {{
+                                                        asc: <TbSortAscending className="scale-125 flex-shrink-0" />,
+                                                        desc: <TbSortDescending className="scale-125 flex-shrink-0" />
+                                                    }[header.column.getIsSorted()]}
+                                                </div>
+                                            ) : (
+                                                <span className="text-xs font-medium leading-tight block">
+                                                    {header.column.columnDef.header}
+                                                </span>
+                                            )}
+                                        </th>
+                                    )}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+
+                                {/* Filter Row - Separate row with better spacing and z-index */}
+                                {filterOn && (
+                                    <tr className="bg-white border-b-2 border-[var(--selago)]">
+                                        {hdGroup.headers.map(header => (
+                                            <th 
+                                                key={header.id} 
+                                                className="px-2 py-2.5 text-left bg-white relative"
+                                                style={{ 
+                                                    position: 'relative', 
+                                                    zIndex: ['description', 'supplier', 'type'].includes(header.column.id) ? 100 : 50 
+                                                }}
+                                            >
+                                                {header.column.getCanFilter() ? (
+                                                    <div className="flex items-center justify-start w-full">
+                                                        <div className="w-full min-w-[140px] relative" style={{ zIndex: 'inherit' }}>
+                                                            <Filter 
+                                                                column={header.column} 
+                                                                table={table} 
+                                                                filterOn={filterOn} 
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                ) : null}
+                                            </th>
+                                        ))}
+                                    </tr>
+                                )}
+                            </Fragment>
+                        )}
+                    </thead>
+
+                    <tbody className="divide-y divide-[var(--selago)] bg-white">
+                        {table.getRowModel().rows.map(row => (
+                            <tr
+                                key={row.id}
+                                className={`cursor-pointer transition-colors ${row.getIsSelected() ? 'bg-blue-50' : 'bg-white'} hover:bg-[var(--rock-blue)]`}
+                                onDoubleClick={() => SelectRow(row.original)}
+                            >
+                                {row.getVisibleCells().map(cell => (
+                                    <td
+                                        key={cell.id}
+                                        data-label={cell.column.columnDef.header}
+                                        className="px-5 py-2.5 text-xs text-[var(--bunting)] whitespace-nowrap leading-relaxed hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)]"
+                                        style={{ minWidth: '120px' }}
+                                    >
+                                        <div className="w-full">
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </div>
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* FOOTER */}
+            <div className="flex p-3 border-t border-[var(--selago)] flex-wrap bg-white rounded-b-2xl gap-2 items-center">
+                <div className="hidden lg:flex text-[var(--regent-gray)] text-sm w-auto p-1 flex-shrink-0">
+                    {`${getTtl('Showing', ln)} ${
+                        table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
+                        (table.getFilteredRowModel().rows.length ? 1 : 0)
+                    }-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
+                    ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
                 </div>
-                <div className="table-toolbar flex p-2.5 border-t border-[var(--selago)] flex-wrap bg-white rounded-b-2xl">
-                    <div className="hidden lg:flex text-[var(--regent-gray)] text-sm w-48 xl:w-96 p-2">
-                        {`${getTtl('Showing', ln)} ${
-                            table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
-                            (table.getFilteredRowModel().rows.length ? 1 : 0)
-                        }-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
-                        ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
-                    </div>
-                    <Paginator table={table} />
-                    <RowsIndicator table={table} />
-                </div>
+                <Paginator table={table} />
+                <RowsIndicator table={table} />
             </div>
         </div>
     )
 }
-
 
 export default Customtable;

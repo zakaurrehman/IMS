@@ -17,7 +17,7 @@ export const Filter = ({ column, table, filterOn }) => {
                             column.setFilterValue(old => [value, old?.[1]])
                         }
                         placeholder={`Min`}
-                        className="w-24 border shadow rounded"
+                        className="border shadow rounded w-full max-w-[90px]"
                     />
                     <DebouncedInput
                         type="number"
@@ -26,7 +26,7 @@ export const Filter = ({ column, table, filterOn }) => {
                             column.setFilterValue(old => [old?.[0], value])
                         }
                         placeholder={`Max`}
-                        className="w-24 border shadow rounded"
+                        className="border shadow rounded w-full max-w-[90px]"
                     />
                 </div>
             </div>
@@ -35,7 +35,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-full max-w-[160px] text-[var(--port-gore)] appearance-none leading-5'
             >
                 <option value="">All</option>
                 {
@@ -49,7 +49,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-full max-w-[160px] text-[var(--port-gore)] appearance-none leading-5'
             >
                 <option value="">All</option>
                 {
@@ -63,7 +63,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-full max-w-[160px] text-[var(--port-gore)] appearance-none leading-5'
             >
                 <option value="">All</option>
                 {
@@ -77,7 +77,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-full max-w-[160px] text-[var(--port-gore)] appearance-none leading-5'
             >
                 <option value="">All</option>
                 {
@@ -92,7 +92,7 @@ export const Filter = ({ column, table, filterOn }) => {
                 onChange={e => column.setFilterValue(e.target.value)}
                 value={columnFilterValue?.toString()}
                 className='text-xs shadow-lg 
-            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-24 text-[var(--port-gore)]'
+            border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-full max-w-[160px] text-[var(--port-gore)]'
             >
                 <option value="">All</option>
                 {
@@ -133,7 +133,7 @@ export const Filter = ({ column, table, filterOn }) => {
 
                         }}
                         className='text-xs shadow-lg 
-                border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-28 text-[var(--port-gore)]'
+                        border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-full max-w-[140px] text-[var(--port-gore)] appearance-none leading-5'
                         max={columnFilterValue?.[1] || ''}
                     />
                     <span className="flex items-center text-[var(--regent-gray)]">-</span>
@@ -151,12 +151,12 @@ export const Filter = ({ column, table, filterOn }) => {
                         }}
                         min={columnFilterValue?.[0] || ''}
                         className='text-xs shadow-lg 
-                border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-28 text-[var(--port-gore)]'
+                    border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] w-full max-w-[140px] text-[var(--port-gore)] appearance-none leading-5'
                     />
                 </div>
             ) : (
                 <DebouncedInput
-                    className="w-36 border shadow rounded"
+                    className="w-full max-w-[180px] border shadow rounded"
                     onChange={value => column.setFilterValue(value)}
                     placeholder={`Search...`}
                     type="text"
@@ -197,6 +197,6 @@ const DebouncedInput = ({
         <input {...props} value={value} onChange={e => setValue(e.target.value)}
             className={`text-xs shadow-lg 
         border rounded-lg border-[var(--rock-blue)]/50 p-1 focus:outline-0 focus:border-[var(--endeavour)] 
-        indent-0.2 text-[var(--port-gore)] ${type === 'number' ? 'w-16' : 'w-28'}`} />
+        indent-0.2 text-[var(--port-gore)] ${type === 'number' ? 'w-full max-w-[90px]' : 'w-full max-w-[160px]'}`} />
     );
 }
