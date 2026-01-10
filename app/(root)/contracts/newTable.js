@@ -141,7 +141,7 @@ const Customtable = ({
     <div className="flex flex-col relative">
 
       {/* HEADER - Enhanced with 3D depth */}
-      <div className="relative z-10 shadow-lg">
+      <div className="relative  shadow-lg">
         <Header
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
@@ -168,7 +168,7 @@ const Customtable = ({
         <table className="w-full border-collapse table-auto" style={{ minWidth: '100%' }}>
 
           {/* THEAD - Enhanced 3D Sticky Header */}
-          <thead className="sticky top-0 z-20">
+          <thead className="sticky top-0 ">
 
             {/* Header Row - Premium 3D Effect */}
             {table.getHeaderGroups().map(hdGroup =>

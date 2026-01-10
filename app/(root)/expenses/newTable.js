@@ -362,6 +362,7 @@ const Customtable = ({
   const [isEditMode, setIsEditMode] = useState(false)
   const [rowSelection, setRowSelection] = useState({});
 
+  /* ---------- Selection Column ---------- */
   const columnsWithSelection = useMemo(() => {
     if (!quickSumEnabled) return columns;
 
@@ -371,10 +372,7 @@ const Customtable = ({
         <input
           type="checkbox"
           checked={table.getIsAllPageRowsSelected()}
-          ref={el => {
-            if (!el) return;
-            el.indeterminate = table.getIsSomePageRowsSelected();
-          }}
+          ref={el => el && (el.indeterminate = table.getIsSomePageRowsSelected())}
           onChange={table.getToggleAllPageRowsSelectedHandler()}
           className="w-4 h-4 cursor-pointer accent-blue-600 rounded shadow-sm"
         />
@@ -396,6 +394,7 @@ const Customtable = ({
     return [selectCol, ...(columns || [])];
   }, [columns, quickSumEnabled]);
 
+  /* ---------- TABLE ---------- */
   const table = useReactTable({
     meta: {
       isEditMode,
@@ -432,7 +431,7 @@ const Customtable = ({
 
   useEffect(() => {
     setFilteredId(
-      table.getFilteredRowModel().rows.map(x => x.original.id)
+      table.getFilteredRowModel().rows.map(r => r.original.id)
     )
   }, [globalFilter, columnFilters])
 
@@ -440,7 +439,7 @@ const Customtable = ({
     <div className="flex flex-col relative">
 
       {/* HEADER */}
-      <div className="relative z-10 shadow-lg">
+      <div className="relative  shadow-lg">
         <Header
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
@@ -457,8 +456,8 @@ const Customtable = ({
         />
       </div>
 
-      {/* TABLE CONTAINER */}
-      <div className="
+      {/* ================= DESKTOP ================= */}
+      <div className="hidden md:block
         overflow-x-auto overflow-y-auto
         border-2 border-gray-300
         shadow-[0_8px_16px_rgba(0,0,0,0.15),0_4px_8px_rgba(0,0,0,0.1)]
@@ -470,34 +469,24 @@ const Customtable = ({
 
         <table className="w-full border-collapse table-auto" style={{ minWidth: '100%' }}>
 
-          <thead className="sticky top-0 z-20">
-
+          <thead className="sticky top-0 ">
             {table.getHeaderGroups().map(hdGroup => (
               <Fragment key={hdGroup.id}>
 
-                {/* HEADER ROW */}
-                <tr className="
-                  bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800
-                  shadow-[0_4px_12px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.2)]
-                ">
+                <tr className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800
+                  shadow-[0_4px_12px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.2)]">
                   {hdGroup.headers.map(header => (
                     <th
                       key={header.id}
-                      className="
-                        relative px-6 py-4
-                        text-left text-xs text-white uppercase font-bold tracking-wide
+                      className="px-6 py-4 text-xs text-white uppercase font-bold
                         border-r border-blue-500/30 last:border-r-0
-                        transition-all duration-200
-                        hover:bg-gradient-to-br hover:from-blue-500 hover:to-blue-700
-                        whitespace-nowrap
-                        shadow-[inset_0_-2px_4px_rgba(0,0,0,0.1)]
-                      "
+                        hover:bg-gradient-to-br hover:from-blue-500 hover:to-blue-700"
                       style={{ minWidth: '140px' }}
                     >
                       {header.column.getCanSort() ? (
                         <div
                           onClick={header.column.getToggleSortingHandler()}
-                          className="flex items-center gap-3 cursor-pointer select-none group"
+                          className="flex items-center gap-3 cursor-pointer group"
                         >
                           <span>{header.column.columnDef.header}</span>
                           {{
@@ -505,25 +494,15 @@ const Customtable = ({
                             desc: <TbSortDescending className="scale-125" />
                           }[header.column.getIsSorted()]}
                         </div>
-                      ) : (
-                        <span>{header.column.columnDef.header}</span>
-                      )}
+                      ) : header.column.columnDef.header}
                     </th>
                   ))}
                 </tr>
 
-                {/* FILTER ROW */}
                 {filterOn && (
-                  <tr className="
-                    bg-gradient-to-b from-white to-gray-50
-                    shadow-[0_4px_8px_rgba(0,0,0,0.1)]
-                  ">
+                  <tr className="bg-gradient-to-b from-white to-gray-50 shadow-[0_4px_8px_rgba(0,0,0,0.1)]">
                     {hdGroup.headers.map(header => (
-                      <th
-                        key={header.id}
-                        className="px-4 py-3 bg-white/95 relative"
-                        style={{ zIndex: ['supplier', 'client'].includes(header.column.id) ? 100 : 50 }}
-                      >
+                      <th key={header.id} className="px-4 py-3 bg-white/95">
                         {header.column.getCanFilter() && (
                           <Filter column={header.column} table={table} filterOn={filterOn} />
                         )}
@@ -541,27 +520,19 @@ const Customtable = ({
               <tr
                 key={row.id}
                 className={`
-                  cursor-pointer transition-all duration-200
+                  cursor-pointer transition-all
                   ${row.getIsSelected()
-                    ? 'bg-gradient-to-r from-blue-50 to-blue-100 shadow-[inset_0_2px_8px_rgba(59,130,246,0.15)]'
-                    : 'bg-white hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50'}
-                  hover:shadow-[0_2px_8px_rgba(0,0,0,0.08)]
+                    ? 'bg-gradient-to-r from-blue-50 to-blue-100'
+                    : rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}
+                  hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50
                   ${highlightId === row.original.id ? 'ring-2 ring-yellow-400' : ''}
                 `}
                 onDoubleClick={() => SelectRow(row.original)}
               >
                 {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className="px-4 py-3 text-xs" style={{ minWidth: '140px' }}>
-                    <div className="
-                      w-full px-4 py-2.5
-                      bg-white
-                      rounded-lg
-                      shadow-[0_2px_6px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.8)]
-                      hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)]
-                      hover:bg-gradient-to-br hover:from-white hover:to-blue-50/30
-                      transition-all duration-200
-                      min-h-[40px]
-                    ">
+                  <td key={cell.id} className="px-4 py-3" style={{ minWidth: '140px' }}>
+                    <div className="bg-white rounded-lg px-4 py-2.5
+                      shadow-[0_2px_6px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)]">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </div>
                   </td>
@@ -573,15 +544,58 @@ const Customtable = ({
         </table>
       </div>
 
+      {/* ================= MOBILE ================= */}
+      <div className="block md:hidden">
+        <div className="space-y-4 p-2 max-h-[600px] overflow-y-auto
+          bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg">
+
+          {table.getRowModel().rows.map((row, rowIndex) => (
+            <div
+              key={row.id}
+              className="bg-white rounded-xl border-2 border-gray-300
+                shadow-[0_4px_12px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.8)]">
+
+              <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 px-4 py-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-white font-bold text-sm">
+                    {getTtl('Row', ln)} {rowIndex + 1}
+                  </span>
+                  {quickSumEnabled && (
+                    <input
+                      type="checkbox"
+                      checked={row.getIsSelected()}
+                      onChange={row.getToggleSelectedHandler()}
+                      className="w-5 h-5 accent-blue-600"
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="p-4 space-y-3">
+                {row.getVisibleCells().map(cell => {
+                  if (cell.column.id === 'select') return null;
+                  return (
+                    <div key={cell.id}>
+                      <div className="text-xs font-bold text-blue-700 uppercase">
+                        {cell.column.columnDef.header}
+                      </div>
+                      <div className="bg-white px-4 py-3 rounded-lg border
+                        shadow-[0_2px_6px_rgba(0,0,0,0.08)]">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* FOOTER */}
-      <div className="
-        flex p-4
-        border-2 border-t-0 border-gray-300
+      <div className="flex p-4 border-2 border-t-0 border-gray-300
         bg-gradient-to-br from-white via-gray-50 to-white
-        rounded-b-xl
-        shadow-[0_8px_16px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.8)]
-        gap-3 items-center
-      ">
+        rounded-b-xl shadow-[0_8px_16px_rgba(0,0,0,0.15)] gap-3 items-center">
         <Paginator table={table} />
         <RowsIndicator table={table} />
       </div>

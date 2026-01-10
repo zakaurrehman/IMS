@@ -1,11 +1,20 @@
 
+
 // 'use client'
 
 // import Header from "../../../components/table/header";
-// import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable, getExpandedRowModel } from "@tanstack/react-table"
+// import {
+//     flexRender,
+//     getCoreRowModel,
+//     getFilteredRowModel,
+//     getPaginationRowModel,
+//     getSortedRowModel,
+//     getExpandedRowModel,
+//     useReactTable
+// } from "@tanstack/react-table"
 // import { Fragment, useEffect, useMemo, useState } from "react"
-// import { TbSortDescending } from "react-icons/tb";
-// import { TbSortAscending } from "react-icons/tb";
+// import { TbSortDescending, TbSortAscending } from "react-icons/tb";
+
 // import { Paginator } from "../../../components/table/Paginator";
 // import RowsIndicator from "../../../components/table/RowsIndicator";
 // import { usePathname } from "next/navigation";
@@ -16,60 +25,79 @@
 // import ResetFilterTableIcon from '../../../components/table/filters/resetTabe';
 // import dateBetweenFilterFn from '../../../components/table/filters/date-between-filter';
 
-// const Customtable = ({ data, columns, invisible, excellReport, ln, setFilteredData, tableModes, type }) => {
+// const Customtable = ({
+//     data,
+//     columns,
+//     invisible,
+//     excellReport,
+//     ln,
+//     setFilteredData,
+//     tableModes,
+//     type
+// }) => {
 
 //     const [globalFilter, setGlobalFilter] = useState('')
 //     const [columnVisibility, setColumnVisibility] = useState(invisible)
 //     const [filterOn, setFilterOn] = useState(false)
 
-//     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 500 })
-//     const pagination = useMemo(() => ({ pageIndex, pageSize, }), [pageIndex, pageSize])
-//     const [expanded, setExpanded] = useState({})
-//     const pathName = usePathname()
+//     const [{ pageIndex, pageSize }, setPagination] = useState({
+//         pageIndex: 0,
+//         pageSize: 500
+//     })
 
+//     const pagination = useMemo(() => ({ pageIndex, pageSize }), [pageIndex, pageSize])
+//     const [expanded, setExpanded] = useState({})
 //     const [columnFilters, setColumnFilters] = useState([])
 
-//     const [quickSumEnabled, setQuickSumEnabled] = useState(false);
-//     const [quickSumColumns, setQuickSumColumns] = useState([]);
-//     const [rowSelection, setRowSelection] = useState({});
+//     const [quickSumEnabled, setQuickSumEnabled] = useState(false)
+//     const [quickSumColumns, setQuickSumColumns] = useState([])
+//     const [rowSelection, setRowSelection] = useState({})
+
+//     usePathname()
 
 //     const columnsWithSelection = useMemo(() => {
-//         if (!quickSumEnabled) return columns;
-//         const selectCol = {
-//             id: "select",
-//             header: ({ table }) => (
-//                 <input 
-//                     type="checkbox" 
-//                     checked={table.getIsAllPageRowsSelected()}
-//                     ref={(el) => { if (el) el.indeterminate = table.getIsSomePageRowsSelected(); }}
-//                     onChange={table.getToggleAllPageRowsSelectedHandler()}
-//                     className="qs-checkbox"
-//                 />
-//             ),
-//             cell: ({ row }) => (
-//                 <input 
-//                     type="checkbox" 
-//                     checked={row.getIsSelected()} 
-//                     disabled={!row.getCanSelect()}
-//                     onChange={row.getToggleSelectedHandler()}
-//                     className="qs-checkbox"
-//                 />
-//             ),
-//             enableSorting: false, 
-//             enableColumnFilter: false, 
-//             size: 48,
-//         };
-//         return [selectCol, ...(columns || [])];
-//     }, [columns, quickSumEnabled]);
+//         if (!quickSumEnabled) return columns
+
+//         return [
+//             {
+//                 id: "select",
+//                 header: ({ table }) => (
+//                     <input
+//                         type="checkbox"
+//                         checked={table.getIsAllPageRowsSelected()}
+//                         ref={el => el && (el.indeterminate = table.getIsSomePageRowsSelected())}
+//                         onChange={table.getToggleAllPageRowsSelectedHandler()}
+//                         className="qs-checkbox"
+//                     />
+//                 ),
+//                 cell: ({ row }) => (
+//                     <input
+//                         type="checkbox"
+//                         checked={row.getIsSelected()}
+//                         disabled={!row.getCanSelect()}
+//                         onChange={row.getToggleSelectedHandler()}
+//                         className="qs-checkbox"
+//                     />
+//                 ),
+//                 enableSorting: false,
+//                 enableColumnFilter: false,
+//                 size: 48,
+//             },
+//             ...(columns || [])
+//         ]
+//     }, [columns, quickSumEnabled])
 
 //     const table = useReactTable({
-//         columns: columnsWithSelection,
 //         data,
+//         columns: columnsWithSelection,
 //         enableRowSelection: quickSumEnabled,
 //         getCoreRowModel: getCoreRowModel(),
-//         filterFns: {
-//             dateBetweenFilterFn,
-//         },
+//         getFilteredRowModel: getFilteredRowModel(),
+//         getSortedRowModel: getSortedRowModel(),
+//         getPaginationRowModel: getPaginationRowModel(),
+//         getExpandedRowModel: getExpandedRowModel(),
+//         getSubRows: row => row.subRows,
+//         filterFns: { dateBetweenFilterFn },
 //         state: {
 //             globalFilter,
 //             columnVisibility,
@@ -78,36 +106,31 @@
 //             columnFilters,
 //             rowSelection,
 //         },
-//         onRowSelectionChange: setRowSelection,
-//         onColumnFiltersChange: setColumnFilters,
-//         onExpandedChange: setExpanded,
-//         getSubRows: row => row.subRows,
-//         getExpandedRowModel: getExpandedRowModel(),
-//         getFilteredRowModel: getFilteredRowModel(),
 //         onGlobalFilterChange: setGlobalFilter,
 //         onColumnVisibilityChange: setColumnVisibility,
-//         getSortedRowModel: getSortedRowModel(),
-//         getPaginationRowModel: getPaginationRowModel(),
+//         onColumnFiltersChange: setColumnFilters,
 //         onPaginationChange: setPagination,
+//         onExpandedChange: setExpanded,
+//         onRowSelectionChange: setRowSelection,
 //     })
 
 //     useEffect(() => {
-//         setFilteredData(table.getFilteredRowModel().rows.map(x => x.original))
+//         setFilteredData(
+//             table.getFilteredRowModel().rows.map(r => r.original)
+//         )
 //     }, [globalFilter, columnFilters])
 
-//     const resetTable = () => {
-//         table.resetColumnFilters()
-//     }
+//     const resetTable = () => table.resetColumnFilters()
 
 //     return (
 //         <div className="flex flex-col relative">
-            
-//             {/* HEADER - Higher z-index to stay above everything */}
-//             <div className="relative ">
-//                 <Header 
-//                     globalFilter={globalFilter} 
+
+//             {/* HEADER */}
+//             <div className="relative z-30">
+//                 <Header
+//                     globalFilter={globalFilter}
 //                     setGlobalFilter={setGlobalFilter}
-//                     table={table} 
+//                     table={table}
 //                     excellReport={excellReport}
 //                     filterIcon={FiltersIcon(ln, filterOn, setFilterOn)}
 //                     resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
@@ -120,91 +143,106 @@
 //                 />
 //             </div>
 
-//             {/* SCROLL CONTAINER */}
-//             <div className="overflow-x-auto overflow-y-auto border-x border-[var(--selago)] max-h-[360px] md:max-h-[310px] 2xl:max-h-[550px] relative ">
-//                 <table className="w-full border-collapse table-auto" style={{ minWidth: '100%' }}>
-                    
-//                     {/* THEAD - Sticky with proper z-index */}
+//             {/* PREMIUM SCROLL CONTAINER */}
+//             <div className="
+//                 overflow-x-auto overflow-y-auto
+//                 border-2 border-gray-300
+//                 rounded-xl
+//                 bg-gradient-to-br from-gray-50 to-gray-100
+//                 shadow-[0_10px_24px_rgba(0,0,0,0.18)]
+//                 max-h-[360px] md:max-h-[310px] 2xl:max-h-[550px]
+//             ">
+//                 <table className="w-full border-collapse table-auto">
+
+//                     {/* THEAD */}
 //                     <thead className="md:sticky md:top-0 md:z-20">
-//                         {table.getHeaderGroups().map((hdGroup, i) =>
-//                             <Fragment key={hdGroup.id}>
-//                                 {/* Header Row */}
-//                                 <tr 
-//                                     key={hdGroup.id} 
-//                                     className="bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)]"
-//                                 >
-//                                     {hdGroup.headers.map(header =>
+//                         {table.getHeaderGroups().map(group => (
+//                             <Fragment key={group.id}>
+
+//                                 {/* HEADER ROW */}
+//                                 <tr className="
+//                                     bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800
+//                                     shadow-[0_4px_12px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.25)]
+//                                 ">
+//                                     {group.headers.map(header => (
 //                                         <th
 //                                             key={header.id}
-//                                             className="relative px-5 py-3 text-left text-xs text-white uppercase font-semibold hover:bg-[var(--rock-blue)] whitespace-nowrap"
-//                                             style={{ minWidth: '120px' }}
+//                                             className="
+//                                                 px-6 py-4
+//                                                 text-xs uppercase font-bold text-white
+//                                                 border-r border-blue-500/30 last:border-r-0
+//                                                 whitespace-nowrap
+//                                             "
 //                                         >
 //                                             {header.column.getCanSort() ? (
 //                                                 <div
 //                                                     onClick={header.column.getToggleSortingHandler()}
 //                                                     className="flex items-center gap-2 cursor-pointer select-none"
 //                                                 >
-//                                                     <span className="leading-tight">{header.column.columnDef.header}</span>
+//                                                     {header.column.columnDef.header}
 //                                                     {{
-//                                                         asc: <TbSortAscending className="scale-125 flex-shrink-0" />,
-//                                                         desc: <TbSortDescending className="scale-125 flex-shrink-0" />
+//                                                         asc: <TbSortAscending />,
+//                                                         desc: <TbSortDescending />
 //                                                     }[header.column.getIsSorted()]}
 //                                                 </div>
-//                                             ) : (
-//                                                 <span className="text-xs font-medium leading-tight block">
-//                                                     {header.column.columnDef.header}
-//                                                 </span>
-//                                             )}
+//                                             ) : header.column.columnDef.header}
 //                                         </th>
-//                                     )}
+//                                     ))}
 //                                 </tr>
 
-//                                 {/* Filter Row - Separate row with better spacing and z-index */}
+//                                 {/* FILTER ROW */}
 //                                 {filterOn && (
-//                                     <tr className="bg-white border-b-2 border-[var(--selago)]">
-//                                         {hdGroup.headers.map(header => (
-//                                             <th 
-//                                                 key={header.id} 
-//                                                 className="px-2 py-2.5 text-left bg-white relative"
-//                                                 style={{ 
-//                                                     position: 'relative', 
-//                                                     zIndex: ['description', 'supplier', 'client', 'type'].includes(header.column.id) ? 100 : 50 
+//                                     <tr className="
+//                                         bg-gradient-to-b from-white to-gray-50
+//                                         shadow-[0_4px_8px_rgba(0,0,0,0.12)]
+//                                     ">
+//                                         {group.headers.map(header => (
+//                                             <th
+//                                                 key={header.id}
+//                                                 className="px-3 py-3 relative"
+//                                                 style={{
+//                                                     zIndex: ['description', 'supplier', 'client', 'type']
+//                                                         .includes(header.column.id) ? 100 : 50
 //                                                 }}
 //                                             >
-//                                                 {header.column.getCanFilter() ? (
-//                                                     <div className="flex items-center justify-start w-full">
-//                                                         <div className="w-full min-w-[140px] relative" style={{ zIndex: 'inherit' }}>
-//                                                             <Filter 
-//                                                                 column={header.column} 
-//                                                                 table={table} 
-//                                                                 filterOn={filterOn} 
-//                                                             />
-//                                                         </div>
-//                                                     </div>
-//                                                 ) : null}
+//                                                 {header.column.getCanFilter() && (
+//                                                     <Filter
+//                                                         column={header.column}
+//                                                         table={table}
+//                                                         filterOn={filterOn}
+//                                                     />
+//                                                 )}
 //                                             </th>
 //                                         ))}
 //                                     </tr>
 //                                 )}
 //                             </Fragment>
-//                         )}
+//                         ))}
 //                     </thead>
 
-//                     <tbody className="divide-y divide-[var(--selago)] bg-white">
+//                     {/* TBODY */}
+//                     <tbody className="bg-white">
 //                         {table.getRowModel().rows.map(row => (
 //                             <tr
 //                                 key={row.id}
-//                                 className={`cursor-pointer transition-colors ${row.getIsSelected() ? 'bg-blue-50' : 'bg-white'} hover:bg-[var(--rock-blue)]`}
 //                                 onClick={() => row.getCanExpand() && row.toggleExpanded()}
+//                                 className={`
+//                                     transition-all duration-200 cursor-pointer
+//                                     ${row.getIsSelected()
+//                                         ? 'bg-gradient-to-r from-blue-50 to-blue-100'
+//                                         : 'hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50'}
+//                                 `}
 //                             >
 //                                 {row.getVisibleCells().map(cell => (
-//                                     <td
-//                                         key={cell.id}
-//                                         data-label={cell.column.columnDef.header}
-//                                         className="px-5 py-2.5 text-xs text-[var(--bunting)] whitespace-nowrap leading-relaxed hover:bg-[var(--rock-blue)] hover:text-[var(--bunting)]"
-//                                         style={{ minWidth: '120px' }}
-//                                     >
-//                                         <div className="w-full">
+//                                     <td key={cell.id} className="px-4 py-3 text-xs">
+//                                         <div className="
+//                                             w-full px-4 py-2.5
+//                                             bg-white
+//                                             rounded-lg
+//                                             shadow-[0_2px_6px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]
+//                                             hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]
+//                                             transition-all duration-200
+//                                         ">
 //                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
 //                                         </div>
 //                                     </td>
@@ -216,14 +254,20 @@
 //             </div>
 
 //             {/* FOOTER */}
-//             <div className="flex p-3 border-t border-[var(--selago)] flex-wrap bg-white rounded-b-2xl gap-2 items-center">
-//                 <div className="hidden lg:flex text-[var(--regent-gray)] text-sm w-auto p-1 flex-shrink-0">
+//             <div className="
+//                 flex p-4 gap-3 items-center
+//                 border-2 border-t-0 border-gray-300
+//                 rounded-b-xl
+//                 bg-gradient-to-br from-white via-gray-50 to-white
+//                 shadow-[0_8px_16px_rgba(0,0,0,0.15)]
+//             ">
+//                 <div className="hidden lg:flex text-sm text-gray-600">
 //                     {`${getTtl('Showing', ln)} ${
-//                         table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
-//                         (table.getFilteredRowModel().rows.length ? 1 : 0)
-//                     }-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
+//                         pageIndex * pageSize + 1
+//                     }-${table.getRowModel().rows.length + pageIndex * pageSize}
 //                     ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
 //                 </div>
+
 //                 <Paginator table={table} />
 //                 <RowsIndicator table={table} />
 //             </div>
@@ -231,8 +275,7 @@
 //     )
 // }
 
-// export default Customtable;
-
+// export default Customtable
 'use client'
 
 import Header from "../../../components/table/header";
@@ -245,12 +288,12 @@ import {
     getExpandedRowModel,
     useReactTable
 } from "@tanstack/react-table"
+
 import { Fragment, useEffect, useMemo, useState } from "react"
 import { TbSortDescending, TbSortAscending } from "react-icons/tb";
 
 import { Paginator } from "../../../components/table/Paginator";
 import RowsIndicator from "../../../components/table/RowsIndicator";
-import { usePathname } from "next/navigation";
 import '../contracts/style.css';
 import { getTtl } from "../../../utils/languages";
 import { Filter } from '../../../components/table/filters/filterFunc'
@@ -286,8 +329,6 @@ const Customtable = ({
     const [quickSumColumns, setQuickSumColumns] = useState([])
     const [rowSelection, setRowSelection] = useState({})
 
-    usePathname()
-
     const columnsWithSelection = useMemo(() => {
         if (!quickSumEnabled) return columns
 
@@ -300,7 +341,7 @@ const Customtable = ({
                         checked={table.getIsAllPageRowsSelected()}
                         ref={el => el && (el.indeterminate = table.getIsSomePageRowsSelected())}
                         onChange={table.getToggleAllPageRowsSelectedHandler()}
-                        className="qs-checkbox"
+                        className="w-4 h-4 accent-blue-600 cursor-pointer"
                     />
                 ),
                 cell: ({ row }) => (
@@ -309,7 +350,7 @@ const Customtable = ({
                         checked={row.getIsSelected()}
                         disabled={!row.getCanSelect()}
                         onChange={row.getToggleSelectedHandler()}
-                        className="qs-checkbox"
+                        className="w-4 h-4 accent-blue-600 cursor-pointer"
                     />
                 ),
                 enableSorting: false,
@@ -359,7 +400,7 @@ const Customtable = ({
         <div className="flex flex-col relative">
 
             {/* HEADER */}
-            <div className="relative z-30">
+            <div className="relative  shadow-lg">
                 <Header
                     globalFilter={globalFilter}
                     setGlobalFilter={setGlobalFilter}
@@ -376,19 +417,19 @@ const Customtable = ({
                 />
             </div>
 
-            {/* PREMIUM SCROLL CONTAINER */}
+            {/* TABLE CONTAINER */}
             <div className="
                 overflow-x-auto overflow-y-auto
                 border-2 border-gray-300
                 rounded-xl
                 bg-gradient-to-br from-gray-50 to-gray-100
                 shadow-[0_10px_24px_rgba(0,0,0,0.18)]
-                max-h-[360px] md:max-h-[310px] 2xl:max-h-[550px]
+                max-h-[360px] md:max-h-[360px] 2xl:max-h-[550px]
             ">
-                <table className="w-full border-collapse table-auto">
+                <table className="border-collapse table-fixed min-w-[1200px] w-full">
 
                     {/* THEAD */}
-                    <thead className="md:sticky md:top-0 md:z-20">
+                    <thead className="sticky top-0 ">
                         {table.getHeaderGroups().map(group => (
                             <Fragment key={group.id}>
 
@@ -405,6 +446,7 @@ const Customtable = ({
                                                 text-xs uppercase font-bold text-white
                                                 border-r border-blue-500/30 last:border-r-0
                                                 whitespace-nowrap
+                                                hover:bg-blue-700 transition
                                             "
                                         >
                                             {header.column.getCanSort() ? (
@@ -414,8 +456,8 @@ const Customtable = ({
                                                 >
                                                     {header.column.columnDef.header}
                                                     {{
-                                                        asc: <TbSortAscending />,
-                                                        desc: <TbSortDescending />
+                                                        asc: <TbSortAscending className="scale-125" />,
+                                                        desc: <TbSortDescending className="scale-125" />
                                                     }[header.column.getIsSorted()]}
                                                 </div>
                                             ) : header.column.columnDef.header}
@@ -454,7 +496,7 @@ const Customtable = ({
                     </thead>
 
                     {/* TBODY */}
-                    <tbody className="bg-white">
+                    <tbody className="bg-white divide-y divide-gray-200">
                         {table.getRowModel().rows.map(row => (
                             <tr
                                 key={row.id}
@@ -467,7 +509,10 @@ const Customtable = ({
                                 `}
                             >
                                 {row.getVisibleCells().map(cell => (
-                                    <td key={cell.id} className="px-4 py-3 text-xs">
+                                    <td
+                                        key={cell.id}
+                                        className="px-5 py-3 text-xs text-gray-700 whitespace-nowrap"
+                                    >
                                         <div className="
                                             w-full px-4 py-2.5
                                             bg-white
@@ -496,7 +541,7 @@ const Customtable = ({
             ">
                 <div className="hidden lg:flex text-sm text-gray-600">
                     {`${getTtl('Showing', ln)} ${
-                        pageIndex * pageSize + 1
+                        pageIndex * pageSize + (table.getFilteredRowModel().rows.length ? 1 : 0)
                     }-${table.getRowModel().rows.length + pageIndex * pageSize}
                     ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
                 </div>
