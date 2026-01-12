@@ -1,11 +1,8 @@
-
 // 'use client'
-
 // import Header from "../../../components/table/header";
 // import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
 // import { Fragment, useEffect, useMemo, useState } from "react"
 // import { TbSortDescending, TbSortAscending } from "react-icons/tb";
-
 // import { Paginator } from "../../../components/table/Paginator";
 // import RowsIndicator from "../../../components/table/RowsIndicator";
 // import { getTtl } from "../../../utils/languages";
@@ -14,208 +11,222 @@
 // import ResetFilterTableIcon from '../../../components/table/filters/resetTabe';
 // import dateBetweenFilterFn from '../../../components/table/filters/date-between-filter';
 // import '../contracts/style.css';
-
 // const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, type, ln, setFilteredArray1 }) => {
+//   const [globalFilter, setGlobalFilter] = useState('')
+//   const [columnVisibility, setColumnVisibility] = useState(invisible)
+//   const [filterOn, setFilterOn] = useState(false)
+//   const [columnFilters, setColumnFilters] = useState([{ id: 'sType', value: 'Warehouse' }])
+//   const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 500 })
+//   const pagination = useMemo(() => ({ pageIndex, pageSize }), [pageIndex, pageSize])
+//   const [quickSumEnabled, setQuickSumEnabled] = useState(false)
+//   const [quickSumColumns, setQuickSumColumns] = useState([])
+//   const [rowSelection, setRowSelection] = useState({})
 
-//     const [globalFilter, setGlobalFilter] = useState('')
-//     const [columnVisibility, setColumnVisibility] = useState(invisible)
-//     const [filterOn, setFilterOn] = useState(false)
-//     const [columnFilters, setColumnFilters] = useState([
-//         { id: 'sType', value: 'Warehouse' }
-//     ]);
+//   const columnsWithSelection = useMemo(() => {
+//     if (!quickSumEnabled) return columns;
+//     return [
+//       {
+//         id: "select",
+//         header: ({ table }) => (
+//           <input
+//             type="checkbox"
+//             checked={table.getIsAllPageRowsSelected()}
+//             ref={el => el && (el.indeterminate = table.getIsSomePageRowsSelected())}
+//             onChange={table.getToggleAllPageRowsSelectedHandler()}
+//             className="qs-checkbox accent-blue-600 hover:accent-blue-500"
+//           />
+//         ),
+//         cell: ({ row }) => (
+//           <input
+//             type="checkbox"
+//             checked={row.getIsSelected()}
+//             disabled={!row.getCanSelect()}
+//             onChange={row.getToggleSelectedHandler()}
+//             className="qs-checkbox accent-blue-600 hover:accent-blue-500"
+//           />
+//         ),
+//         enableSorting: false,
+//         enableColumnFilter: false,
+//         size: 48
+//       },
+//       ...(columns || [])
+//     ];
+//   }, [columns, quickSumEnabled]);
 
-//     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 500 })
-//     const pagination = useMemo(() => ({ pageIndex, pageSize }), [pageIndex, pageSize])
+//   const table = useReactTable({
+//     columns: columnsWithSelection,
+//     data,
+//     enableRowSelection: quickSumEnabled,
+//     getCoreRowModel: getCoreRowModel(),
+//     getFilteredRowModel: getFilteredRowModel(),
+//     getSortedRowModel: getSortedRowModel(),
+//     getPaginationRowModel: getPaginationRowModel(),
+//     filterFns: { dateBetweenFilterFn },
+//     state: { globalFilter, columnVisibility, pagination, columnFilters, rowSelection },
+//     onGlobalFilterChange: setGlobalFilter,
+//     onColumnFiltersChange: setColumnFilters,
+//     onColumnVisibilityChange: setColumnVisibility,
+//     onPaginationChange: setPagination,
+//     onRowSelectionChange: setRowSelection
+//   });
 
-//     const [quickSumEnabled, setQuickSumEnabled] = useState(false);
-//     const [quickSumColumns, setQuickSumColumns] = useState([]);
-//     const [rowSelection, setRowSelection] = useState({});
+//   useEffect(() => setFilteredArray1(table.getFilteredRowModel().rows.map(r => r.original)), [globalFilter, columnFilters])
 
-//     const columnsWithSelection = useMemo(() => {
-//         if (!quickSumEnabled) return columns;
-//         return [
-//             {
-//                 id: "select",
-//                 header: ({ table }) => (
-//                     <input
-//                         type="checkbox"
-//                         checked={table.getIsAllPageRowsSelected()}
-//                         ref={el => el && (el.indeterminate = table.getIsSomePageRowsSelected())}
-//                         onChange={table.getToggleAllPageRowsSelectedHandler()}
-//                         className="qs-checkbox accent-blue-600 hover:accent-blue-500"
-//                     />
-//                 ),
-//                 cell: ({ row }) => (
-//                     <input
-//                         type="checkbox"
-//                         checked={row.getIsSelected()}
-//                         disabled={!row.getCanSelect()}
-//                         onChange={row.getToggleSelectedHandler()}
-//                         className="qs-checkbox accent-blue-600 hover:accent-blue-500"
-//                     />
-//                 ),
-//                 enableSorting: false,
-//                 enableColumnFilter: false,
-//                 size: 48
-//             },
-//             ...(columns || [])
-//         ];
-//     }, [columns, quickSumEnabled]);
+//   const styledOutDiv = (row, cell) => {
+//     const field = cell.column?.columnDef?.accessorKey;
+//     return ['description','sType','supplier'].includes(field) ? 'bg-[var(--selago)]/50' : 'bg-white';
+//   }
 
-//     const table = useReactTable({
-//         columns: columnsWithSelection,
-//         data,
-//         enableRowSelection: quickSumEnabled,
-//         getCoreRowModel: getCoreRowModel(),
-//         getFilteredRowModel: getFilteredRowModel(),
-//         getSortedRowModel: getSortedRowModel(),
-//         getPaginationRowModel: getPaginationRowModel(),
-//         filterFns: { dateBetweenFilterFn },
-//         state: { globalFilter, columnVisibility, pagination, columnFilters, rowSelection },
-//         onGlobalFilterChange: setGlobalFilter,
-//         onColumnFiltersChange: setColumnFilters,
-//         onColumnVisibilityChange: setColumnVisibility,
-//         onPaginationChange: setPagination,
-//         onRowSelectionChange: setRowSelection
-//     });
+//   const resetTable = () => table.resetColumnFilters();
 
-//     useEffect(() => setFilteredArray1(table.getFilteredRowModel().rows.map(r => r.original)), [globalFilter, columnFilters])
+//   return (
+//     <div className="flex flex-col relative">
 
-//     const styledOutDiv = (row, cell) => {
-//         const field = cell.column?.columnDef?.accessorKey;
-//         return ['description','sType','supplier'].includes(field) ? 'bg-[var(--selago)]/50' : 'bg-white';
-//     }
+//       {/* HEADER */}
+//       <div className="relative ">
+//         <Header
+//           globalFilter={globalFilter}
+//           setGlobalFilter={setGlobalFilter}
+//           table={table}
+//           excellReport={excellReport}
+//           cb={cb}
+//           type={type}
+//           filterIcon={FiltersIcon(ln, filterOn, setFilterOn)}
+//           resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
+//           quickSumEnabled={quickSumEnabled}
+//           setQuickSumEnabled={setQuickSumEnabled}
+//           quickSumColumns={quickSumColumns}
+//           setQuickSumColumns={setQuickSumColumns}
+//         />
+//       </div>
 
-//     const resetTable = () => table.resetColumnFilters();
+//       {/* SCROLLABLE TABLE */}
+//       <div className="overflow-x-auto overflow-y-auto border border-gray-300 rounded-2xl shadow-xl max-h-[85vh] relative bg-white">
 
-//     return (
-//         <div className="flex flex-col relative">
+//         {/* DESKTOP & MOBILE */}
+//         <table className="w-full border-collapse table-auto">
 
-//             {/* HEADER */}
-//             <div className="relative z-30">
-//                 <Header
-//                     globalFilter={globalFilter}
-//                     setGlobalFilter={setGlobalFilter}
-//                     table={table}
-//                     excellReport={excellReport}
-//                     cb={cb}
-//                     type={type}
-//                     filterIcon={FiltersIcon(ln, filterOn, setFilterOn)}
-//                     resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
-//                     quickSumEnabled={quickSumEnabled}
-//                     setQuickSumEnabled={setQuickSumEnabled}
-//                     quickSumColumns={quickSumColumns}
-//                     setQuickSumColumns={setQuickSumColumns}
-//                 />
-//             </div>
+//           <thead className="sticky top-0 ">
+//             {table.getHeaderGroups().map(group => (
+//               <Fragment key={group.id}>
+//                 <tr className="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-700 shadow-md">
+//                   {group.headers.map(header => (
+//                     <th
+//                       key={header.id}
+//                       className="px-4 py-3 text-left text-sm font-semibold text-white uppercase border-r border-white/20 last:border-r-0 whitespace-nowrap"
+//                     >
+//                       {header.column.getCanSort() ? (
+//                         <div onClick={header.column.getToggleSortingHandler()} className="flex items-center gap-2 cursor-pointer select-none">
+//                           {header.column.columnDef.header}
+//                           {{
+//                             asc: <TbSortAscending className="text-white" />,
+//                             desc: <TbSortDescending className="text-white" />
+//                           }[header.column.getIsSorted()]}
+//                         </div>
+//                       ) : header.column.columnDef.header}
+//                     </th>
+//                   ))}
+//                 </tr>
 
-//             {/* SCROLL CONTAINER */}
-//             <div className="overflow-x-auto overflow-y-auto border border-gray-300 rounded-2xl shadow-xl md:max-h-[650px] 2xl:max-h-[850px] relative bg-white">
-//                 <table className="w-full border-collapse table-auto">
+//                 {/* FILTER ROW */}
+//                 {filterOn && (
+//                   <tr className="bg-gray-50">
+//                     {group.headers.map(header => (
+//                       <th key={header.id + '-filter'} className="px-3 py-2">
+//                         {header.column.getCanFilter() && <Filter column={header.column} table={table} filterOn={filterOn} />}
+//                       </th>
+//                     ))}
+//                   </tr>
+//                 )}
+//               </Fragment>
+//             ))}
+//           </thead>
 
-//                     <thead className="md:sticky md:top-0 md:z-20">
-//                         {table.getHeaderGroups().map(group => (
-//                             <Fragment key={group.id}>
+//           {/* TABLE BODY */}
+//           <tbody className="bg-white">
+//             {table.getRowModel().rows.map(row => (
+//               <tr
+//                 key={row.id}
+//                 onDoubleClick={() => SelectRow(row.original)}
+//                 className={`transition-all duration-200 cursor-pointer hover:bg-gradient-to-r hover:from-gray-100 hover:to-blue-50 ${row.getIsSelected() ? 'bg-gradient-to-r from-blue-50 to-blue-100' : ''}`}
+//               >
+//                 {row.getVisibleCells().map(cell => (
+//                   <td
+//                     key={cell.id}
+//                     data-label={cell.column.columnDef.header}
+//                     className={`px-4 py-3 text-sm whitespace-nowrap ${styledOutDiv(row, cell)}`}
+//                   >
+//                     <div className="w-full px-3 py-2 bg-white rounded-xl shadow-inner hover:shadow-lg transition-all duration-200">
+//                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
+//                     </div>
+//                   </td>
+//                 ))}
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
 
-//                                 {/* HEADER ROW */}
-//                                 <tr className="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-700 shadow-md">
-//                                     {group.headers.map(header => (
-//                                         <th
-//                                             key={header.id}
-//                                             className="px-6 py-3 text-left text-sm font-semibold text-white uppercase border-r border-white/20 last:border-r-0 whitespace-nowrap"
-//                                         >
-//                                             {header.column.getCanSort() ? (
-//                                                 <div onClick={header.column.getToggleSortingHandler()} className="flex items-center gap-2 cursor-pointer select-none">
-//                                                     {header.column.columnDef.header}
-//                                                     {{
-//                                                         asc: <TbSortAscending className="text-white" />,
-//                                                         desc: <TbSortDescending className="text-white" />
-//                                                     }[header.column.getIsSorted()]}
-//                                                 </div>
-//                                             ) : header.column.columnDef.header}
-//                                         </th>
-//                                     ))}
-//                                 </tr>
-
-//                                 {/* FILTER ROW */}
-//                                 {filterOn && (
-//                                     <tr className="bg-gray-50">
-//                                         {group.headers.map(header => (
-//                                             <th key={header.id + '-filter'} className="px-3 py-2" style={{ zIndex: ['description','sType','supplier'].includes(header.column.id) ? 100 : 50 }}>
-//                                                 {header.column.getCanFilter() && <Filter column={header.column} table={table} filterOn={filterOn} />}
-//                                             </th>
-//                                         ))}
-//                                     </tr>
-//                                 )}
-//                             </Fragment>
-//                         ))}
-//                     </thead>
-
-//                     {/* TABLE BODY */}
-//                     <tbody className="bg-white">
-//                         {table.getRowModel().rows.map(row => (
-//                             <tr
-//                                 key={row.id}
-//                                 onDoubleClick={() => SelectRow(row.original)}
-//                                 className={`transition-all duration-200 cursor-pointer hover:bg-gradient-to-r hover:from-gray-100 hover:to-blue-50 ${row.getIsSelected() ? 'bg-gradient-to-r from-blue-50 to-blue-100' : ''}`}
-//                             >
-//                                 {row.getVisibleCells().map(cell => (
-//                                     <td
-//                                         key={cell.id}
-//                                         data-label={cell.column.columnDef.header}
-//                                         className={`px-4 py-3 text-sm whitespace-nowrap ${styledOutDiv(row, cell)}`}
-//                                     >
-//                                         <div className="w-full px-3 py-2 bg-white rounded-xl shadow-inner hover:shadow-lg transition-all duration-200">
-//                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
-//                                         </div>
-//                                     </td>
-//                                 ))}
-//                             </tr>
-//                         ))}
-//                     </tbody>
-//                 </table>
-//             </div>
-
-//             {/* FOOTER */}
-//             <div className="flex p-4 gap-3 items-center border border-t-0 border-gray-300 rounded-b-2xl bg-gradient-to-r from-white via-gray-50 to-white shadow-md">
-//                 <div className="hidden lg:flex text-sm text-gray-700">
-//                     {`${getTtl('Showing', ln)} ${pageIndex * pageSize + 1}-${table.getRowModel().rows.length + pageIndex * pageSize} ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
-//                 </div>
-//                 <Paginator table={table} />
-//                 <RowsIndicator table={table} />
-//             </div>
+//       {/* FOOTER */}
+//       <div className="flex flex-col lg:flex-row p-4 gap-3 items-center border border-t-0 border-gray-300 rounded-b-2xl bg-gradient-to-r from-white via-gray-50 to-white shadow-md">
+//         <div className="hidden lg:flex text-sm text-gray-700">
+//           {`${getTtl('Showing', ln)} ${pageIndex * pageSize + 1}-${table.getRowModel().rows.length + pageIndex * pageSize} ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
 //         </div>
-//     )
+//         <Paginator table={table} />
+//         <RowsIndicator table={table} />
+//       </div>
+//     </div>
+//   )
 // }
 
 // export default Customtable;
 'use client'
 
 import Header from "../../../components/table/header";
-import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
-import { Fragment, useEffect, useMemo, useState } from "react"
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable
+} from "@tanstack/react-table";
+
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { TbSortDescending, TbSortAscending } from "react-icons/tb";
+
 import { Paginator } from "../../../components/table/Paginator";
 import RowsIndicator from "../../../components/table/RowsIndicator";
 import { getTtl } from "../../../utils/languages";
-import { Filter } from '../../../components/table/filters/filterFunc'
+import { Filter } from '../../../components/table/filters/filterFunc';
 import FiltersIcon from '../../../components/table/filters/filters';
 import ResetFilterTableIcon from '../../../components/table/filters/resetTabe';
 import dateBetweenFilterFn from '../../../components/table/filters/date-between-filter';
-import '../contracts/style.css';
 
-const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, type, ln, setFilteredArray1 }) => {
+const Customtable = ({
+  data,
+  columns,
+  invisible,
+  SelectRow,
+  excellReport,
+  cb,
+  type,
+  ln,
+  setFilteredArray1
+}) => {
 
-  const [globalFilter, setGlobalFilter] = useState('')
-  const [columnVisibility, setColumnVisibility] = useState(invisible)
-  const [filterOn, setFilterOn] = useState(false)
-  const [columnFilters, setColumnFilters] = useState([{ id: 'sType', value: 'Warehouse' }])
-  const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 500 })
-  const pagination = useMemo(() => ({ pageIndex, pageSize }), [pageIndex, pageSize])
-  const [quickSumEnabled, setQuickSumEnabled] = useState(false)
-  const [quickSumColumns, setQuickSumColumns] = useState([])
-  const [rowSelection, setRowSelection] = useState({})
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [columnVisibility, setColumnVisibility] = useState(invisible);
+  const [filterOn, setFilterOn] = useState(false);
+  const [columnFilters, setColumnFilters] = useState([{ id: 'sType', value: 'Warehouse' }]);
+  const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 500 });
 
+  const pagination = useMemo(() => ({ pageIndex, pageSize }), [pageIndex, pageSize]);
+  const [quickSumEnabled, setQuickSumEnabled] = useState(false);
+  const [quickSumColumns, setQuickSumColumns] = useState([]);
+  const [rowSelection, setRowSelection] = useState({});
+
+  /* SELECTION COLUMN */
   const columnsWithSelection = useMemo(() => {
     if (!quickSumEnabled) return columns;
     return [
@@ -227,7 +238,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, ty
             checked={table.getIsAllPageRowsSelected()}
             ref={el => el && (el.indeterminate = table.getIsSomePageRowsSelected())}
             onChange={table.getToggleAllPageRowsSelectedHandler()}
-            className="qs-checkbox accent-blue-600 hover:accent-blue-500"
+            className="w-4 h-4 accent-blue-600 cursor-pointer"
           />
         ),
         cell: ({ row }) => (
@@ -236,7 +247,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, ty
             checked={row.getIsSelected()}
             disabled={!row.getCanSelect()}
             onChange={row.getToggleSelectedHandler()}
-            className="qs-checkbox accent-blue-600 hover:accent-blue-500"
+            className="w-4 h-4 accent-blue-600 cursor-pointer"
           />
         ),
         enableSorting: false,
@@ -248,8 +259,8 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, ty
   }, [columns, quickSumEnabled]);
 
   const table = useReactTable({
-    columns: columnsWithSelection,
     data,
+    columns: columnsWithSelection,
     enableRowSelection: quickSumEnabled,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -264,12 +275,16 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, ty
     onRowSelectionChange: setRowSelection
   });
 
-  useEffect(() => setFilteredArray1(table.getFilteredRowModel().rows.map(r => r.original)), [globalFilter, columnFilters])
+  useEffect(() => {
+    setFilteredArray1(table.getFilteredRowModel().rows.map(r => r.original));
+  }, [globalFilter, columnFilters]);
 
   const styledOutDiv = (row, cell) => {
     const field = cell.column?.columnDef?.accessorKey;
-    return ['description','sType','supplier'].includes(field) ? 'bg-[var(--selago)]/50' : 'bg-white';
-  }
+    return ['description', 'sType', 'supplier'].includes(field)
+      ? 'bg-[var(--selago)]/50'
+      : 'bg-white';
+  };
 
   const resetTable = () => table.resetColumnFilters();
 
@@ -277,57 +292,57 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, ty
     <div className="flex flex-col relative">
 
       {/* HEADER */}
-      <div className="relative ">
-        <Header
-          globalFilter={globalFilter}
-          setGlobalFilter={setGlobalFilter}
-          table={table}
-          excellReport={excellReport}
-          cb={cb}
-          type={type}
-          filterIcon={FiltersIcon(ln, filterOn, setFilterOn)}
-          resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
-          quickSumEnabled={quickSumEnabled}
-          setQuickSumEnabled={setQuickSumEnabled}
-          quickSumColumns={quickSumColumns}
-          setQuickSumColumns={setQuickSumColumns}
-        />
-      </div>
+      <Header
+        globalFilter={globalFilter}
+        setGlobalFilter={setGlobalFilter}
+        table={table}
+        excellReport={excellReport}
+        cb={cb}
+        type={type}
+        filterIcon={FiltersIcon(ln, filterOn, setFilterOn)}
+        resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
+        quickSumEnabled={quickSumEnabled}
+        setQuickSumEnabled={setQuickSumEnabled}
+        quickSumColumns={quickSumColumns}
+        setQuickSumColumns={setQuickSumColumns}
+      />
 
-      {/* SCROLLABLE TABLE */}
-      <div className="overflow-x-auto overflow-y-auto border border-gray-300 rounded-2xl shadow-xl max-h-[85vh] relative bg-white">
+      {/* DESKTOP TABLE */}
+      <div className="hidden md:block overflow-x-auto overflow-y-auto border-2 border-gray-300 rounded-xl shadow-md md:max-h-[700px] 2xl:max-h-[900px]">
+        <table className="w-full table-auto border-collapse">
 
-        {/* DESKTOP & MOBILE */}
-        <table className="w-full border-collapse table-auto">
-
-          <thead className="sticky top-0 ">
+          <thead className="sticky top-0 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800">
             {table.getHeaderGroups().map(group => (
               <Fragment key={group.id}>
-                <tr className="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-700 shadow-md">
+                <tr>
                   {group.headers.map(header => (
                     <th
                       key={header.id}
-                      className="px-4 py-3 text-left text-sm font-semibold text-white uppercase border-r border-white/20 last:border-r-0 whitespace-nowrap"
+                      className="px-6 py-4 text-xs font-bold text-white uppercase border-r border-blue-500/30 last:border-r-0 whitespace-nowrap"
                     >
                       {header.column.getCanSort() ? (
-                        <div onClick={header.column.getToggleSortingHandler()} className="flex items-center gap-2 cursor-pointer select-none">
+                        <div
+                          onClick={header.column.getToggleSortingHandler()}
+                          className="flex items-center gap-2 cursor-pointer"
+                        >
                           {header.column.columnDef.header}
                           {{
-                            asc: <TbSortAscending className="text-white" />,
-                            desc: <TbSortDescending className="text-white" />
-                          }[header.column.getIsSorted()]}
+                            asc: <TbSortAscending />,
+                            desc: <TbSortDescending />
+                          }[header.column.getIsSorted()] || null}
                         </div>
                       ) : header.column.columnDef.header}
                     </th>
                   ))}
                 </tr>
 
-                {/* FILTER ROW */}
                 {filterOn && (
-                  <tr className="bg-gray-50">
+                  <tr className="bg-white shadow-inner">
                     {group.headers.map(header => (
-                      <th key={header.id + '-filter'} className="px-3 py-2">
-                        {header.column.getCanFilter() && <Filter column={header.column} table={table} filterOn={filterOn} />}
+                      <th key={header.id} className="px-3 py-2">
+                        {header.column.getCanFilter() && (
+                          <Filter column={header.column} table={table} filterOn={filterOn} />
+                        )}
                       </th>
                     ))}
                   </tr>
@@ -336,21 +351,21 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, ty
             ))}
           </thead>
 
-          {/* TABLE BODY */}
-          <tbody className="bg-white">
+          <tbody>
             {table.getRowModel().rows.map(row => (
               <tr
                 key={row.id}
                 onDoubleClick={() => SelectRow(row.original)}
-                className={`transition-all duration-200 cursor-pointer hover:bg-gradient-to-r hover:from-gray-100 hover:to-blue-50 ${row.getIsSelected() ? 'bg-gradient-to-r from-blue-50 to-blue-100' : ''}`}
+                className={`cursor-pointer transition-all duration-200
+                  hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50
+                  ${row.getIsSelected() ? 'bg-gradient-to-r from-blue-50 to-blue-100' : ''}`}
               >
                 {row.getVisibleCells().map(cell => (
                   <td
                     key={cell.id}
-                    data-label={cell.column.columnDef.header}
-                    className={`px-4 py-3 text-sm whitespace-nowrap ${styledOutDiv(row, cell)}`}
+                    className={`px-4 py-3 text-xs ${styledOutDiv(row, cell)}`}
                   >
-                    <div className="w-full px-3 py-2 bg-white rounded-xl shadow-inner hover:shadow-lg transition-all duration-200">
+                    <div className="px-4 py-2.5 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </div>
                   </td>
@@ -358,19 +373,68 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, cb, ty
               </tr>
             ))}
           </tbody>
+
         </table>
       </div>
 
+      {/* MOBILE CARDS (MATCHES FIRST FILE 100%) */}
+      <div className="block md:hidden space-y-4 p-2 max-h-[600px] overflow-y-auto">
+        {table.getRowModel().rows.map((row, idx) => (
+          <div
+            key={row.id}
+            className={`bg-white rounded-xl border-2 border-gray-300 shadow-md p-4
+              ${row.getIsSelected() ? 'ring-2 ring-blue-500' : ''}`}
+          >
+            <div className="flex justify-between items-center mb-3
+              bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800
+              text-white px-3 py-2 rounded-lg"
+            >
+              <span className="font-bold text-sm">
+                {getTtl('Row', ln)} {idx + 1}
+              </span>
+
+              {quickSumEnabled && (
+                <input
+                  type="checkbox"
+                  checked={row.getIsSelected()}
+                  onChange={row.getToggleSelectedHandler()}
+                  className="accent-white"
+                />
+              )}
+            </div>
+
+            <div className="space-y-2">
+              {row.getVisibleCells().map(cell => {
+                if (cell.column.id === 'select') return null;
+                return (
+                  <div key={cell.id}>
+                    <div className="text-xs font-bold text-blue-700">
+                      {cell.column.columnDef.header}
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg p-2 shadow-sm">
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* FOOTER */}
-      <div className="flex flex-col lg:flex-row p-4 gap-3 items-center border border-t-0 border-gray-300 rounded-b-2xl bg-gradient-to-r from-white via-gray-50 to-white shadow-md">
-        <div className="hidden lg:flex text-sm text-gray-700">
+      <div className="flex p-4 gap-3 items-center border-2 border-t-0 border-gray-300 rounded-b-xl
+        bg-gradient-to-br from-white via-gray-50 to-white shadow-md"
+      >
+        <div className="hidden lg:flex text-sm text-gray-600">
           {`${getTtl('Showing', ln)} ${pageIndex * pageSize + 1}-${table.getRowModel().rows.length + pageIndex * pageSize} ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
         </div>
         <Paginator table={table} />
         <RowsIndicator table={table} />
       </div>
+
     </div>
-  )
-}
+  );
+};
 
 export default Customtable;
