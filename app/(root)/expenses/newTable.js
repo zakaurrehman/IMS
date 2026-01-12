@@ -469,7 +469,7 @@ const Customtable = ({
 
         <table className="w-full border-collapse table-auto" style={{ minWidth: '100%' }}>
 
-          <thead className="sticky top-0 ">
+          <thead>
             {table.getHeaderGroups().map(hdGroup => (
               <Fragment key={hdGroup.id}>
 

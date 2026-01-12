@@ -377,7 +377,7 @@ const Customtable = ({
 
         <table className="w-full table-auto border-collapse">
 
-          <thead className="sticky top-0 ">
+          <thead>
             {table.getHeaderGroups().map(group => (
               <Fragment key={group.id}>
                 <tr className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 shadow-lg">

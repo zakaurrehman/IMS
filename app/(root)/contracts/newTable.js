@@ -168,7 +168,7 @@ const Customtable = ({
         <table className="w-full border-collapse table-auto" style={{ minWidth: '100%' }}>
 
           {/* THEAD - Enhanced 3D Sticky Header */}
-          <thead className="sticky top-0 ">
+          <thead>
 
             {/* Header Row - Premium 3D Effect */}
             {table.getHeaderGroups().map(hdGroup =>

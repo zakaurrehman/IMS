@@ -23,6 +23,8 @@ function useSettingsState() {
 
     // Year state for navigating to specific year data
     const [dateYr, setDateYr] = useState(currentYear.toString());
+    // Toast state for global notifications
+    const [toast, setToast] = useState({ show: false, text: '', clr: 'success' });
 
     // Setter for updating settings
     const updateSettings = (newSettings) => {
@@ -47,6 +49,8 @@ function useSettingsState() {
         updateCompanyData,
         loading,
         setLoading,
+        toast,
+        setToast,
         dateSelect,
         setDateSelect,
         dateYr,

@@ -547,22 +547,19 @@ const ContractsMerged = () => {
             enableColumnPinning: true,
             enablePinning: true,
             enableColumnFilter: false,
-            cell: ({ row, getValue }) => (
-                <div className='w-4'>
-                    <>
-                        {row.getCanExpand() ? (
-                            <button
-                                {...{
-                                    onClick: row.getToggleExpandedHandler(),
-                                    style: { cursor: 'pointer' },
-                                }}
-                            >
-                                {row.getIsExpanded() ? <IoIosArrowDown className='scale-125' /> : <MdOutlineArrowForwardIos />}
-                            </button>
-                        ) : (
-                            <span className='pl-4'>🔵</span>
-                        )}
-                    </>
+            cell: ({ row }) => (
+                <div className='w-10 flex items-center justify-center'>
+                    {row.getCanExpand() ? (
+                        <button
+                            onClick={row.getToggleExpandedHandler()}
+                            aria-label={row.getIsExpanded() ? 'Collapse details' : 'Expand details'}
+                            className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--endeavour)] ${row.getIsExpanded() ? 'bg-[var(--endeavour)] text-white' : 'bg-white text-[var(--endeavour)] hover:bg-[var(--selago)]'}`}
+                        >
+                            <IoIosArrowDown className={`transform transition-transform duration-200 ${row.getIsExpanded() ? 'rotate-180' : 'rotate-0'}`} />
+                        </button>
+                    ) : (
+                        <span className='pl-4'>🔵</span>
+                    )}
                 </div>
             ),
         },
@@ -795,9 +792,13 @@ const ContractsMerged = () => {
 
     const TableModes = () => {
         return (
-            <div className='flex items-center gap-2'>
-                <p>{enabledSwitch ? 'Expanded mode' : 'Table mode'}</p>
-                <Switch checked={enabledSwitch} onCheckedChange={() => setEnabledSwitch(prev => !prev)} />
+            <div className='flex items-center gap-3'>
+                <span className='text-sm text-[var(--port-gore)] font-medium select-none'>{enabledSwitch ? 'Expanded mode' : 'Table mode'}</span>
+                <Switch
+                    checked={enabledSwitch}
+                    onCheckedChange={(v) => setEnabledSwitch(!!v)}
+                    className={`h-6 w-11 p-0.5 rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--endeavour)] ${enabledSwitch ? 'bg-[var(--endeavour)]' : 'bg-white border border-gray-300'}`}
+                />
             </div>
         )
     }

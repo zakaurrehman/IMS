@@ -88,7 +88,7 @@ const DoalogModal = ({ obj, supplierPartialPayment }) => {
                 </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="w-96 border border-slate-500 shadow-lg rounded-lg
+              <PopoverContent className="w-full max-w-xs md:max-w-md bg-white p-4 border border-slate-300 shadow-lg rounded-lg z-50
                  data-[state=open]:animate-fade-zoom-in
                  data-[state=closed]:animate-fade-zoom-out
 ">
@@ -104,8 +104,8 @@ const DoalogModal = ({ obj, supplierPartialPayment }) => {
                         Set Date and Amount to pay
                     </h4>
 
-                    <div className="flex justify-between pt-2">
-                        <div>
+                    <div className="flex flex-col md:flex-row justify-between pt-2 gap-3">
+                        <div className="flex-1 min-w-0">
                             <label className="text-sm justify-start flex">Date</label>
                             {showDatepicker && (
                                 <Datepicker
@@ -119,20 +119,20 @@ const DoalogModal = ({ obj, supplierPartialPayment }) => {
                                 />
                             )}
                         </div>
-                        <div>
+                        <div className="flex items-start md:items-end">
                             <label className='text-sm justify-start flex'>%</label>
                             <div className='flex'>
-                                <input type='text' className="pr-3 number-separator input text-[15px] h-7 shadow-lg text-xs w-14" name='invValue'
+                                <input type='text' className="pr-3 number-separator input text-[15px] h-7 shadow-sm text-xs w-20 md:w-14" name='invValue'
                                     value={perc} onChange={e => handleValuePerc(e)} />
-                                <span className='relative right-[0.9rem] text-slate-600 flex items-center'>%</span>
+                                <span className='ml-2 text-slate-600 flex items-center'>%</span>
 
                             </div>
                         </div>
-                        <div>
+                        <div className="flex-1 min-w-0">
                             <label className="text-sm justify-start flex">Amount</label>
                             <input
                                 type="text"
-                                className="number-separator input text-[15px] h-7 shadow-lg text-xs w-24"
+                                className="number-separator input text-[15px] h-7 shadow-sm text-xs w-full"
                                 value={addComma(pmnt)}
                                 onChange={handleValuePmnt}
                             />

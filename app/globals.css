@@ -35,7 +35,7 @@ body,
   }
 
   .input {
-    @apply w-full border rounded-lg border-[var(--rock-blue)] h-10 focus:outline-0 focus:border-[var(--endeavour)] indent-1.5 text-sm text-[var(--port-gore)];
+    @apply w-full border rounded-lg border-[var(--rock-blue)] h-10 focus:outline-0 focus:border-[var(--endeavour)] indent-1.5 text-sm text-[var(--port-gore)] bg-white;
   }
 
   .dashBox {
@@ -71,27 +71,31 @@ body,
 
 @layer app {
   .responsiveText {
-    @apply text-[0.70rem] 2xl:text-[0.8rem];
+    @apply text-[0.70rem] 2xl:text-[0.8rem] break-words min-w-0 whitespace-normal;
   }
 
   .responsiveTextTitle {
-    @apply text-[0.75rem] 2xl:text-sm;
+    @apply text-[0.75rem] 2xl:text-sm break-words min-w-0 whitespace-normal;
   }
 
   .responsiveTextTotal {
-    @apply text-[0.70rem] 2xl:text-[0.77rem] font-semibold;
+    @apply text-[0.70rem] 2xl:text-[0.77rem] font-semibold break-words min-w-0 whitespace-normal;
   }
 
   .responsiveTextTable {
-    @apply text-[0.68rem] 2xl:text-[0.75rem];
+    @apply text-[0.68rem] 2xl:text-[0.75rem] break-words min-w-0 whitespace-normal;
   }
 
   .responsiveTextTable1 {
-    @apply text-[0.56rem] 2xl:text-[0.75rem];
+    @apply text-[0.56rem] 2xl:text-[0.75rem] break-words min-w-0 whitespace-normal;
   }
 
   .responsiveTextInput {
-    @apply text-[0.72rem] 2xl:text-[0.8rem];
+    @apply text-[0.72rem] 2xl:text-[0.8rem] break-words min-w-0 whitespace-normal;
+  }
+
+  .cf-card {
+    @apply overflow-hidden min-w-0;
   }
 }
 

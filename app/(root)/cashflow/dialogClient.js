@@ -71,7 +71,7 @@ const DoalogModalClient = ({ obj, clientPartialPayment }) => {
                 </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="w-72 border border-slate-500 shadow-lg rounded-lg
+              <PopoverContent className="w-full max-w-xs md:max-w-sm bg-white p-4 border border-slate-300 shadow-lg rounded-lg z-50
                  data-[state=open]:animate-fade-zoom-in
                  data-[state=closed]:animate-fade-zoom-out
 ">
@@ -87,8 +87,8 @@ const DoalogModalClient = ({ obj, clientPartialPayment }) => {
                         Set Date and Amount to pay
                     </h4>
 
-                    <div className="flex justify-between pt-2">
-                        <div>
+                    <div className="flex flex-col md:flex-row justify-between pt-2 gap-3">
+                        <div className="flex-1 min-w-0">
                             <label className="text-sm justify-start flex">Date</label>
                             {showDatepicker && (
                                 <Datepicker
@@ -103,11 +103,11 @@ const DoalogModalClient = ({ obj, clientPartialPayment }) => {
                             )}
                         </div>
 
-                        <div>
+                        <div className="flex-1 min-w-0">
                             <label className="text-sm justify-start flex">Amount</label>
                             <input
                                 type="text"
-                                className="number-separator input text-[15px] h-7 shadow-lg text-xs w-24"
+                                className="number-separator input text-[15px] h-7 shadow-sm text-xs w-full"
                                 value={addComma(pmnt)}
                                 onChange={handleValuePmnt}
                             />
