@@ -5,31 +5,64 @@ import { HiChevronDoubleLeft } from 'react-icons/hi';
 
 
 export const Paginator = ({table}) => {
+	const currentPage = table.getState().pagination.pageIndex;
+	const pageCount = table.getPageCount();
 
+	// Generate page numbers to display
+	const getPageNumbers = () => {
+		const pages = [];
+		const maxVisible = 5;
+		let start = Math.max(0, currentPage - Math.floor(maxVisible / 2));
+		let end = Math.min(pageCount, start + maxVisible);
+		
+		if (end - start < maxVisible) {
+			start = Math.max(0, end - maxVisible);
+		}
+		
+		for (let i = start; i < end; i++) {
+			pages.push(i);
+		}
+		return pages;
+	};
 
 	return (
-		<div className="py-1 px-1 md:px-4 self-center m-auto md:m-0">
-			<nav className="flex items-center space-x-2">
-				<div className="inline-flex items-center gap-2"	>
-					<HiChevronDoubleLeft className={`paginator_arrow scale-125
-			   ${!table.getCanPreviousPage() ? 'opacity-50' : ''}`}
-						onClick={() => table.setPageIndex(0)} />
-					<HiChevronLeft className={`paginator_arrow scale-125
-			 ${!table.getCanPreviousPage() ? 'opacity-50' : ''}`}
-						onClick={() => table.getCanPreviousPage() && table.previousPage()}
-					/>
-					<span className="text-white size-8 rounded-full bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] items-center justify-center flex select-none shadow-md">
-						{table.getState().pagination.pageIndex + 1}
-					</span>
-					<HiChevronRight className={`paginator_arrow scale-125 
-			${!table.getCanNextPage() ? 'opacity-50' : ''}`}
-						onClick={() => table.getCanNextPage() && table.nextPage()}
-					/>
-					<HiChevronDoubleRight className={`paginator_arrow scale-125
-			   ${!table.getCanNextPage() ? 'opacity-50' : ''}`}
-						onClick={() => table.setPageIndex(table.getPageCount() - 1)} />
+		<div className="self-center">
+			<nav className="flex items-center gap-3">
+				{/* Previous Button */}
+				<button
+					onClick={() => table.getCanPreviousPage() && table.previousPage()}
+					disabled={!table.getCanPreviousPage()}
+					className={`text-[0.72rem] font-medium text-[var(--port-gore)] hover:text-[var(--endeavour)] transition-colors
+						${!table.getCanPreviousPage() ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
+				>
+					Previous
+				</button>
 
+				{/* Page Numbers */}
+				<div className="flex items-center gap-1">
+					{getPageNumbers().map((pageIndex) => (
+						<button
+							key={pageIndex}
+							onClick={() => table.setPageIndex(pageIndex)}
+							className={`min-w-[2rem] h-8 text-[0.72rem] font-medium rounded-md border transition-all
+								${currentPage === pageIndex 
+									? 'bg-[var(--endeavour)] text-white border-[var(--endeavour)]' 
+									: 'bg-white text-[var(--port-gore)] border-gray-200 hover:border-[var(--endeavour)]'}`}
+						>
+							{pageIndex + 1}
+						</button>
+					))}
 				</div>
+
+				{/* Next Button */}
+				<button
+					onClick={() => table.getCanNextPage() && table.nextPage()}
+					disabled={!table.getCanNextPage()}
+					className={`text-[0.72rem] font-medium text-[var(--port-gore)] hover:text-[var(--endeavour)] transition-colors
+						${!table.getCanNextPage() ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
+				>
+					Next
+				</button>
 			</nav>
 		</div>
 	)

@@ -15,7 +15,7 @@ const Filters = (ln, resetTable, filterOn) => {
      items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none transition-colors"
                 >
                     {
-                        <AiOutlineClear className="scale-[1.4] text-[var(--endeavour)]" />
+                        <AiOutlineClear className="scale-[1.4] text-[var(--port-gore)]" />
                     }
                 </button>
             </Tltip>

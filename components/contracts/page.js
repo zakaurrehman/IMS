@@ -198,15 +198,15 @@ const Contracts = () => {
 	}
 
 	return (
-		<div className="container mx-auto px-2 md:px-8 xl:px-10 pb-8 md:pb-0 mt-16 md:mt-0">
+		<div className="container mx-auto px-2 md:px-8 xl:px-10 pb-4 md:pb-0 mt-1 md:mt-2">
 			{Object.keys(settings).length === 0 ? <Spinner /> :
 				<>
 					<Toast />
 					<ModalCopyInvoice />
 					{/* {loading && <Spin />} */}
-					<div className="border border-slate-200 rounded-xl p-4 mt-8 shadow-md relative">
-						<div className='flex items-center justify-between flex-wrap pb-2'>
-							<div className="text-3xl p-1 pb-2 text-slate-500"> {getTtl('Contracts', ln)} </div>
+					<div className="border border-[var(--endeavour)] rounded-lg p-2 mt-1 shadow-sm relative">
+						<div className='flex items-center justify-between flex-wrap pb-0.5'>
+							<div className="text-lg p-0 pb-0.5 text-[var(--endeavour)] font-medium"> {getTtl('Contracts', ln)} </div>
 							<div className='flex group'>
 								<DateRangePicker />
 								<Tooltip txt='Select Dates Range' />
@@ -222,15 +222,15 @@ const Contracts = () => {
 								settings, getTtl('Contracts', ln), ln)}
 							setFilteredData={setFilteredData} />
 					</div>
-					<div className="text-left pt-6 flex gap-4">
+<div className="text-left pt-0.5 flex gap-2">
 						<Tltip direction='bottom' tltpText='Create new Contract'>
 							<button
 								type="button"
 								onClick={addNewContract}
-								className="text-white bg-slate-500 hover:bg-slate-400 focus:outline-none font-medium rounded-lg 
-													 text-sm px-4 py-3 text-center drop-shadow-xl gap-1.5 items-center flex"
+								className="text-white bg-[var(--endeavour)] hover:bg-[var(--endeavour)]/80 focus:outline-none font-medium rounded-md 
+															text-[0.65rem] px-2 py-1 text-center drop-shadow-sm gap-1 items-center flex"
 							>
-								<TbLayoutGridAdd className="scale-110" />
+								<TbLayoutGridAdd className="text-xs" />
 								{getTtl('New Contract', ln)}
 							</button>
 						</Tltip>
@@ -238,19 +238,19 @@ const Contracts = () => {
 							<button
 								type="button"
 								onClick={() => router.push('/analysis')}
-								className="text-white bg-slate-500 hover:bg-slate-400 focus:outline-none font-medium rounded-lg 
-													 text-sm px-4 py-3 text-center drop-shadow-xl gap-1.5 items-center flex"
+								className="text-white bg-[var(--endeavour)] hover:bg-[var(--endeavour)]/80 focus:outline-none font-medium rounded-md 
+															text-[0.65rem] px-2 py-1 text-center drop-shadow-sm gap-1 items-center flex"
 							>
-								<IoAnalyticsOutline className="scale-110" />
+								<IoAnalyticsOutline className="text-xs" />
 								{getTtl('Weight Analysis', ln)}
 							</button>
 						</Tltip>
 					</div>
 
 
-					{alertArr.length ? <div className='mt-8'>
-						<div className="text-lg font-medium leading-5 text-gray-900 border-2
-						 border-slate-200 p-2 max-w-2xl mb-10 rounded-xl shadow-md"
+					{alertArr.length ? <div className='mt-2'>
+						<div className="text-sm font-medium leading-4 text-gray-900 border
+						 border-[var(--endeavour)] p-1.5 max-w-2xl mb-4 rounded-lg shadow-sm"
 						>
 							<div className='text-slate-600 '>
 								<span className='p-2'>Notification for delayed response</span>

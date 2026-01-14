@@ -39,18 +39,22 @@ const showEditButton = editEnabledRoutes.some(route =>
 
 
 	return (
-		<div className="justify-between flex p-3 flex-wrap bg-[var(--selago)]/30 border border-[var(--selago)] rounded-t-2xl sticky top-0 z-20" style={{ position: 'sticky', top: 0, zIndex: 0, background: 'rgba(235,242,252,0.95)' }}>
-			<div className='flex items-center gap-5 w-full sm:w-auto'>
+		<div className="justify-between flex p-1.5 flex-wrap rounded-t-xl sticky top-0 shadow-sm" style={{ position: 'sticky', top: 0,  background: '#ffffff' }}>
+			<div className='flex items-center gap-3 w-full sm:w-auto'>
 				{pathname !== '/accounting' &&
-					<div className="flex items-center relative md:max-w-64 w-full sm:w-auto md:w-64">
-						<input className='input border-[var(--rock-blue)]/50 shadow-sm pr-8 focus:border-[var(--endeavour)]' placeholder={getTtl('Search', ln)}
+					<div className="flex items-center relative w-auto md:w-20">
+						<input
+							className="bg-white border-0 shadow-none pr-6 focus:outline-none focus:ring-0 focus:border-0 w-full text-[0.65rem] py-0.5 text-[var(--port-gore)] placeholder:text-[var(--port-gore)]"
+							placeholder={getTtl('Search', ln)}
 							value={globalFilter ?? ''}
-							onChange={e => setGlobalFilter(e.target.value)} type='text' />
+							onChange={e => setGlobalFilter(e.target.value)}
+							type='text'
+						/>
 
 						{globalFilter === '' ?
-							<FaSearch className="scale-140 text-[var(--regent-gray)] font-bold absolute right-2" />
+							<FaSearch className="text-[var(--port-gore)] absolute right-1 text-[0.6rem]" />
 							:
-							<TiDeleteOutline className="scale-150 text-[var(--regent-gray)] font-bold absolute right-2 cursor-pointer hover:text-[var(--endeavour)]"
+							<TiDeleteOutline className="text-[var(--port-gore)] absolute right-1 cursor-pointer text-[0.65rem] hover:text-[var(--endeavour)]"
 								onClick={() => setGlobalFilter('')} />
 						}
 
@@ -75,27 +79,24 @@ const showEditButton = editEnabledRoutes.some(route =>
 						<div className='flex items-center '>
 							<Tltip direction='bottom' tltpText='Add new material'>
 								<div onClick={addMaterial}
-									className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center size-10 inline-flex
-				 items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50 transition-colors"
+									className="hover:bg-[var(--selago)] text-[var(--port-gore)] inline-flex items-center text-xs rounded-full p-1 hover:drop-shadow-sm focus:outline-none transition-colors"
 								>
-									<GrAddCircle className="scale-[1.4] cursor-pointer text-[var(--endeavour)]" />
+									<GrAddCircle className="cursor-pointer text-[var(--port-gore)] text-xs hover:text-[var(--endeavour)]" />
 								</div>
 							</Tltip>
 							<Tltip direction='bottom' tltpText='Export to PDF'>
 								<div onClick={() => runPdf(table1)}
-									className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center size-10 inline-flex
-				 items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50 transition-colors"
+									className="hover:bg-[var(--selago)] text-[var(--port-gore)] inline-flex items-center text-xs rounded-full p-1 hover:drop-shadow-sm focus:outline-none transition-colors"
 								>
-									<GrDocumentPdf className="scale-125 cursor-pointer text-[var(--endeavour)]" />
+									<GrDocumentPdf className="cursor-pointer text-[var(--port-gore)] text-xs hover:text-[var(--endeavour)]" />
 								</div>
 							</Tltip>
 
 							<Tltip direction='bottom' tltpText='Delete Table'>
 								<div onClick={() => delTable(table1)}
-									className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center size-10 inline-flex
-									items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50 transition-colors"
+									className="hover:bg-[var(--selago)] text-[var(--port-gore)] inline-flex items-center text-xs rounded-full p-1 hover:drop-shadow-sm focus:outline-none transition-colors"
 								>
-									<MdDeleteOutline className="scale-[1.6] cursor-pointer text-[var(--endeavour)]" />
+									<MdDeleteOutline className="cursor-pointer text-[var(--port-gore)] text-xs hover:text-[var(--endeavour)]" />
 								</div>
 
 							</Tltip>
@@ -111,17 +112,17 @@ const showEditButton = editEnabledRoutes.some(route =>
 					{filterIcon}
 					{excellReport}
 					<ColFilter table={table} />
-					{showEditButton && typeof setIsEditMode === 'function' && (
-  <button
-    onClick={() => setIsEditMode(prev => !prev)}
-    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all
-      ${isEditMode
-        ? 'bg-[var(--endeavour)] text-white'
-        : 'bg-white border border-gray-300 text-gray-600 hover:bg-gray-100'}
-    `}
-  >
-    ✏️ {isEditMode ? 'Editing ON' : 'Edit'}
-  </button>
+										{showEditButton && typeof setIsEditMode === 'function' && (
+	<button
+		onClick={() => setIsEditMode(prev => !prev)}
+		className={`px-1.5 py-0.5 rounded-md text-[0.6rem] font-medium transition-all flex items-center
+			${isEditMode
+				? 'bg-[var(--endeavour)] text-white'
+				: 'bg-white text-[var(--port-gore)] hover:bg-[var(--selago)]'}
+		`}
+	>
+		 {isEditMode ? 'Editing ON' : 'Edit'}
+	</button>
 )}
 									<QuickSumControl
   table={table}

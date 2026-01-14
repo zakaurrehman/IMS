@@ -45,7 +45,7 @@ const Customtable = ({
 
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 200
+    pageSize: 25
   })
 
   const pagination = useMemo(() => ({ pageIndex, pageSize }), [pageIndex, pageSize])
@@ -55,6 +55,7 @@ const Customtable = ({
 
   const [quickSumEnabled, setQuickSumEnabled] = useState(false);
   const [quickSumColumns, setQuickSumColumns] = useState([]);
+  const [showSelectionDropdown, setShowSelectionDropdown] = useState(false);
 
   const [isEditMode, setIsEditMode] = useState(false)
   const [rowSelection, setRowSelection] = useState({});
@@ -76,7 +77,7 @@ const Customtable = ({
             el.indeterminate = table.getIsSomePageRowsSelected();
           }}
           onChange={table.getToggleAllPageRowsSelectedHandler()}
-          className="w-4 h-4 cursor-pointer accent-blue-600 rounded shadow-sm"
+          className="w-4 h-4 cursor-pointer accent-blue-600 rounded outline-none focus:outline-none focus:ring-0 border-0"
         />
       ),
       cell: ({ row }) => (
@@ -85,7 +86,7 @@ const Customtable = ({
           checked={row.getIsSelected()}
           disabled={!row.getCanSelect()}
           onChange={row.getToggleSelectedHandler()}
-          className="w-4 h-4 cursor-pointer accent-blue-600 rounded shadow-sm"
+          className="w-4 h-4 cursor-pointer accent-blue-600 rounded outline-none focus:outline-none focus:ring-0 border-0"
         />
       ),
       enableSorting: false,
@@ -141,7 +142,7 @@ const Customtable = ({
     <div className="flex flex-col relative">
 
       {/* HEADER - Enhanced with 3D depth */}
-      <div className="relative  shadow-lg">
+      <div className="relative">
         <Header
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
@@ -158,38 +159,22 @@ const Customtable = ({
         />
       </div>
 
-      {/* ---------- DESKTOP VIEW - Enhanced 3D Container ---------- */}
-      <div className="hidden md:block overflow-x-auto overflow-y-auto 
-        border-2 border-gray-300
-        shadow-[0_8px_16px_rgba(0,0,0,0.15),0_4px_8px_rgba(0,0,0,0.1)]
-        max-h-[720px] md:max-h-[700px] 2xl:max-h-[900px] 
-        relative rounded-lg bg-gradient-to-br from-gray-50 to-gray-100">
-
-        <table className="w-full border-collapse table-auto" style={{ minWidth: '100%' }}>
+      {/* ---------- DESKTOP VIEW - Table area with constrained height ---------- */}
+      <div className="hidden md:block overflow-x-auto relative custom-scroll">
+        <div className="overflow-y-auto max-h-[60vh] custom-scroll" style={{ scrollbarGutter: 'stable' }}>
+        <table className="w-full border-collapse table-auto table-cell-uniform" style={{ minWidth: '100%' }}>
 
           {/* THEAD - Enhanced 3D Sticky Header */}
-          <thead>
+          <thead className="md:sticky md:top-0">
 
-            {/* Header Row - Premium 3D Effect */}
             {table.getHeaderGroups().map(hdGroup =>
-              <tr key={hdGroup.id}
-                className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 
-                  shadow-[0_4px_12px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.2)]">
+              <tr key={hdGroup.id} className="bg-[var(--endeavour)] border-b border-[var(--selago)]/20">
 
                 {hdGroup.headers.map(header =>
                   <th
                     key={header.id}
-                    className="relative px-6 py-4 text-left text-xs text-white uppercase 
-                      font-bold tracking-wide
-                      border-r border-blue-500/30 last:border-r-0
-                      transition-all duration-200
-                      hover:bg-gradient-to-br hover:from-blue-500 hover:via-blue-600 hover:to-blue-700
-                      whitespace-nowrap
-                      shadow-[inset_0_-2px_4px_rgba(0,0,0,0.1)]"
-                    style={{ 
-                      minWidth: '140px',
-                      textShadow: '0 2px 4px rgba(0,0,0,0.3)'
-                    }}>
+                    className="relative px-3 py-2 text-left responsiveTextTitle text-white uppercase text-sm font-semibold tracking-wide whitespace-nowrap"
+                    style={{ minWidth: '110px' }}>
 
                     {/* SORTABLE HEADERS with 3D Icons */}
                     {header.column.getCanSort() ? (
@@ -197,18 +182,18 @@ const Customtable = ({
                         onClick={header.column.getToggleSortingHandler()}
                         className="flex items-center gap-3 cursor-pointer select-none group"
                       >
-                        <span className="leading-tight drop-shadow-md">
+                        <span className="responsiveTextTitle leading-tight">
                           {header.column.columnDef.header}
                         </span>
-                        <span className="transition-transform group-hover:scale-110 drop-shadow-lg">
+                        <span className="transition-transform">
                           {{
-                            asc: <TbSortAscending className="scale-125 flex-shrink-0" />,
-                            desc: <TbSortDescending className="scale-125 flex-shrink-0" />
+                            asc: <TbSortAscending className="flex-shrink-0" />,
+                            desc: <TbSortDescending className="flex-shrink-0" />
                           }[header.column.getIsSorted()]}
                         </span>
                       </div>
-                    ) : (
-                      <span className="text-xs font-bold leading-tight block drop-shadow-md">
+                      ) : (
+                      <span className="responsiveTextTitle font-semibold leading-tight block">
                         {header.column.columnDef.header}
                       </span>
                     )}
@@ -219,24 +204,16 @@ const Customtable = ({
               </tr>
             )}
 
-            {/* Filter Row - Enhanced 3D Depth */}
             {filterOn && (
-              <tr className="bg-gradient-to-b from-white to-gray-50 
-                 
-                shadow-[0_4px_8px_rgba(0,0,0,0.1)]">
+              <tr className="bg-white">
                 {table.getHeaderGroups()[0].headers.map(header => (
                   <th 
                     key={header.id} 
-                    className="px-4 py-3 text-left bg-white/95 relative
-                      "
-                    style={{ 
-                      position: 'relative', 
-                      zIndex: header.column.id === 'supplier' ? 100 : 50 
-                    }}
+                    className="px-4 py-3 text-left bg-white/95 relative"
                   >
                     {header.column.getCanFilter() ? (
                       <div className="flex items-center justify-start w-full">
-                        <div className="w-full min-w-[160px] relative" style={{ zIndex: 'inherit' }}>
+                        <div className="w-full min-w-[160px] relative">
                           <Filter 
                             column={header.column} 
                             table={table} 
@@ -252,46 +229,40 @@ const Customtable = ({
 
           </thead>
 
-          {/* TBODY - Perfect 3D Cell Design */}
-          <tbody className=" bg-gradient-to-b from-gray-50 to-white">
+          {/* TBODY - flat design */}
+          <tbody>
 
             {table.getRowModel().rows.map((row, rowIndex) => (
-              <tr
-                key={row.id}
-                className={`cursor-pointer transition-all duration-200
-                  ${row.getIsSelected() 
-                    ? 'bg-gradient-to-r from-blue-50 to-blue-100 shadow-[inset_0_2px_8px_rgba(59,130,246,0.15)]' 
-                    : 'bg-white hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50'}
-                  hover:shadow-[0_2px_8px_rgba(0,0,0,0.08)]
-                  ${rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}
-                onDoubleClick={() => SelectRow(row.original)}
-              >
+            <tr
+  key={row.id}
+  onDoubleClick={() => SelectRow(row.original)}
+  className="
+    cursor-pointer
+    transition
+    sm:hover:shadow-[0_10px_26px_rgba(0,0,0,0.18)]
+    hover:bg-[#F9F9F9]
+  "
+>
 
-                {row.getVisibleCells().map((cell, cellIndex) => (
+
+                {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
                     data-label={cell.column.columnDef.header}
-                    className="px-4 py-3 text-xs 
-                      transition-all duration-150"
-                    style={{ minWidth: '140px' }}
+                    className="px-1 py-0.5 text-[0.72rem] leading-tight responsiveTextTable text-[var(--port-gore)] transition-colors truncate"
+                    style={{ minWidth: '86px' }}
                   >
-                    {/* Perfect 3D Cell Container */}
-                    <div className={`
-                      w-full px-4 py-2.5
-                      bg-white
-                      text-gray-800 font-medium
-                      rounded-lg
-                      shadow-[0_2px_6px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.8)]
-                      hover:shadow-[0_4px_12px_rgba(0,0,0,0.12),0_2px_4px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,1)]
-                      hover:bg-gradient-to-br hover:from-white hover:to-blue-50/30
-                      transition-all duration-200
-                      leading-relaxed
-                      min-h-[40px]
-                      ${cell.column.id === 'select' ? 'flex items-center justify-center' : ''}
-                    `}>
-                      <div className="text-[13px] font-medium text-gray-900 antialiased">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </div>
+                    <div
+                      className="inline-block
+    px-2 py-2
+    rounded-md
+    w-full
+    transition-colors
+    hover:text-[var(--endeavour)]
+    hover:bg-gray-200"
+                      
+                    >
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </div>
                   </td>
                 ))}
@@ -301,44 +272,35 @@ const Customtable = ({
           </tbody>
 
         </table>
+        </div>
 
       </div>
 
       {/* ---------- MOBILE VIEW - Card Layout ---------- */}
-      <div className="block md:hidden">
-        <div className="space-y-4 p-2 max-h-[600px] overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg">
+              <div className="block md:hidden">
+              <div className="space-y-3 p-2 max-h-[560px] overflow-y-auto custom-scroll">
           {table.getRowModel().rows.map((row, rowIndex) => (
             <div
               key={row.id}
-              className={`
-                relative
-                bg-white
-                rounded-xl
-                border-2 border-gray-300
-                shadow-[0_4px_12px_rgba(0,0,0,0.1),0_2px_6px_rgba(0,0,0,0.06),inset_0_1px_2px_rgba(255,255,255,0.8)]
-                transition-all duration-300
-                overflow-hidden
-                ${row.getIsSelected() ? 'ring-2 ring-blue-500 bg-blue-50/30' : ''}
-              `}
+              className="relative bg-white rounded-md border border-[var(--selago)]/30 overflow-hidden transform transition-all duration-300 ease-out hover:shadow-sm hover:border-[var(--endeavour)]/20 hover:-translate-y-0.5"
             >
-              {/* Card Header with Gradient */}
-              <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 px-4 py-3 
-                shadow-[inset_0_-2px_4px_rgba(0,0,0,0.2)]">
+              {/* Card Header */}
+              <div className="bg-[var(--endeavour)] px-2 py-1 relative">
                 <div className="flex items-center justify-between">
-                  <span className="text-white font-bold text-sm drop-shadow-md">
-                    {getTtl('Row', ln)} {rowIndex + 1}
-                  </span>
-                  {quickSumEnabled && (
-                    <input
-                      type="checkbox"
-                      checked={row.getIsSelected()}
-                      disabled={!row.getCanSelect()}
-                      onChange={row.getToggleSelectedHandler()}
-                      onClick={(e) => e.stopPropagation()}
-                      className="w-5 h-5 cursor-pointer accent-blue-600 rounded shadow-lg"
-                    />
-                  )}
+                    <span className="responsiveTextTitle text-white text-sm font-semibold">
+                      {getTtl('Row', ln)} {rowIndex + 1}
+                    </span>
                 </div>
+                {quickSumEnabled && (
+                  <input
+                    type="checkbox"
+                    checked={row.getIsSelected()}
+                    disabled={!row.getCanSelect()}
+                    onChange={row.getToggleSelectedHandler()}
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-5 h-5 cursor-pointer accent-blue-600 rounded absolute right-2 top-2"
+                  />
+                )}
               </div>
 
               {/* Card Content */}
@@ -353,23 +315,12 @@ const Customtable = ({
                       className="flex flex-col space-y-1.5 pb-3 "
                     >
                       {/* Label */}
-                      <div className="text-xs font-bold text-blue-700 uppercase tracking-wide 
-                        drop-shadow-sm">
+                      <div className="text-xs font-bold text-[var(--chathams-blue)] uppercase tracking-wide responsiveTextTitle">
                         {cell.column.columnDef.header}
                       </div>
                       
                       {/* Value with 3D Effect */}
-                      <div className="
-                        bg-gradient-to-br from-white via-gray-50 to-white
-                        px-4 py-3
-                        rounded-lg
-                        border border-gray-300
-                        shadow-[0_2px_6px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.06),inset_0_1px_2px_rgba(255,255,255,0.9)]
-                        text-sm font-semibold text-gray-900
-                        break-words
-                        min-h-[44px]
-                        flex items-center
-                      ">
+                      <div className="px-1.5 py-0.5 rounded-md border border-[var(--selago)]/40 responsiveTextTable font-medium text-[var(--port-gore)] break-words min-h-[24px] flex items-center hover:bg-[var(--selago)]/12 transition-all duration-300 ease-out">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </div>
                     </div>
@@ -393,28 +344,29 @@ const Customtable = ({
         </div>
       </div>
 
-      {/* ---------- FOOTER - Enhanced 3D Depth ---------- */}
-      <div className="table-toolbar flex p-4 
-        border-2 border-t-0 border-gray-300
-        flex-wrap 
-        bg-gradient-to-br from-white via-gray-50 to-white
-        rounded-b-xl 
-        shadow-[0_8px_16px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.8)]
-        gap-3 items-center">
+      {/* ---------- FOOTER - Table toolbar (sticky on desktop) ---------- */}
+      {/* ---------- FOOTER - Modern Table Toolbar ---------- */}
+<div className="flex flex-col md:flex-row items-center justify-between gap-3 py-4 bg-white md:sticky md:bottom-0">
 
-        <div className="hidden lg:flex text-gray-700 text-sm font-medium w-auto px-3 py-2 
-          flex-shrink-0 bg-white rounded-lg border border-gray-200 
-          shadow-[0_2px_4px_rgba(0,0,0,0.06)]">
-          {`${getTtl('Showing', ln)} ${
-            table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
-            (table.getFilteredRowModel().rows.length ? 1 : 0)
-          }-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
-          ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
-        </div>
+  {/* Left: Pagination */}
+  <div className="flex items-center">
+    <Paginator table={table} />
+  </div>
 
-        <Paginator table={table} />
-        <RowsIndicator table={table} />
-      </div>
+  {/* Right: Rows info + Rows per page */}
+  <div className="flex items-center gap-4">
+    <div className="text-[var(--port-gore)] text-[0.72rem] font-medium">
+      {`${
+        table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
+        (table.getFilteredRowModel().rows.length ? 1 : 0)
+      } - ${
+        table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize
+      } ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
+    </div>
+    <RowsIndicator table={table} />
+  </div>
+</div>
+
 
     </div>
   )

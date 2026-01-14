@@ -17,9 +17,9 @@ const Filters = (ln, filterOn, setFilterOn) => {
                 >
                     {
                         filterOn ?
-                            <MdFilterAlt className="scale-[1.4] text-[var(--endeavour)]" />
+                            <MdFilterAlt className="scale-[1.4] text-[var(--port-gore)]" />
                             :
-                            <MdFilterAltOff className="scale-[1.4] text-[var(--endeavour)]" />
+                            <MdFilterAltOff className="scale-[1.4] text-[var(--port-gore)]" />
                     }
                 </button>
             </Tltip>

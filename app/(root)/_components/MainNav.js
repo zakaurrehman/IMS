@@ -6,8 +6,7 @@ import { UserAuth } from '../../../contexts/useAuthContext'
 import { SettingsContext } from '../../../contexts/useSettingsContext'
 import { getTtl } from '../../../utils/languages'
 import { useRouter } from 'next/navigation'
-import { BiSearch, BiLogOutCircle } from 'react-icons/bi'
-import { IoChatbubblesOutline } from 'react-icons/io5'
+import { BiSearch, BiLogOutCircle, BiMessageRoundedDots } from 'react-icons/bi'
 import { FiSettings, FiUser } from 'react-icons/fi'
 import { useGlobalSearch } from '../../../contexts/useGlobalSearchContext'
 
@@ -58,7 +57,7 @@ export const MainNav = () => {
   }
 
   return (
-    <div className='px-4 md:px-8 xl:px-10 py-3 hidden md:flex items-center justify-between bg-white border-b border-[var(--selago)]'>
+    <div className='px-4 md:px-8 xl:px-10 py-3 hidden md:flex items-center justify-between bg-white '>
       {/* Search Bar */}
       <div className='flex items-center flex-1 max-w-xl'>
         <div className='relative w-full' ref={searchRef}>
@@ -98,6 +97,17 @@ export const MainNav = () => {
 
       {/* Right Side Icons */}
       <div className='flex items-center gap-3'>
+        <button
+          className='flex items-center gap-2 px-4 py-2 rounded-md bg-[var(--endeavour)]  text-white text-sm font-medium transition-all shadow-md '
+          onClick={() => {
+            if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('ims:openChat'))
+          }}
+          aria-label='Ask question'
+          title={getTtl('Ask question', ln) || 'Ask question'}
+        >
+          <BiMessageRoundedDots className='text-lg' />
+          {getTtl('Ask Question', ln) || 'Ask Question'}
+        </button>
         <button
           className='p-2.5 rounded-lg bg-white border border-gray-200 hover:bg-[var(--selago)] hover:border-[var(--rock-blue)] transition-all group'
           onClick={LogOut}

@@ -92,6 +92,7 @@ const useContractsState = (props) => {
             let tmpValue = {}
 
             let tmpEuToUs = await getCur(valueCon.dateRange.startDate)
+            if (tmpEuToUs === undefined || tmpEuToUs === null) tmpEuToUs = 1;
 
 
             if (indx !== -1) { //update

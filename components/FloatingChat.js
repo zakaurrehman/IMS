@@ -105,6 +105,14 @@ const FloatingChat = () => {
         };
     }, []);
 
+    // Listen for global open-chat event so other UI can trigger the chat
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const handler = () => setChatOpen(true);
+        window.addEventListener('ims:openChat', handler);
+        return () => window.removeEventListener('ims:openChat', handler);
+    }, []);
+
     // Toggle a body class so other components (like datepicker) can hide when chat is open
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -392,26 +400,9 @@ const FloatingChat = () => {
 
     return (
         <>
-            {/* Floating Chat Button */}
-            <button
-                onClick={() => setChatOpen(!chatOpen)}
-                style={{ zIndex: 99999 }}
-                className={`fixed bottom-4 right-4 p-3.5 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
-                    chatOpen
-                        ? 'bg-gray-500 hover:bg-gray-600'
-                        : 'bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90'
-                }`}
-            >
-                {chatOpen ? (
-                    <X className="w-6 h-6 text-white" />
-                ) : (
-                    <MessageCircle className="w-6 h-6 text-white" />
-                )}
-            </button>
-
             {/* Chat Window */}
             {chatOpen && (
-                <div style={{ zIndex: 99999 }} className="fixed bottom-20 right-4 w-96 h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
+                <div style={{ zIndex: 99999 }} className="fixed bottom-4 right-4 w-96 h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
                     {/* Header */}
                     <div className="p-3 bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -425,13 +416,22 @@ const FloatingChat = () => {
                                 </p>
                             </div>
                         </div>
-                        <button
-                            onClick={handleClearChat}
-                            className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
-                            title="Clear chat"
-                        >
-                            <Trash2 className="w-4 h-4 text-white/80" />
-                        </button>
+                        <div className="flex items-center gap-1">
+                            <button
+                                onClick={handleClearChat}
+                                className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+                                title="Clear chat"
+                            >
+                                <Trash2 className="w-4 h-4 text-white/80" />
+                            </button>
+                            <button
+                                onClick={() => setChatOpen(false)}
+                                className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+                                title="Close chat"
+                            >
+                                <X className="w-4 h-4 text-white" />
+                            </button>
+                        </div>
                     </div>
 
                     {/* Messages */}

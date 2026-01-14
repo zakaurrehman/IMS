@@ -1,7 +1,8 @@
 import { saveAs } from 'file-saver';
 import { Workbook } from 'exceljs';
 import Tooltip from '../../../components/tlTip';
-import { FileSpreadsheet } from 'lucide-react'; // Excel icon import
+// import { FileSpreadsheet } from 'lucide-react'; 
+import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import dateFormat from "dateformat";
 import { getTtl } from '../../../utils/languages';
 import Tltip from '../../../components/tlTip';
@@ -117,10 +118,10 @@ export const EXD = (dataTable, settings, name, ln) => {
         <div>
             <Tltip direction='bottom' tltpText={getTtl('Excel', ln)}>
                 <div onClick={() => exportExcel()}
-                    className="hover:bg-slate-200 text-slate-700 justify-center size-10 inline-flex
-     items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none cursor-pointer"
+                    className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center size-10 inline-flex
+     items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none cursor-pointer transition-colors"
                 >
-                    <FileSpreadsheet className="w-5 h-5" style={{ color: 'var(--endeavour)' }} strokeWidth={2} />
+                    <PiMicrosoftExcelLogoFill className="w-5 h-5 text-[var(--port-gore)]"  strokeWidth={2} />
                 </div>
             </Tltip>
         </div>

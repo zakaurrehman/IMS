@@ -332,15 +332,15 @@ useEffect(() => {
   }
 };
 	return (
-		<div className="container mx-auto px-0 pb-8 md:pb-0 mt-16 md:mt-0">
+		<div className="container mx-auto max-w-full px-0.5 md:px-4 lg:px-6 pb-8 md:pb-0 mt-4 md:mt-2">
 			{Object.keys(settings).length === 0 ? <Spinner /> :
 				<>
 					<Toast />
 					<ModalCopyInvoice />
 					{/* {loading && <Spin />} */}
-					<div className="border border-[var(--selago)] rounded-2xl p-4 mt-8 shadow-lg bg-white relative">
-						<div className='flex items-center justify-between flex-wrap pb-2'>
-							<div className="text-2xl p-1 pb-2 font-semibold text-[var(--port-gore)]"> {getTtl('Contracts', ln)} </div>
+					<div className="rounded-2xl p-3 mt-3 bg-white relative">
+						<div className='flex items-center justify-between flex-wrap pb-1'>
+							<div className="text-lg md:text-xl p-0 pb-1 font-semibold text-[var(--port-gore)] responsiveTextTitle"> {getTtl('Contracts', ln)} </div>
 							<div className='flex group'>
 								  <div className="relative">
 									<DateRangePicker />
@@ -360,15 +360,15 @@ useEffect(() => {
 							setFilteredData={setFilteredData}
 							highlightId={highlightId} onCellUpdate={onCellUpdate} />
 					</div>
-					<div className="text-left pt-6 flex gap-4 md:ml-72">
+					<div className="text-left pt-0.5 flex flex-col sm:flex-row gap-2 ml-2 sm:gap-3 md:ml-0 w-full">
 						<Tltip direction='bottom' tltpText='Create new Contract'>
 							<button
 								type="button"
 								onClick={addNewContract}
-								className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 focus:outline-none font-medium rounded-xl 
-															 text-sm px-4 py-2.5 text-center shadow-lg gap-1.5 items-center flex transition-all"
+								className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 focus:outline-none font-medium rounded-md 
+										 text-xs px-3 py-2 text-center shadow-sm gap-1 items-center flex transition-all responsiveTextInput"
 							>
-								<TbLayoutGridAdd className="scale-110" />
+								<TbLayoutGridAdd className="text-sm" />
 								{getTtl('New Contract', ln)}
 							</button>
 						</Tltip>
@@ -376,22 +376,22 @@ useEffect(() => {
 							<button
 								type="button"
 								onClick={() => router.push('/analysis')}
-								className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 focus:outline-none font-medium rounded-xl 
-															 text-sm px-4 py-2.5 text-center shadow-lg gap-1.5 items-center flex transition-all"
+								className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 focus:outline-none font-medium rounded-md 
+										 text-xs px-3 py-2 text-center shadow-sm gap-1 items-center flex transition-all responsiveTextInput"
 							>
-								<IoAnalyticsOutline className="scale-110" />
+								<IoAnalyticsOutline className="text-sm" />
 								{getTtl('Weight Analysis', ln)}
 							</button>
 						</Tltip>
 					</div>
 
 
-					{alertArr.length ? <div className='mt-8'>
-						<div className="text-lg font-medium leading-5 text-[var(--port-gore)] border
-						 border-[var(--selago)] p-3 max-w-2xl mb-10 rounded-2xl shadow-lg bg-white"
+					{alertArr.length ? <div className='mt-4'>
+						<div className="text-base font-medium leading-5 text-[var(--port-gore)] border
+						 border-[var(--selago)] p-2 max-w-2xl mb-6 rounded-xl shadow-sm bg-white"
 						>
 							<div className='text-[var(--port-gore)]'>
-								<span className='p-2'>Notification for delayed response</span>
+								<span className='p-1 text-sm'>Notification for delayed response</span>
 								<DlayedResponse alertArr={alertArr} setAlertArr={setAlertArr} />
 							</div>
 

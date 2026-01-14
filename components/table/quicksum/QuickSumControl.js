@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { detectNumericCols } from './detectNumericCols';
 import { useQuickSum } from './useQuickSum';
 
@@ -18,6 +19,64 @@ export default function QuickSumControl({
   setSelectedColumnIds,
 }) {
   const [open, setOpen] = useState(false);
+  const triggerRef = useRef(null);
+  const [dropdownStyle, setDropdownStyle] = useState({});
+  const [portalNode, setPortalNode] = useState(null);
+
+  // Create portal node on mount
+  useEffect(() => {
+    const node = document.createElement('div');
+    node.setAttribute('id', 'quicksum-columns-portal');
+    document.body.appendChild(node);
+    setPortalNode(node);
+    return () => {
+      if (node.parentNode) node.parentNode.removeChild(node);
+    };
+  }, []);
+
+  // Update dropdown position when open
+  useEffect(() => {
+    if (!open || !triggerRef.current) return;
+    
+    const updatePos = () => {
+      const rect = triggerRef.current.getBoundingClientRect();
+      const ddWidth = 256; // w-64
+      const ddHeight = 300;
+      const margin = 12;
+      
+      let top = rect.bottom + 8;
+      let left = rect.right - ddWidth;
+      
+      // Keep within viewport
+      if (left < margin) left = margin;
+      if (left + ddWidth > window.innerWidth - margin) {
+        left = window.innerWidth - ddWidth - margin;
+      }
+      
+      // If would go below viewport, show above
+      if (top + ddHeight > window.innerHeight - margin) {
+        top = rect.top - ddHeight - 8;
+        if (top < margin) top = margin;
+      }
+      
+      setDropdownStyle({
+        position: 'fixed',
+        top: Math.round(top) + 'px',
+        left: Math.round(left) + 'px',
+        zIndex: 999999,
+        width: ddWidth + 'px'
+      });
+    };
+    
+    updatePos();
+    window.addEventListener('resize', updatePos);
+    window.addEventListener('scroll', updatePos, true);
+    
+    return () => {
+      window.removeEventListener('resize', updatePos);
+      window.removeEventListener('scroll', updatePos, true);
+    };
+  }, [open]);
 
   // Get row count to trigger re-detection when data changes
   const currentRowCount = table.getRowModel().rows.length;
@@ -66,8 +125,8 @@ export default function QuickSumControl({
       <button
         type="button"
         onClick={toggleEnabled}
-        className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center border
-          ${enabled ? 'bg-[var(--endeavour)] text-white' : 'bg-white border-gray-300 text-gray-600 hover:bg-gray-100'}`}
+        className={`px-2 py-1 rounded-md text-xs font-medium transition-all flex items-center
+          ${enabled ? 'bg-[var(--endeavour)] text-white' : 'bg-white text-[var(--port-gore)] hover:bg-[var(--selago)]'}`}
         title="Quick Sum"
       >
         Quick Sum
@@ -76,60 +135,72 @@ export default function QuickSumControl({
       {enabled && (
         <div className="relative">
           <button
+            ref={triggerRef}
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all bg-white border border-gray-300"
+            className="px-2 py-1 rounded-md text-xs font-medium transition-all bg-white text-[var(--port-gore)] border border-[var(--rock-blue)]/50 hover:border-[var(--endeavour)]"
             title="Choose columns"
           >
             Columns ▾
           </button>
 
-          {open && (
-            <div className="sm:absolute right-0 mt-2 sm:w-64 w-full bg-white border rounded shadow-md z-50 p-2">
-              <div className="text-xs font-semibold text-slate-700 mb-2">
-                Select numeric columns
-              </div>
-
-              {numericCols.length === 0 ? (
-                <div className="text-sm text-slate-500">
-                  No numeric columns detected.
+          {open && portalNode && createPortal(
+            <>
+              <div 
+                style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, zIndex: 999998, background: 'transparent' }} 
+                onClick={() => setOpen(false)} 
+              />
+              <div 
+                style={dropdownStyle}
+                className="bg-white border border-[var(--selago)] rounded-xl shadow-lg p-3"
+              >
+                <div className="text-sm font-medium text-[var(--port-gore)] mb-2 pl-1">
+                  Select numeric columns
                 </div>
-              ) : (
-                <div className="max-h-56 overflow-auto">
-                  {numericCols.map((c) => (
-                    <label
-                      key={c.id}
-                      className="flex items-center gap-2 text-sm py-1 cursor-pointer"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={(selectedColumnIds || []).includes(c.id)}
-                        onChange={() => toggleCol(c.id)}
-                      />
-                      <span className="truncate">{c.label}</span>
-                    </label>
-                  ))}
+
+                {numericCols.length === 0 ? (
+                  <div className="text-sm text-[var(--port-gore)] p-2">
+                    No numeric columns detected.
+                  </div>
+                ) : (
+                  <div className="max-h-56 overflow-auto">
+                    {numericCols.map((c) => (
+                      <label
+                        key={c.id}
+                        className="flex items-center gap-2 text-xs py-2 px-2 cursor-pointer hover:bg-[var(--selago)]/50 rounded-lg transition-colors"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={(selectedColumnIds || []).includes(c.id)}
+                          onChange={() => toggleCol(c.id)}
+                          className="w-4 h-4 accent-[var(--endeavour)] rounded"
+                        />
+                        <span className="truncate text-[var(--port-gore)]">{c.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+
+                <div className="mt-2 pt-2 border-t border-[var(--selago)] flex items-center justify-between">
+                  <button
+                    type="button"
+                    className="text-xs text-[var(--endeavour)] hover:underline"
+                    onClick={() => setSelectedColumnIds([])}
+                  >
+                    Clear columns
+                  </button>
+
+                  <button
+                    type="button"
+                    className="text-xs text-[var(--endeavour)] hover:underline"
+                    onClick={() => setOpen(false)}
+                  >
+                    Close
+                  </button>
                 </div>
-              )}
-
-              <div className="mt-2 pt-2 border-t flex items-center justify-between">
-                <button
-                  type="button"
-                  className="text-sm underline text-slate-600"
-                  onClick={() => setSelectedColumnIds([])}
-                >
-                  Clear columns
-                </button>
-
-                <button
-                  type="button"
-                  className="text-sm underline text-slate-600"
-                  onClick={() => setOpen(false)}
-                >
-                  Close
-                </button>
               </div>
-            </div>
+            </>,
+            portalNode
           )}
         </div>
       )}
@@ -137,25 +208,25 @@ export default function QuickSumControl({
       {/* Totals display (compact) */}
       {enabled ? (
         selectedCount > 0 ? (
-          <div className="flex flex-wrap items-center gap-2 text-sm text-slate-700 ml-2">
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--port-gore)] ml-2">
             <span className="font-medium">{selectedCount} selected</span>
 
             {(totals || []).map((t) => (
-              <span key={t.id} className="bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-sm whitespace-nowrap">
+              <span key={t.id} className="bg-white rounded-md px-2 py-1 text-xs whitespace-nowrap">
                 {t.id}: {t.total.toFixed(2)}
               </span>
             ))}
 
             <button
               type="button"
-              className="text-sm underline text-slate-600"
+              className="text-xs underline text-[var(--port-gore)]"
               onClick={() => table.resetRowSelection()}
             >
               Clear rows
             </button>
           </div>
         ) : (
-          <span className="text-xs text-slate-400 ml-2">
+          <span className="text-xs text-[var(--port-gore)] opacity-60 ml-2">
             Select rows to see Quick Sum
           </span>
         )

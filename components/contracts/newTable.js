@@ -8,7 +8,6 @@ import { TbSortAscending } from "react-icons/tb";
 
 import { Paginator } from "@components/table/Paginator";
 import RowsIndicator from "@components/table/RowsIndicator";
-import './style.css';
 import { useContext } from 'react';
 import { SettingsContext } from "@contexts/useSettingsContext";
 import { usePathname } from "next/navigation";
@@ -35,7 +34,7 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
     const [filterOn, setFilterOn] = useState(false)
 
 
-    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 500, })
+    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 25, })
     const pagination = useMemo(() => ({ pageIndex, pageSize, }), [pageIndex, pageSize])
     const pathName = usePathname()
     const { ln } = useContext(SettingsContext);
@@ -84,30 +83,29 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                     resetFilterTable={ResetFilterTableIcon(ln, resetTable, filterOn)}
                 />
 
-                <div className=" overflow-x-auto border-x md:max-h-[310px] 2xl:max-h-[550px]">
-                    <table className="w-full">
-                        <thead className="bg-gray-50 divide-y divide-gray-200 md:sticky md:top-0 md:z-10 ">
+                <div className="overflow-x-auto md:max-h-[80vh] 2xl:max-h-[80vh]">
+                    <table className="w-full border-collapse">
+                        <thead className="bg-[var(--endeavour)] md:sticky md:top-0 md:z-10">
                             {table.getHeaderGroups().map(hdGroup =>
-                                <tr key={hdGroup.id} className='border-b'>
+                                <tr key={hdGroup.id}>
                                     {hdGroup.headers.map(
                                         header =>
-                                            <th key={header.id} className="relative px-6 py-2 text-left text-sm font-medium text-gray-500 uppercase">
+                                            <th key={header.id} className="relative px-1 py-0.5 text-left text-[0.6rem] font-medium text-white uppercase responsiveTextTitle">
                                                 {header.column.getCanSort() ?
-                                                    <div onClick={header.column.getToggleSortingHandler()} className="table-caption cursor-pointer items-center gap-1 text-xs
-                                                    font-medium">
+                                                    <div onClick={header.column.getToggleSortingHandler()} className="cursor-pointer items-center gap-2 responsiveTextTitle font-medium flex">
                                                         {/* <Tltip direction='top' tltpText='sdsd ffgf'> */}
                                                         {header.column.columnDef.header}
                                                         {/* </Tltip> */}
 
                                                         {
                                                             {
-                                                                asc: <TbSortAscending className="text-slate-600 scale-125" />,
-                                                                desc: <TbSortDescending className="text-slate-600 scale-125" />
+                                                                asc: <TbSortAscending className="text-[var(--selago)] scale-100" />,
+                                                                desc: <TbSortDescending className="text-[var(--selago)] scale-100" />
                                                             }[header.column.getIsSorted()]
                                                         }
                                                     </div>
                                                     :
-                                                    <span className="text-xs py-1  font-medium">{header.column.columnDef.header}</span>
+                                                    <span className="responsiveTextTitle font-medium">{header.column.columnDef.header}</span>
                                                 }
                                                 {header.column.getCanFilter() ? (
                                                     <div>
@@ -118,12 +116,12 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                                     )}
                                 </tr>)}
                         </thead>
-                        <tbody className="divide-y divide-gray-200 ">
+                        <tbody className="bg-white">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className='cursor-pointer hover:bg-slate-200 ' onDoubleClick={() => SelectRow(row.original)}>
+                                <tr key={row.id} className='cursor-pointer transition-all duration-150' onDoubleClick={() => SelectRow(row.original)}>
 
                                     {row.getVisibleCells().map(cell => (
-                                        <td key={cell.id} data-label={cell.column.columnDef.header} className={`table_cell text-xs ${pathName === '/invoices' ? 'md:py-1.5' : 'md:py-3'}`}>
+                                        <td key={cell.id} data-label={cell.column.columnDef.header} className="px-0.5 py-0 text-[0.55rem] leading-none responsiveTextTable text-[var(--port-gore)] hover:bg-[var(--selago)]/12 hover:text-[var(--endeavour)] hover:border-b hover:border-[var(--endeavour)] transition-colors truncate">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     ))}
@@ -133,14 +131,16 @@ const Customtable = ({ data, columns, invisible, SelectRow, excellReport, setFil
                         </tbody>
                     </table>
                 </div>
-                <div className="flex p-2 border-t flex-wrap bg-slate-50 border rounded-b-xl">
-                    <div className="hidden lg:flex text-gray-600 text-sm w-48 xl:w-96 p-2 items-center">
+                <div className="flex items-center justify-between p-1 flex-wrap gap-2">
+                    <div className="hidden lg:flex text-[var(--port-gore)] text-[0.6rem] w-48 xl:w-96 p-1 items-center responsiveTextTable">
                         {`${getTtl('Showing', ln)} ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
                             (table.getFilteredRowModel().rows.length ? 1 : 0)}-${table.getRowModel().rows.length + table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
                             ${getTtl('of', ln)} ${table.getFilteredRowModel().rows.length}`}
                     </div>
-                    <Paginator table={table} />
-                    <RowsIndicator table={table} />
+                    <div className="flex items-center gap-2">
+                        <Paginator table={table} />
+                        <RowsIndicator table={table} />
+                    </div>
                 </div>
             </div>
         </div>

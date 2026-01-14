@@ -7,7 +7,7 @@ import { getD } from '@utils/utils.js';
 import dateFormat from "dateformat";
 import { SettingsContext } from "@contexts/useSettingsContext";
 
-import './style.css';
+
 
 const Customtable = ({ data, propDefaults, SelectRow, lastAction, name, excellReport }) => {
 

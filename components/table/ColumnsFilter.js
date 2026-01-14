@@ -48,25 +48,27 @@ const ColFilter = ({ table }) => {
 
 			const isDesktop = window.innerWidth >= 768; // md breakpoint
 			if (isDesktop) {
-				let top = rect.bottom + desktopOffset + window.scrollY;
-				let left = rect.right - ddWidth + window.scrollX;
-				const maxLeft = window.innerWidth - ddWidth - margin + window.scrollX;
-				if (left > maxLeft) left = maxLeft;
-				if (left < margin + window.scrollX) left = margin + window.scrollX;
-
-				// avoid bottom overflow - try place above if needed
-				const bottomOverflow = top + ddHeight - (window.innerHeight + window.scrollY);
-				if (bottomOverflow > 0) {
-					const aboveTop = rect.top - ddHeight - desktopOffset + window.scrollY;
-					if (aboveTop >= margin + window.scrollY) top = aboveTop;
-					else top = Math.max(margin + window.scrollY, top - bottomOverflow);
+				// Use fixed positioning to escape any overflow:hidden containers
+				let top = rect.bottom + 8;
+				let left = rect.right - ddWidth;
+				
+				// Keep within viewport
+				if (left < margin) left = margin;
+				if (left + ddWidth > window.innerWidth - margin) {
+					left = window.innerWidth - ddWidth - margin;
 				}
 
-				setDropdownStyle({ position: 'absolute', top: Math.round(top) + 'px', left: Math.round(left) + 'px', zIndex: 9999, minWidth: ddWidth + 'px' });
+				// If dropdown would go below viewport, show above trigger
+				if (top + ddHeight > window.innerHeight - margin) {
+					top = rect.top - ddHeight - 8;
+					if (top < margin) top = margin;
+				}
+
+				setDropdownStyle({ position: 'fixed', top: Math.round(top) + 'px', left: Math.round(left) + 'px', zIndex: 999999, minWidth: ddWidth + 'px' });
 			} else {
 				// Mobile/tablet: fallback to fixed top/right like before
 				const topFixed = 64; // matches previous top-16 (64px)
-				setDropdownStyle({ position: 'fixed', top: topFixed + 'px', right: '16px', zIndex: 9999, minWidth: ddWidth + 'px' });
+				setDropdownStyle({ position: 'fixed', top: topFixed + 'px', right: '16px', zIndex: 999999, minWidth: ddWidth + 'px' });
 			}
 		}
 
@@ -110,14 +112,14 @@ const ColFilter = ({ table }) => {
 				<div ref={triggerRef} onClick={() => setOpen(!open)}
 					className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center w-10 h-10 inline-flex items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50 transition-colors"
 				>
-					<HiMiniViewColumns className="scale-[1.4] text-[var(--endeavour)]" />
+					<HiMiniViewColumns className="scale-[1.4] text-[var(--port-gore)]" />
 				</div>
 			</Tltip>
 
 			{open && portalNodeRef.current ? createPortal(
 				<>
+					<div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, zIndex: 999998, background: 'transparent' }} onClick={() => setOpen(false)} />
 					{DropdownContent}
-					<div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, zIndex: 9998 }} onClick={() => setOpen(false)} />
 				</>,
 				portalNodeRef.current
 			) : null}
