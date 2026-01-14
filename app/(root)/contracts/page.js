@@ -332,13 +332,13 @@ useEffect(() => {
   }
 };
 	return (
-		<div className="container mx-auto max-w-full px-0.5 md:px-4 lg:px-6 pb-8 md:pb-0 mt-4 md:mt-2">
+		<div className="container mx-auto max-w-full px-1 md:px-2 lg:px-3 pb-8 md:pb-0 mt-2 md:mt-1 overflow-x-hidden">
 			{Object.keys(settings).length === 0 ? <Spinner /> :
 				<>
 					<Toast />
 					<ModalCopyInvoice />
 					{/* {loading && <Spin />} */}
-					<div className="rounded-2xl p-3 mt-3 bg-white relative">
+					<div className="rounded-2xl p-2 mt-2 bg-white relative border-2 border-[var(--selago)] shadow-sm">
 						<div className='flex items-center justify-between flex-wrap pb-1'>
 							<div className="text-lg md:text-xl p-0 pb-1 font-semibold text-[var(--port-gore)] responsiveTextTitle"> {getTtl('Contracts', ln)} </div>
 							<div className='flex group'>
@@ -360,7 +360,7 @@ useEffect(() => {
 							setFilteredData={setFilteredData}
 							highlightId={highlightId} onCellUpdate={onCellUpdate} />
 					</div>
-					<div className="text-left pt-0.5 flex flex-col sm:flex-row gap-2 ml-2 sm:gap-3 md:ml-0 w-full">
+					<div className="text-left pt-2 flex flex-col sm:flex-row gap-2 ml-3 sm:gap-2 md:ml-4 w-full">
 						<Tltip direction='bottom' tltpText='Create new Contract'>
 							<button
 								type="button"

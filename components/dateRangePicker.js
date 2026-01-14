@@ -176,7 +176,7 @@ const DateRangePicker = () => {
 
     return (
         <div
-            className="relative flex items-center gap-2"
+            className="relative flex items-center gap-2 border-2 border-[var(--selago)] rounded-md "
             style={{ zIndex: 5 }}   // 🔑 LOW z-index container
         >
             {displayLabel && (

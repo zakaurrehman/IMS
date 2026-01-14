@@ -42,9 +42,9 @@ const showEditButton = editEnabledRoutes.some(route =>
 		<div className="justify-between flex p-1.5 flex-wrap rounded-t-xl sticky top-0 shadow-sm" style={{ position: 'sticky', top: 0,  background: '#ffffff' }}>
 			<div className='flex items-center gap-3 w-full sm:w-auto'>
 				{pathname !== '/accounting' &&
-					<div className="flex items-center relative w-auto md:w-20">
+					<div className="flex items-center relative w-auto min-w-[120px] md:w-40 border-2 border-[var(--selago)] rounded-md ">
 						<input
-							className="bg-white border-0 shadow-none pr-6 focus:outline-none focus:ring-0 focus:border-0 w-full text-[0.65rem] py-0.5 text-[var(--port-gore)] placeholder:text-[var(--port-gore)]"
+							className="bg-white border-0 shadow-none pr-6 focus:outline-none focus:ring-0 focus:border-0 w-full text-[0.65rem] py-[2px] text-[var(--port-gore)] placeholder:text-[var(--port-gore)] h-7 min-h-0"
 							placeholder={getTtl('Search', ln)}
 							value={globalFilter ?? ''}
 							onChange={e => setGlobalFilter(e.target.value)}
@@ -113,24 +113,26 @@ const showEditButton = editEnabledRoutes.some(route =>
 					{excellReport}
 					<ColFilter table={table} />
 										{showEditButton && typeof setIsEditMode === 'function' && (
-	<button
-		onClick={() => setIsEditMode(prev => !prev)}
-		className={`px-1.5 py-0.5 rounded-md text-[0.6rem] font-medium transition-all flex items-center
-			${isEditMode
-				? 'bg-[var(--endeavour)] text-white'
-				: 'bg-white text-[var(--port-gore)] hover:bg-[var(--selago)]'}
-		`}
-	>
+				<button
+					onClick={() => setIsEditMode(prev => !prev)}
+					className={`px-1.5 py-0.5 rounded-md text-[0.6rem] font-medium transition-all flex items-center border-2 border-[var(--selago)] h-7
+						${isEditMode
+							? 'bg-[var(--endeavour)] text-white'
+							: 'bg-white text-[var(--port-gore)] hover:bg-[var(--selago)]'}
+					`}
+				>
 		 {isEditMode ? 'Editing ON' : 'Edit'}
 	</button>
 )}
-									<QuickSumControl
-  table={table}
-  enabled={quickSumEnabled}
-  setEnabled={setQuickSumEnabled}
-  selectedColumnIds={quickSumColumns}
-  setSelectedColumnIds={setQuickSumColumns}
-/>
+									<div className="border-2 border-[var(--selago)] rounded-md px-1 py-0.5 flex items-center h-7">
+									  <QuickSumControl
+						table={table}
+						enabled={quickSumEnabled}
+						setEnabled={setQuickSumEnabled}
+						selectedColumnIds={quickSumColumns}
+						setSelectedColumnIds={setQuickSumColumns}
+						/>
+									</div>
 
 				</div>
 			</div>

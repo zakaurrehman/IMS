@@ -139,7 +139,7 @@ const Customtable = ({
   }, [columnFilters, globalFilter])
 
   return (
-    <div className="flex flex-col relative">
+    <div className="flex flex-col relative border-2 border-[var(--selago)] rounded-lg shadow-sm">
 
       {/* HEADER - Enhanced with 3D depth */}
       <div className="relative">
@@ -349,7 +349,7 @@ const Customtable = ({
 <div className="flex flex-col md:flex-row items-center justify-between gap-3 py-4 bg-white md:sticky md:bottom-0">
 
   {/* Left: Pagination */}
-  <div className="flex items-center">
+  <div className="flex items-center  ml-3  md:ml-3">
     <Paginator table={table} />
   </div>
 

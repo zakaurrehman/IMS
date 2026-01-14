@@ -57,7 +57,7 @@ export const MainNav = () => {
   }
 
   return (
-    <div className='px-4 md:px-8 xl:px-10 py-3 hidden md:flex items-center justify-between bg-white '>
+    <div className='px-2 md:px-4 xl:px-6 py-3 hidden md:flex items-center justify-between bg-white border-b-2 border-[var(--selago)]'>
       {/* Search Bar */}
       <div className='flex items-center flex-1 max-w-xl'>
         <div className='relative w-full' ref={searchRef}>
