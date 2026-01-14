@@ -141,7 +141,7 @@ const Dash = () => {
 
 
       {/* Header Section */}
-      <div className="pt-10 pb-3">
+      <div className="pt-1 pb-3">
         <div className='flex items-center justify-between flex-wrap gap-4'>
           <div className="flex items-center gap-3">
             <div className="w-1.5 h-10 bg-gradient-to-b from-[var(--endeavour)] to-[var(--chathams-blue)] rounded-full"></div>

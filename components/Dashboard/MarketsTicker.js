@@ -1,14 +1,12 @@
-
 'use client';
 
 import { useMemo, useState } from 'react';
 import HeadlineTicker from './HeadlineTicker';
 import useExchangeRates from '../../hooks/useExchangeRates';
 import useMetalPrices from '../../hooks/useMetalPrices';
-import { HiRefresh } from 'react-icons/hi';
+import { HiRefresh, HiCube, HiCubeTransparent } from 'react-icons/hi';
 import { FaDollarSign, FaEuroSign, FaPoundSign, FaRubleSign } from 'react-icons/fa';
 import { TbCurrencyShekel } from 'react-icons/tb';
-import { HiCube, HiCubeTransparent } from 'react-icons/hi';
 
 const currencyNames = {
   USD: 'US Dollar',
@@ -35,10 +33,7 @@ export default function MarketsTicker({ className = '' }) {
   const fx = useExchangeRates();
   const metals = useMetalPrices();
 
-  // ✅ FIX-3: base currency selector restored
   const [baseCurrency, setBaseCurrency] = useState('USD');
-
-  // local spinner for FX refresh
   const [fxRefreshing, setFxRefreshing] = useState(false);
 
   const getFxRate = (rates, currency) => {
@@ -47,32 +42,27 @@ export default function MarketsTicker({ className = '' }) {
     return rates[currency] / rates[baseCurrency];
   };
 
-  // ================= FX ITEMS =================
   const fxItems = useMemo(() => {
-    const list = ['USD', 'EUR', 'GBP', 'ILS', 'RUB'].filter(
-      (c) => c !== baseCurrency
-    );
-
+    const list = ['USD', 'EUR', 'GBP', 'ILS', 'RUB'].filter((c) => c !== baseCurrency);
     return list.map((c) => {
       const r = getFxRate(fx.rates, c);
       return {
         key: `fx-${c}`,
-        icon: currencyIcons[c], // ✅ FIX-2
+        icon: currencyIcons[c],
         label: `${currencyNames[baseCurrency]} → ${currencyNames[c]}`,
         value: r ? fx.formatRate(r) : '—',
         subValue: `1 ${baseCurrency} = ${r ? fx.formatRate(r) : '—'} ${c}`,
       };
     });
-  }, [fx.rates, baseCurrency, fx]);
+  }, [fx.rates, baseCurrency]);
 
-  // ================= METAL ITEMS =================
   const metalItems = useMemo(() => {
     return ['nickel', 'copper'].map((k) => {
       const m = metals.prices?.[k];
       if (!m) {
         return {
           key: `m-${k}`,
-          icon: metalIcons[k], // ✅ FIX-2
+          icon: metalIcons[k],
           label: k.toUpperCase(),
           value: '—',
           subValue: '',
@@ -85,30 +75,17 @@ export default function MarketsTicker({ className = '' }) {
 
       return {
         key: `m-${k}`,
-        icon: metalIcons[k], // ✅ FIX-2
+        icon: metalIcons[k],
         label: `${m.name || k} (${m.unit || 'USD/MT'})`,
         value: metals.formatPrice(m.price),
-        subValue:
-          ch !== null
-            ? `${sign}${ch.toFixed(2)} (${(pct ?? 0).toFixed(2)}%)`
-            : '',
+        subValue: ch !== null ? `${sign}${ch.toFixed(2)} (${(pct ?? 0).toFixed(2)}%)` : '',
       };
     });
-  }, [metals.prices, metals]);
+  }, [metals.prices]);
 
-  const fxStatus = fx.error
-    ? 'Failed to load'
-    : fx.loading
-    ? 'Loading…'
-    : `Base: ${baseCurrency}`;
+  const fxSubtitle = fx.error ? 'Failed to load' : fx.loading ? 'Loading…' : `Base: ${baseCurrency}`;
+  const metalSubtitle = metals.error ? 'Failed to load' : metals.loading ? 'Loading…' : 'LME Spot Prices';
 
-  const metalStatus = metals.error
-    ? 'Failed to load'
-    : metals.loading
-    ? 'Loading…'
-    : 'LME Spot Prices';
-
-  // ================= REFRESH HANDLERS =================
   const refreshFx = async () => {
     try {
       setFxRefreshing(true);
@@ -121,24 +98,19 @@ export default function MarketsTicker({ className = '' }) {
 
   const refreshMetals = () => metals.refresh?.();
 
-  return (
-    <div className={['mt-4 mb-4 space-y-4', className].join(' ')}>
-      {/* ================= FX TICKER ================= */}
-      <div>
-        <div className="flex items-center justify-between mb-2 px-1">
-          <div className="flex items-center gap-3">
-            <div className="w-1.5 h-6 bg-gradient-to-b from-[var(--endeavour)] to-[var(--chathams-blue)] rounded-full" />
-            <div>
-              <div className="text-sm font-bold text-[var(--port-gore)]">
-                Exchange Rates
-              </div>
-              <div className="text-xs text-[var(--regent-gray)]">
-                {fxStatus}
-              </div>
-            </div>
+  const BaseIcon = currencyIcons[baseCurrency] || FaDollarSign;
 
-            {/* ✅ FIX-3: Base selector */}
-            <div className="flex items-center gap-1 ml-2">
+  return (
+    <div className={['mt-4 mb-4 space-y-2', className].join(' ')}>
+      {/* ===== FX ===== */}
+      <HeadlineTicker
+        title="Exchange Rates"
+        subtitle={fxSubtitle}
+        leftIcon={BaseIcon}
+        rightSlot={
+          <div className="flex items-center gap-2">
+            {/* ✅ base selector INLINE with heading */}
+            <div className="hidden md:flex items-center gap-1">
               {['USD', 'EUR', 'GBP', 'ILS', 'RUB'].map((cur) => (
                 <button
                   key={cur}
@@ -154,46 +126,55 @@ export default function MarketsTicker({ className = '' }) {
                 </button>
               ))}
             </div>
+
+            {/* ✅ refresh stays on far right */}
+            <button
+              onClick={refreshFx}
+              disabled={fxRefreshing}
+              title="Refresh exchange rates"
+              className={[
+                'inline-flex items-center justify-center',
+                'h-9 w-11 rounded-full',
+                'bg-[var(--selago)] text-[var(--port-gore)]',
+                'hover:bg-[var(--rock-blue)]/30 transition-colors',
+                fxRefreshing ? 'opacity-60 cursor-not-allowed' : '',
+              ].join(' ')}
+            >
+              <HiRefresh className={['w-5 h-5', fxRefreshing ? 'animate-spin' : ''].join(' ')} />
+            </button>
           </div>
+        }
+        items={fxItems}
+        speed={110}
+        pauseOnHover
+        rightToLeft
+        gap={28}
+      />
 
+      {/* ✅ mobile base selector (wrap under header nicely) */}
+      <div className="flex md:hidden items-center gap-2 px-1 -mt-2">
+        {['USD', 'EUR', 'GBP', 'ILS', 'RUB'].map((cur) => (
           <button
-            onClick={refreshFx}
-            disabled={fxRefreshing}
-            title="Refresh exchange rates"
-            className={[
-              'inline-flex items-center justify-center',
-              'h-9 w-11 rounded-full',
-              'bg-[var(--selago)] text-[var(--port-gore)]',
-              'hover:bg-[var(--rock-blue)]/30 transition-colors',
-              fxRefreshing ? 'opacity-60 cursor-not-allowed' : '',
-            ].join(' ')}
+            key={cur}
+            onClick={() => setBaseCurrency(cur)}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition
+              ${
+                baseCurrency === cur
+                  ? 'bg-[var(--endeavour)] text-white'
+                  : 'bg-[var(--selago)] text-[var(--port-gore)] hover:bg-[var(--rock-blue)]/30'
+              }`}
           >
-            <HiRefresh
-              className={['w-5 h-5', fxRefreshing ? 'animate-spin' : ''].join(
-                ' '
-              )}
-            />
+            {cur}
           </button>
-        </div>
-
-        <HeadlineTicker items={fxItems} speed={100} pauseOnHover rightToLeft />
+        ))}
       </div>
 
-      {/* ================= METALS TICKER ================= */}
-      <div>
-        <div className="flex items-center justify-between mb-2 px-1">
-          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-6 bg-gradient-to-b from-amber-500 to-amber-700 rounded-full" />
-            <div>
-              <div className="text-sm font-bold text-[var(--port-gore)]">
-                Metal Prices
-              </div>
-              <div className="text-xs text-[var(--regent-gray)]">
-                {metalStatus}
-              </div>
-            </div>
-          </div>
-
+      {/* ===== METALS ===== */}
+      <HeadlineTicker
+        title="Metal Prices"
+        subtitle={metalSubtitle}
+        leftIcon={HiCube}
+        rightSlot={
           <button
             onClick={refreshMetals}
             disabled={metals.loading}
@@ -206,17 +187,15 @@ export default function MarketsTicker({ className = '' }) {
               metals.loading ? 'opacity-60 cursor-not-allowed' : '',
             ].join(' ')}
           >
-            <HiRefresh
-              className={[
-                'w-5 h-5',
-                metals.loading ? 'animate-spin' : '',
-              ].join(' ')}
-            />
+            <HiRefresh className={['w-5 h-5', metals.loading ? 'animate-spin' : ''].join(' ')} />
           </button>
-        </div>
-
-        <HeadlineTicker items={metalItems} speed={150} pauseOnHover rightToLeft />
-      </div>
+        }
+        items={metalItems}
+        speed={140}
+        pauseOnHover
+        rightToLeft
+        gap={36}
+      />
     </div>
   );
 }
