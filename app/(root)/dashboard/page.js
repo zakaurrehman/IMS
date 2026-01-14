@@ -26,8 +26,10 @@ import { setMonthsInvoices, calContracts, frmNum } from './funcs'
 import { getTtl } from '@utils/languages';
 import DateRangePicker from '@components/dateRangePicker';
 import TooltipComp from '@components/tooltip';
-import CurrencyWidget from '@components/Dashboard/CurrencyWidget';
-import MetalPricesWidget from '@components/Dashboard/MetalPricesWidget';
+// import CurrencyWidget from '@components/Dashboard/CurrencyWidget';
+// import MetalPricesWidget from '@components/Dashboard/MetalPricesWidget';
+import MarketsTicker from '@components/Dashboard/MarketsTicker';
+
 import dateFormat from "dateformat";
 
 ChartJS.register(
@@ -133,7 +135,11 @@ const Dash = () => {
     <div className="xl:container mx-auto px-2 md:px-6 xl:px-8 pb-6 md:pb-0 min-h-screen md:pl-[260px] bg-gradient-to-br from-[var(--selago)]/20 via-[var(--white)] to-[var(--rock-blue)]/5">
       <Toast />
       {loading && <Spin />}
-      
+     <div className="mb-8">
+  <MarketsTicker />
+</div>
+
+
       {/* Header Section */}
       <div className="pt-10 pb-3">
         <div className='flex items-center justify-between flex-wrap gap-4'>
@@ -323,10 +329,10 @@ const Dash = () => {
       {/* Currency Widget + Metal Prices + Horizontal Bar Charts Row */}
       <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 mb-6'>
         {/* Currency Exchange Widget */}
-        <CurrencyWidget />
+        {/* <CurrencyWidget /> */}
 
         {/* Metal Prices Widget */}
-        <MetalPricesWidget />
+        {/* <MetalPricesWidget /> */}
 
         {/* Consignees Chart */}
         <div className='bg-white rounded-2xl shadow-xl border border-[var(--selago)] overflow-hidden hover:shadow-2xl transition-all duration-300'>
