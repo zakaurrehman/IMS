@@ -461,6 +461,21 @@ const fmtK = (n, decimals = 2) => {
   if (!Number.isFinite(num)) return `$0.00K`;
   return `$${fmtMoney(num / 1000, decimals)}K`;
 };
+const fmtAutoKM = (n, decimals = 2) => {
+  const num = Number(n);
+  if (!Number.isFinite(num)) return "$0";
+
+  if (Math.abs(num) >= 1_000_000) {
+    return `$${fmtMoney(num / 1_000_000, decimals)}M`;
+  }
+
+  if (Math.abs(num) >= 1_000) {
+    return `$${fmtMoney(num / 1_000, decimals)}K`;
+  }
+
+  return `$${fmtMoney(num, decimals)}`;
+};
+
 
 const loadInvoices = async (uidCollection, con) => {
   let yrs = [...new Set(con.invoices.map(x => x.date.substring(0, 4)))]
@@ -693,25 +708,22 @@ const Dash = () => {
             </div>
           </div>
 
-          <div className="relative">
-            <div className='flex items-center justify-between flex-wrap gap-3'>
-              <div className='flex group items-center gap-3'>
-                <DateRangePicker />
-                <TooltipComp txt='Select Dates Range' />
-              </div>
-            </div>
+         <div className="p-4 mt-8 relative">
+             <div className='flex items-center justify-between flex-wrap pb-2'>
+               <div className='flex group items-center gap-3'>
+                 <DateRangePicker />
+                 <TooltipComp txt='Select Dates Range' />
+               </div>
+             </div>
+           </div>
 
-            <div className="mt-2 text-xs text-[var(--regent-gray)]">
-              {dateSelect?.start
-                ? `${dateFormat(dateSelect.start, 'dd-mmm-yy')} - ${dateFormat(dateSelect.end, 'dd-mmm-yy')}`
-                : currentYear}
-            </div>
-          </div>
+       
+       
         </div>
       </div>
 
       {/* ====== NEW LAYOUT ====== */}
-{/* ====== NEW LAYOUT (as your sketch) ====== */}
+
 <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
 
   {/* Row 1: Total Revenue FULL WIDTH */}
@@ -831,7 +843,8 @@ const Dash = () => {
           title={`${getTtl('P&L', ln)} - $K`}
           badgeText={totalPL > 0 ? getTtl('Profit', ln) : "Loss"}
           badgeTone={profitTone}
-          value={fmtK(totalPL)}
+          value={fmtAutoKM(totalPL)}
+
           chartData={dataPL}
           chartColor="rgba(255, 255, 255, 0.95)"
           grad="from-violet-700 to-indigo-900"
@@ -849,7 +862,7 @@ const Dash = () => {
           title={`${getTtl('Invoices', ln)} - $K`}
           badgeText={getTtl('Sales', ln)}
           badgeTone="good"
-          value={fmtK(totalInvoices)}
+          value={fmtAutoKM(totalInvoices)}
           chartData={dataInvoices}
           chartColor="rgba(255,255,255,0.92)"
           grad="from-emerald-700 to-teal-900"
@@ -867,7 +880,7 @@ const Dash = () => {
           title={`${getTtl('Contracts & Expenses', ln)} - $K`}
           badgeText={getTtl('Costs', ln)}
           badgeTone="bad"
-          value={fmtK(totalInvoices - totalPL)}
+          value={fmtAutoKM(totalInvoices - totalPL)}
           chartData={dataContracts}
           chartColor="rgba(255,255,255,0.92)"
           grad="from-rose-700 to-fuchsia-900"
@@ -885,7 +898,7 @@ const Dash = () => {
           title={`Sales Contracts - $K`}
           badgeText="Sales"
           badgeTone="good"
-          value={fmtK(totalContracts)}
+          value={fmtAutoKM(totalContracts)}
           chartData={dataContracts}
           chartColor="rgba(255,255,255,0.92)"
           grad="from-indigo-700 to-sky-900"
@@ -903,7 +916,7 @@ const Dash = () => {
           title={`Expenses - $K`}
           badgeText="Costs"
           badgeTone="bad"
-          value={fmtK(totalExpenses)}
+          value={fmtAutoKM(totalExpenses)}
           chartData={dataExpenses}
           chartColor="rgba(255,255,255,0.92)"
           grad="from-rose-700 to-red-900"
@@ -921,7 +934,7 @@ const Dash = () => {
           title={`Purchase Contracts - $K`}
           badgeText="Purchases"
           badgeTone="warn"
-          value={fmtK(totalInvoices)}
+          value={fmtAutoKM(totalInvoices)}
           chartData={dataInvoices}
           chartColor="rgba(255,255,255,0.92)"
           grad="from-amber-600 to-orange-900"
