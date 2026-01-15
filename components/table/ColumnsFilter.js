@@ -1,5 +1,5 @@
 "use client"
-import { HiMiniViewColumns } from 'react-icons/hi2';
+import Image from 'next/image';
 import ChkBox from '../../components/checkbox.js'
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
@@ -109,11 +109,11 @@ const ColFilter = ({ table }) => {
 	return (
 		<div className="relative">
 			<Tltip direction='bottom' tltpText={getTtl('Columns', ln)}>
-				<div ref={triggerRef} onClick={() => setOpen(!open)}
-					className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center w-10 h-10 inline-flex items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50 transition-colors"
-				>
-					<HiMiniViewColumns className="scale-[1.4] text-[var(--port-gore)]" />
-				</div>
+				   <div ref={triggerRef} onClick={() => setOpen(!open)}
+					   className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center w-10 h-10 inline-flex items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none z-50 transition-colors"
+				   >
+					   <Image src="/logo/colum.svg" alt="Columns" width={22} height={22} className="scale-[1.4]" />
+				   </div>
 			</Tltip>
 
 			{open && portalNodeRef.current ? createPortal(

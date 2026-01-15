@@ -1,3 +1,5 @@
+
+
 'use client';
 import { useContext, useEffect, useState, useCallback } from 'react';
 import Customtable from './newTable';
@@ -11,7 +13,6 @@ import { InvoiceContext } from "../../../contexts/useInvoiceContext";
 import MonthSelect from '../../../components/monthSelect';
 import Toast from '../../../components/toast.js'
 import ModalCopyInvoice from '../../../components/modalCopyInvoice';
-//import EditableCell from '../../../components/table/EditableCell';
 import useInlineEdit from '../../../hooks/useInlineEdit';
 import { loadData, sortArr, getD, saveDataSettings } from '../../../utils/utils'
 import Spinner from '../../../components/spinner';
@@ -32,8 +33,6 @@ import EditableSelectCell from '../../../components/table/inlineEditing/Editable
 import { updateContractField } from '../../../utils/utils';
 import { useGlobalSearch } from '../../../contexts/useGlobalSearchContext';
 
-
-
 const Contracts = () => {
 
 	const { settings, dateSelect, setDateYr, setLoading, loading, ln, compData, updateCompanyData } = useContext(SettingsContext);
@@ -50,13 +49,11 @@ const Contracts = () => {
 	const [highlightId, setHighlightId] = useState(null)
 	const { upsertSourceItems } = useGlobalSearch();
 
-
 	// Inline editing hook
 	const { updateField } = useInlineEdit('contracts', setContractsData);
 
 	// Handle inline cell save
 	const handleCellSave = useCallback(async (rowData, field, value) => {
-		// Find original data (not formatted)
 		const originalItem = contractsData.find(c => c.id === rowData.id);
 		if (originalItem) {
 			await updateField(originalItem, field, value);
@@ -69,37 +66,31 @@ const Contracts = () => {
 		if (openId && contractsData.length > 0) {
 			const item = contractsData.find(c => c.id === openId);
 			if (item) {
-				// Highlight the row
 				setHighlightId(openId);
 				setTimeout(() => setHighlightId(null), 3000);
-				// Clear the URL parameter
 				router.replace('/contracts', { scroll: false });
 			}
 		}
 	}, [searchParams, contractsData]);
 
 	useEffect(() => {
-
 		const Load = async () => {
 			setLoading(true)
 			let dt = await loadData(uidCollection, 'contracts', dateSelect);
 			setContractsData(dt)
 			setFilteredData(dt)
 
-			//Alert///
+			// Alert Logic
 			let invArr = []
 			let tmpArr = dt.filter(z => z.poInvoices.length === 0)
 			tmpArr.forEach(z => {
-
 				let date1 = z.dateRange?.endDate;
 				if (!date1) return;
 
 				const date = new Date(date1);
-
 				date.setDate(date.getDate() + 14);
 				const today = new Date();
 
-				// Compare if the new date is greater than today
 				if (date < today) {
 					if (z.alert !== undefined && z.alert) {
 						invArr.push(z);
@@ -109,52 +100,47 @@ const Contracts = () => {
 				}
 			})
 
-
 			setOpenAlert(true)
 			setAlertArr(invArr)
-			//Alert///
-
 			setLoading(false)
 		}
 
 		Load();
 	}, [dateSelect])
-useEffect(() => {
-  if (!contractsData || !contractsData.length || Object.keys(settings).length === 0) {
-    upsertSourceItems('contracts', []);
-    return;
-  }
 
-  const items = contractsData.map(c => ({
-    key: `contract_${c.id}`,
-    route: '/contracts',
-    rowId: c.id,
+	useEffect(() => {
+		if (!contractsData || !contractsData.length || Object.keys(settings).length === 0) {
+			upsertSourceItems('contracts', []);
+			return;
+		}
 
-    title: `Contract • PO ${c.order || ''}`,
-    subtitle: `${gQ(c.supplier, 'Supplier', 'nname') || ''} • ${c.pol || ''}-${c.pod || ''}`,
+		const items = contractsData.map(c => ({
+			key: `contract_${c.id}`,
+			route: '/contracts',
+			rowId: c.id,
+			title: `Contract • PO ${c.order || ''}`,
+			subtitle: `${gQ(c.supplier, 'Supplier', 'nname') || ''} • ${c.pol || ''}-${c.pod || ''}`,
+			searchText: [
+				c.order,
+				gQ(c.supplier, 'Supplier', 'nname'),
+				c.pol,
+				c.pod,
+				c.packing,
+				c.contType,
+				c.size,
+			].filter(Boolean).join(' ')
+		}));
 
-    searchText: [
-      c.order,
-      gQ(c.supplier, 'Supplier', 'nname'),
-      c.pol,
-      c.pod,
-      c.packing,
-      c.contType,
-      c.size,
-    ].filter(Boolean).join(' ')
-  }));
+		upsertSourceItems('contracts', items);
+	}, [contractsData, settings]);
 
-  upsertSourceItems('contracts', items);
-}, [contractsData, settings]);
 	const gQ = (z, y, x) => settings[y][y].find(q => q.id === z)?.[x] || ''
 
 	const showQTY = (x) => {
-
 		return x.row.original.productsData.length !== 0 ? new Intl.NumberFormat('en-US', {
 			minimumFractionDigits: 1
 		}).format(x.row.original.productsData.reduce((sum, item) => sum + parseInt(item.qnty, 10), 0)) +
 			' ' + gQ(x.row.original.qTypeTable, 'Quantity', 'qTypeTable') : '-'
-
 	}
 
 	let propDefaults = Object.keys(settings).length === 0 ? [] : [
@@ -163,75 +149,66 @@ useEffect(() => {
 		{ accessorKey: 'order', header: getTtl('PO', ln) + '#' },
 		{
 			accessorKey: 'date', header: getTtl('Date', ln), cell: (props) => <p>{dateFormat(props.getValue(), 'dd-mmm-yy')}</p>,
+			meta: { filterVariant: 'dates' }, 
+			filterFn: 'dateBetweenFilterFn'
+		},
+		{
+			accessorKey: 'supplier',
+			header: getTtl('Supplier', ln),
+			cell: EditableSelectCell,
 			meta: {
-				filterVariant: 'dates',
-			}, filterFn: 'dateBetweenFilterFn'
+				filterVariant: 'selectSupplier',
+				options: settings.Supplier?.Supplier?.map(s => ({
+					value: s.id,
+					label: s.nname
+				})) ?? []
+			}
 		},
-{
-  accessorKey: 'supplier',
-  header: getTtl('Supplier', ln),
-  cell: EditableSelectCell,
-  meta: {
-    filterVariant: 'selectSupplier',
-    options: settings.Supplier?.Supplier?.map(s => ({
-      value: s.id,
-      label: s.nname
-    })) ?? []
-  }
-},
-
+		{ accessorKey: 'originSupplier', header: 'Original supplier' },
 		{
-			accessorKey: 'originSupplier', header: 'Original supplier',
+			accessorKey: 'shpType',
+			header: getTtl('Shipment', ln),
+			cell: EditableSelectCell,
+			meta: {
+				options: settings.Shipment?.Shipment?.map(s => ({
+					value: s.id,
+					label: s.shpType
+				})) ?? []
+			}
 		},
 		{
-  accessorKey: 'shpType',
-  header: getTtl('Shipment', ln),
-  cell: EditableSelectCell,
-  meta: {
-    options: settings.Shipment?.Shipment?.map(s => ({
-      value: s.id,
-      label: s.shpType
-    })) ?? []
-  }
-},
-
+			accessorKey: 'origin',
+			header: getTtl('Origin', ln),
+			cell: EditableSelectCell,
+			meta: {
+				options: settings.Origin?.Origin?.map(o => ({
+					value: o.id,
+					label: o.origin
+				})) ?? []
+			}
+		},
 		{
-  accessorKey: 'origin',
-  header: getTtl('Origin', ln),
-  cell: EditableSelectCell,
-  meta: {
-    options: settings.Origin?.Origin?.map(o => ({
-      value: o.id,
-      label: o.origin
-    })) ?? []
-  }
-},
-{
-  accessorKey: 'delTerm',
-  header: getTtl('Delivery Terms', ln),
-  cell: EditableSelectCell,
-  meta: {
-    options: settings['Delivery Terms']?.['Delivery Terms']?.map(d => ({
-      value: d.id,
-      label: d.delTerm
-    })) ?? []
-  }
-},
-{ accessorKey: 'pol', header: getTtl('POL', ln), cell: EditableCell },
-{ accessorKey: 'pod', header: getTtl('POD', ln), cell: EditableCell },
-
-{ accessorKey: 'packing', header: getTtl('Packing', ln), cell: EditableCell },
-{ accessorKey: 'contType', header: getTtl('Container Type', ln), cell: EditableCell },
-{ accessorKey: 'size', header: getTtl('Size', ln), cell: EditableCell },
-
+			accessorKey: 'delTerm',
+			header: getTtl('Delivery Terms', ln),
+			cell: EditableSelectCell,
+			meta: {
+				options: settings['Delivery Terms']?.['Delivery Terms']?.map(d => ({
+					value: d.id,
+					label: d.delTerm
+				})) ?? []
+			}
+		},
+		{ accessorKey: 'pol', header: getTtl('POL', ln), cell: EditableCell },
+		{ accessorKey: 'pod', header: getTtl('POD', ln), cell: EditableCell },
+		{ accessorKey: 'packing', header: getTtl('Packing', ln), cell: EditableCell },
+		{ accessorKey: 'contType', header: getTtl('Container Type', ln), cell: EditableCell },
+		{ accessorKey: 'size', header: getTtl('Size', ln), cell: EditableCell },
 		{ accessorKey: 'deltime', header: getTtl('Delivery Time', ln), cell: EditableCell },
-
 		{
-  accessorKey: 'cur',
-  header: getTtl('Currency', ln),
-  cell: (props) => <span>{gQ(props.getValue(), 'Currency', 'cur')}</span>
-},
-
+			accessorKey: 'cur',
+			header: getTtl('Currency', ln),
+			cell: (props) => <span>{gQ(props.getValue(), 'Currency', 'cur')}</span>
+		},
 		{ accessorKey: 'qTypeTable', header: getTtl('QTY', ln), cell: (props) => <span>{showQTY(props)}</span> },
 		{
 			accessorKey: 'completed', header: 'Completed',
@@ -256,40 +233,7 @@ useEffect(() => {
 			return acc;
 		}, {});
 
-
-	const getFormatted = (arr) => {  //convert id's to values
-
-		let newArr = []
-		const gQ = (z, y, x) => settings[y][y].find(q => q.id === z)?.[x] || ''
-
-		arr.forEach(row => {
-			let formattedRow = {
-				...row,
-				supplier: gQ(row.supplier, 'Supplier', 'nname'),
-				originSupplier: gQ(row.originSupplier, 'Supplier', 'nname'),
-				shpType: gQ(row.shpType, 'Shipment', 'shpType'),
-				origin: gQ(row.origin, 'Origin', 'origin'),
-				delTerm: gQ(row.delTerm, 'Delivery Terms', 'delTerm'),
-				pol: gQ(row.pol, 'POL', 'pol'),
-				pod: gQ(row.pod, 'POD', 'pod'),
-				packing: gQ(row.packing, 'Packing', 'packing'),
-				contType: gQ(row.contType, 'Container Type', 'contType'),
-				size: gQ(row.size, 'Size', 'size'),
-				deltime: gQ(row.deltime, 'Delivery Time', 'deltime'),
-				cur: gQ(row.cur, 'Currency', 'cur'),
-				//		qTypeTable: gQ(row.qTypeTable, 'Quantity', 'qTypeTable'),
-
-			}
-
-			newArr.push(formattedRow)
-		})
-
-		return newArr
-	}
-
-
 	const SelectRow = (row) => {
-
 		let itm = contractsData.find(x => x.id === row.id)
 		itm = itm.finalSRemarks == null ? { ...itm, finalSRemarks: [] } : itm
 
@@ -307,113 +251,138 @@ useEffect(() => {
 	}
 
 	const onCellUpdate = async ({ rowIndex, columnId, value }) => {
-  const row = contractsData[rowIndex];
-  if (!row?.id) return;
+		const row = contractsData[rowIndex];
+		if (!row?.id) return;
 
-  // 🚫 Do not allow editing completed contracts
-  if (row.completed) return;
+		// Do not allow editing completed contracts
+		if (row.completed) return;
 
-  const prev = contractsData;
-  const next = prev.map((x, i) =>
-    i === rowIndex ? { ...x, [columnId]: value } : x
-  );
-  setContractsData(next);
+		const prev = contractsData;
+		const next = prev.map((x, i) =>
+			i === rowIndex ? { ...x, [columnId]: value } : x
+		);
+		setContractsData(next);
 
-  try {
-    await updateContractField(
-      uidCollection,
-      row.id,
-      row.dateRange?.startDate ?? row.date,
-      { [columnId]: value }
-    );
-  } catch (e) {
-    console.error(e);
-    setContractsData(prev); // revert on failure
-  }
-};
+		try {
+			await updateContractField(
+				uidCollection,
+				row.id,
+				row.dateRange?.startDate ?? row.date,
+				{ [columnId]: value }
+			);
+		} catch (e) {
+			console.error(e);
+			setContractsData(prev);
+		}
+	};
+
 	return (
-		<div className="container mx-auto max-w-full px-1 md:px-2 lg:px-3 pb-8 md:pb-0 mt-2 md:mt-1 overflow-x-hidden">
-			{Object.keys(settings).length === 0 ? <Spinner /> :
-				<>
-					<Toast />
-					<ModalCopyInvoice />
-					{/* {loading && <Spin />} */}
-					<div className="rounded-2xl p-2 mt-2 bg-white relative border-2 border-[var(--selago)] shadow-sm">
-						<div className='flex items-center justify-between flex-wrap pb-1'>
-							<div className="text-lg md:text-xl p-0 pb-1 font-semibold text-[var(--port-gore)] responsiveTextTitle"> {getTtl('Contracts', ln)} </div>
-							<div className='flex group'>
-								  <div className="relative">
-									<DateRangePicker />
-								</div>
-								<Tooltip txt='Select Dates Range' />
+	<div className="w-full overflow-x-hidden">
+    <div className="mx-auto w-full max-w-[98%] px-1 sm:px-2 md:px-3 pb-4 mt-2">
+				{Object.keys(settings).length === 0 ? <Spinner /> :
+					<>
+						<Toast />
+						<ModalCopyInvoice />
 
+						{/* Main Card */}
+						<div className="rounded-lg p-2 sm:p-3 mt-2 bg-white border-2 border-[var(--selago)] shadow-sm w-full">
+							
+							{/* Header Section */}
+							<div className='flex items-center justify-between flex-wrap gap-2 pb-2'>
+								<h1 className="text-base sm:text-lg lg:text-xl font-semibold text-[var(--port-gore)] responsiveTextTitle">
+									{getTtl('Contracts', ln)}
+								</h1>
 								
+								<div className='flex items-center gap-2 group'>
+									<div className="relative">
+										<DateRangePicker />
+									</div>
+									<Tooltip txt='Select Dates Range' />
+								</div>
 							</div>
 
+							{/* Table Component */}
+							<Customtable 
+								data={sortArr(contractsData, 'order')}
+								columns={propDefaults} 
+								SelectRow={SelectRow}
+								invisible={invisible}
+								excellReport={EXD(contractsData.filter(x => filteredData.map(z => z.id).includes(x.id)),
+									settings, getTtl('Contracts', ln), ln)}
+								setFilteredData={setFilteredData}
+								highlightId={highlightId} 
+								onCellUpdate={onCellUpdate} 
+							/>
 						</div>
 
-<Customtable data={sortArr(contractsData, 'order')}
- columns={propDefaults} SelectRow={SelectRow}
- 							invisible={invisible}
-							excellReport={EXD(contractsData.filter(x => filteredData.map(z => z.id).includes(x.id)),
-								settings, getTtl('Contracts', ln), ln)}
-							setFilteredData={setFilteredData}
-							highlightId={highlightId} onCellUpdate={onCellUpdate} />
-					</div>
-					<div className="text-left pt-2 flex flex-col sm:flex-row gap-2 ml-3 sm:gap-2 md:ml-4 w-full">
-						<Tltip direction='bottom' tltpText='Create new Contract'>
-							<button
-								type="button"
-								onClick={addNewContract}
-								className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 focus:outline-none font-medium rounded-md 
-										 text-xs px-3 py-2 text-center shadow-sm gap-1 items-center flex transition-all responsiveTextInput"
-							>
-								<TbLayoutGridAdd className="text-sm" />
-								{getTtl('New Contract', ln)}
-							</button>
-						</Tltip>
-						<Tltip direction='bottom' tltpText='Quantities analysis report'>
-							<button
-								type="button"
-								onClick={() => router.push('/analysis')}
-								className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 focus:outline-none font-medium rounded-md 
-										 text-xs px-3 py-2 text-center shadow-sm gap-1 items-center flex transition-all responsiveTextInput"
-							>
-								<IoAnalyticsOutline className="text-sm" />
-								{getTtl('Weight Analysis', ln)}
-							</button>
-						</Tltip>
-					</div>
+						{/* Action Buttons */}
+						<div className="flex flex-col sm:flex-row gap-2 mt-2 ml-4">
+							<Tltip direction='bottom' tltpText='Create new Contract'>
+								<button
+									type="button"
+									onClick={addNewContract}
+									className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 
+										focus:outline-none font-medium rounded-md text-xs px-3 py-2 
+										shadow-sm gap-1.5 items-center flex justify-center transition-all responsiveTextInput
+										whitespace-nowrap"
+								>
+									<TbLayoutGridAdd className="text-sm flex-shrink-0" />
+									<span>{getTtl('New Contract', ln)}</span>
+								</button>
+							</Tltip>
+							
+							<Tltip direction='bottom' tltpText='Quantities analysis report'>
+								<button
+									type="button"
+									onClick={() => router.push('/analysis')}
+									className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 
+										focus:outline-none font-medium rounded-md text-xs px-3 py-2 
+										shadow-sm gap-1.5 items-center flex justify-center transition-all responsiveTextInput
+										whitespace-nowrap"
+								>
+									<IoAnalyticsOutline className="text-sm flex-shrink-0" />
+									<span>{getTtl('Weight Analysis', ln)}</span>
+								</button>
+							</Tltip>
+						</div>
 
-
-					{alertArr.length ? <div className='mt-4'>
-						<div className="text-base font-medium leading-5 text-[var(--port-gore)] border
-						 border-[var(--selago)] p-2 max-w-2xl mb-6 rounded-xl shadow-sm bg-white"
-						>
-							<div className='text-[var(--port-gore)]'>
-								<span className='p-1 text-sm'>Notification for delayed response</span>
-								<DlayedResponse alertArr={alertArr} setAlertArr={setAlertArr} />
+						{/* Alert Section */}
+						{alertArr.length > 0 && (
+							<div className='mt-4 px-2 sm:px-3'>
+								<div className="text-sm font-medium text-[var(--port-gore)] border border-[var(--selago)] 
+									p-3 rounded-lg shadow-sm bg-white w-full max-w-2xl">
+									<div className='text-[var(--port-gore)]'>
+										<span className='text-xs sm:text-sm'>Notification for delayed response</span>
+										<DlayedResponse alertArr={alertArr} setAlertArr={setAlertArr} />
+									</div>
+								</div>
 							</div>
+						)}
 
-						</div >
-					</div>
-						: ''}
+						{/* Modals */}
+						{valueCon && (
+							<MyDetailsModal 
+								isOpen={isOpenCon} 
+								setIsOpen={setIsOpenCon}
+								title={!valueCon.id ? getTtl('New Contract', ln) : `${getTtl('Contract No', ln)}: ${valueCon.order}`} 
+							/>
+						)}
 
-					{valueCon && <MyDetailsModal isOpen={isOpenCon} setIsOpen={setIsOpenCon}
-						title={!valueCon.id ? getTtl('New Contract', ln) : `${getTtl('Contract No', ln)}: ${valueCon.order}`} />}
-
-					{alertArr.length ?
-						<Modal isOpen={openAlert} setIsOpen={setOpenAlert} title='Notification for delayed response' w='max-w-2xl'>
-							<DlayedResponse alertArr={alertArr} setAlertArr={setAlertArr} />
-						</Modal>
-						:
-						null}
-
-				</>}
+						{alertArr.length > 0 && (
+							<Modal 
+								isOpen={openAlert} 
+								setIsOpen={setOpenAlert} 
+								title='Notification for delayed response' 
+								w='max-w-2xl'
+							>
+								<DlayedResponse alertArr={alertArr} setAlertArr={setAlertArr} />
+							</Modal>
+						)}
+					</>
+				}
+			</div>
 		</div>
 	);
-
 };
 
 export default Contracts;
-

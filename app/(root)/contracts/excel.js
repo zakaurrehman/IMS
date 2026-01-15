@@ -2,7 +2,7 @@ import { saveAs } from 'file-saver';
 import { Workbook } from 'exceljs';
 import Tooltip from '../../../components/tlTip';
 // import { FileSpreadsheet } from 'lucide-react'; 
-import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
+import Image from 'next/image';
 import dateFormat from "dateformat";
 import { getTtl } from '../../../utils/languages';
 import Tltip from '../../../components/tlTip';
@@ -121,7 +121,7 @@ export const EXD = (dataTable, settings, name, ln) => {
                     className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center size-10 inline-flex
      items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none cursor-pointer transition-colors"
                 >
-                    <PiMicrosoftExcelLogoFill className="w-5 h-5 text-[var(--port-gore)]"  strokeWidth={2} />
+                    <Image src="/logo/excel.svg" alt="Excel Export" width={32} height={32} className="w-8 h-8 object-cover inline-block align-middle" priority />
                 </div>
             </Tltip>
         </div>

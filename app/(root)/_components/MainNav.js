@@ -7,7 +7,8 @@ import { SettingsContext } from '../../../contexts/useSettingsContext'
 import { getTtl } from '../../../utils/languages'
 import { useRouter } from 'next/navigation'
 import { BiSearch, BiLogOutCircle, BiMessageRoundedDots } from 'react-icons/bi'
-import { FiSettings, FiUser } from 'react-icons/fi'
+import { FiSettings } from 'react-icons/fi'
+import Image from 'next/image';
 import { useGlobalSearch } from '../../../contexts/useGlobalSearchContext'
 
 export const MainNav = () => {
@@ -123,8 +124,8 @@ export const MainNav = () => {
             className='flex items-center gap-2 p-1 rounded-lg hover:bg-[var(--selago)] transition-all'
             aria-label='User menu'
           >
-            <div className='w-10 h-10 rounded-full bg-gradient-to-r from-[var(--endeavour)] via-[var(--chathams-blue)] to-[var(--endeavour)] flex items-center justify-center text-white font-semibold text-sm overflow-hidden border-2 border-white shadow-md'>
-              {user?.email ? user.email.charAt(0).toUpperCase() : <FiUser />}
+            <div className='w-10 h-10 rounded-full  flex items-center justify-center text-white font-semibold text-sm overflow-hidden border-2 border-white shadow-md'>
+              <Image src="/logo/profile.svg" alt="Profile" width={28} height={28} className="inline-block align-middle" />
             </div>
           </button>
 
