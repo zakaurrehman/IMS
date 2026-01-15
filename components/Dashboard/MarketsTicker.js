@@ -172,7 +172,7 @@ export default function MarketsTicker({ className = '' }) {
           </div>
         }
         items={fxItems}
-        speed={110}
+        speed={50}
         pauseOnHover
         rightToLeft
         gap={22}
@@ -224,7 +224,7 @@ export default function MarketsTicker({ className = '' }) {
           </button>
         }
         items={metalItems}
-        speed={140}
+        speed={50}
         pauseOnHover
         rightToLeft
         gap={18} // ✅ tighter so it never feels empty with only 2 metals
