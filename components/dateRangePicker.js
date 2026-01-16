@@ -1,10 +1,10 @@
-
 'use client'
 
 import React, { useContext, useState, useEffect } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { SettingsContext } from "../contexts/useSettingsContext";
 import dateFormat from "dateformat";
+import { FaRegCalendarAlt } from "react-icons/fa"; // Make sure you have this import
 
 function useIsMobile() {
     const [isMobile, setIsMobile] = useState(false);
@@ -19,19 +19,13 @@ function useIsMobile() {
     return isMobile;
 }
 
-/* ================================
-   Helpers
-================================ */
 // string (yyyy-mm-dd) -> Date
 const toDate = (val) => (val ? new Date(val) : null);
 
 // Date -> string (yyyy-mm-dd)
 const toStr = (val) => (val ? dateFormat(val, "yyyy-mm-dd") : null);
 
-/* ================================
-   Component
-================================ */
-const DateRangePicker = () => {
+const DateRangePicker = ({ displayLabel }) => {
     const { setDateSelect, dateSelect } = useContext(SettingsContext);
 
     // Keep picker value as Date objects
@@ -48,80 +42,22 @@ const DateRangePicker = () => {
         });
     }, [dateSelect]);
 
-    /* ================================
-       Shortcut Dates (UNCHANGED)
-    ================================ */
-    const yr = new Date().getFullYear();
-    const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
+    // Handle value change
     const handleValueChange = (newValue) => {
         setValue(newValue);
         setDateSelect({
-            ...dateSelect,
             start: toStr(newValue.startDate),
             end: toStr(newValue.endDate),
         });
     };
 
-    // Get display label based on selected date range
-    const getDisplayLabel = () => {
-        const start = dateSelect.start;
-        const end = dateSelect.end;
-        
-        if (!start || !end) return null;
-        
-        const todayStr = dateFormat(today, "yyyy-mm-dd");
-        const firstOfMonthStr = dateFormat(firstDayOfMonth, "yyyy-mm-dd");
-        const lastOfMonthStr = dateFormat(lastDayOfMonth, "yyyy-mm-dd");
-        
-        // Also calculate expected year strings with local dates
-        const thisYearStart = dateFormat(new Date(yr, 0, 1), "yyyy-mm-dd");
-        const thisYearEnd = dateFormat(new Date(yr, 11, 31), "yyyy-mm-dd");
-        const lastYearStart = dateFormat(new Date(yr - 1, 0, 1), "yyyy-mm-dd");
-        const lastYearEnd = dateFormat(new Date(yr - 1, 11, 31), "yyyy-mm-dd");
-        
-        // Check which shortcut matches
-        if (start === todayStr && end === todayStr) {
-            return "Today";
-        }
-        if (start === firstOfMonthStr && end === lastOfMonthStr) {
-            return dateFormat(firstDayOfMonth, "mmmm yyyy");
-        }
-        
-        // Current year check (using formatted dates)
-        if (start === thisYearStart && end === thisYearEnd) {
-            return `Year ${yr}`;
-        }
-        
-        // Last year check (using formatted dates)
-        if (start === lastYearStart && end === lastYearEnd) {
-            return `Year ${yr - 1}`;
-        }
-        
-        // Generic year check: extract and compare
-        const startYear = start?.substring(0, 4);
-        const endYear = end?.substring(0, 4);
-        const startMonthDay = start?.substring(5); // "01-01"
-        const endMonthDay = end?.substring(5); // "12-31"
-        
-        // Any full year (Jan 1 to Dec 31 of same year)
-        if (startYear === endYear && startMonthDay === "01-01" && endMonthDay === "12-31") {
-            return `Year ${startYear}`;
-        }
-        
-        return null; // Custom range, no label
-    };
+    // Shortcut Dates
+    const today = new Date();
+    const yr = today.getFullYear();
+    const firstDayOfMonth = new Date(yr, today.getMonth(), 1);
+    const lastDayOfMonth = new Date(yr, today.getMonth() + 1, 0);
 
-    const displayLabel = getDisplayLabel();
-
-    const isMobile = useIsMobile();
-
-    /* ================================
-       Z-INDEX FIX (LOW PRIORITY)
-       Datepicker will NEVER overlay modals
-    ================================ */
+    // Inject custom styles for datepicker
     useEffect(() => {
         const styleId = "datepicker-low-zindex";
         if (document.getElementById(styleId)) return;
@@ -165,86 +101,130 @@ const DateRangePicker = () => {
                 pointer-events: none !important;
                 opacity: 0 !important;
             }
+
+            /* --- Custom styling for datepicker shortcuts --- */
+            .react-tailwindcss-datepicker .rdrDefinedRangesWrapper {
+                background: #f8f5ff !important;
+                border-radius: 1rem 0 0 1rem !important;
+                padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+                min-width: 120px;
+            }
+            .react-tailwindcss-datepicker .rdrStaticRange {
+                margin-bottom: 0.25rem !important;
+            }
+            .react-tailwindcss-datepicker .rdrStaticRangeLabel {
+                font-weight: 700 !important;
+                font-size: 1.08rem !important;
+                color: #5b21b6 !important;
+                border-radius: 0.5rem !important;
+                padding: 0.5rem 1.2rem 0.5rem 1.2rem !important;
+                margin: 0.1rem 0.2rem !important;
+                transition: background 0.15s, color 0.15s;
+                cursor: pointer;
+                border-left: 4px solid transparent;
+            }
+            .react-tailwindcss-datepicker .rdrStaticRangeLabel:hover {
+                background: #ede9fe !important;
+                color: #7c3aed !important;
+            }
+            .react-tailwindcss-datepicker .rdrStaticRangeSelected .rdrStaticRangeLabel {
+                background: #c7d2fe !important;
+                color: #1e40af !important;
+                border-left: 4px solid #7c3aed !important;
+            }
+            /* Add a dot for selected shortcut (optional, for visual cue) */
+            .react-tailwindcss-datepicker .rdrStaticRangeSelected .rdrStaticRangeLabel::before {
+                content: '';
+                display: inline-block;
+                width: 0.5em;
+                height: 0.5em;
+                background: #7c3aed;
+                border-radius: 50%;
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
         `;
         document.head.appendChild(style);
 
         return () => {
             const s = document.getElementById(styleId);
             if (s) s.remove();
-        };
+        }
     }, []);
 
     return (
         <div
-            className="relative flex items-center gap-2 border-2 border-[var(--selago)] rounded-md "
-            style={{ zIndex: 5 }}   // 🔑 LOW z-index container
+            className="relative flex items-center gap-3 p-3 rounded-2xl shadow-xl bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 border border-indigo-100/60 hover:shadow-2xl transition-all duration-200 group w-full max-w-xs sm:max-w-sm md:max-w-md"
+            style={{ zIndex: 5 }}
         >
             {displayLabel && (
-                <span className="text-xs font-medium text-[var(--port-gore)] bg-[var(--selago)]/60 px-2 py-0.5 rounded-md whitespace-nowrap">
+                <span className="text-[15px] sm:text-base font-black text-indigo-700 bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 px-4 py-1.5 rounded-xl shadow whitespace-nowrap tracking-wider mr-3">
                     {displayLabel}
                 </span>
             )}
-            <Datepicker
-                inputClassName="
-                    text-xs p-1 px-2
-                    rounded-md
-                    text-[var(--port-gore)]
-                    font-medium
-                    w-48
-                    bg-transparent
-                    cursor-pointer
-                    hover:bg-[var(--selago)]/50
-                    focus:outline-none
-                    focus:ring-0
-                    focus:border-none
-                    border-none
-                    outline-none
-                    shadow-none
-                    transition-all
-                    duration-200
-                "
-                useRange={false}
-                value={value}
-                onChange={handleValueChange}
-                displayFormat="DD-MMM-YY"
-                placeholder="Select range"
-                showShortcuts={true}
-                readOnly={true}
-                popoverDirection="down"
-                containerClassName="relative z-[5]"
-                configs={{
-                    shortcuts: {
-                        customToday: {
-                            text: "Today",
-                            period: {
-                                start: today,
-                                end: today,
+            <div className="relative w-full flex-1">
+                <Datepicker
+                    inputClassName="
+                        text-[15px] sm:text-base p-2 pl-11 pr-4
+                        rounded-xl
+                        text-indigo-900
+                        font-extrabold
+                        w-full
+                        bg-white/90
+                        cursor-pointer
+                        hover:bg-indigo-100/90
+                        focus:outline-none
+                        focus:ring-2 focus:ring-indigo-300
+                        border border-indigo-200
+                        shadow transition-all duration-200
+                        placeholder:text-indigo-300
+                        tracking-wide
+                        leading-tight
+                    "
+                    useRange={false}
+                    value={value}
+                    onChange={handleValueChange}
+                    displayFormat="DD-MMM-YY"
+                    placeholder="Select range"
+                    showShortcuts={true}
+                    readOnly={true}
+                    popoverDirection="down"
+                    containerClassName="relative z-[5]"
+                    configs={{
+                        shortcuts: {
+                            customToday: {
+                                text: "Today",
+                                period: {
+                                    start: today,
+                                    end: today,
+                                },
+                            },
+                            customMonth: {
+                                text: "This month",
+                                period: {
+                                    start: firstDayOfMonth,
+                                    end: lastDayOfMonth,
+                                },
+                            },
+                            custom: {
+                                text: "This year",
+                                period: {
+                                    start: new Date(yr, 0, 1),
+                                    end: new Date(yr, 11, 31),
+                                },
+                            },
+                            custom1: {
+                                text: "Last year",
+                                period: {
+                                    start: new Date(yr - 1, 0, 1),
+                                    end: new Date(yr - 1, 11, 31),
+                                },
                             },
                         },
-                        customMonth: {
-                            text: "This month",
-                            period: {
-                                start: firstDayOfMonth,
-                                end: lastDayOfMonth,
-                            },
-                        },
-                        custom: {
-                            text: "This year",
-                            period: {
-                                start: new Date(yr, 0, 1),      // Jan 1 (local time)
-                                end: new Date(yr, 11, 31),      // Dec 31 (local time)
-                            },
-                        },
-                        custom1: {
-                            text: "Last year",
-                            period: {
-                                start: new Date(yr - 1, 0, 1),  // Jan 1 last year (local time)
-                                end: new Date(yr - 1, 11, 31),  // Dec 31 last year (local time)
-                            },
-                        },
-                    },
-                }}
-            />
+                    }}
+                />
+                <FaRegCalendarAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-indigo-400 text-xl sm:text-2xl pointer-events-none group-hover:text-indigo-600 transition-colors" />
+            </div>
         </div>
     );
 };

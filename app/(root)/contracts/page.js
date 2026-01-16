@@ -285,11 +285,11 @@ const Contracts = () => {
 						<ModalCopyInvoice />
 
 						{/* Main Card */}
-						<div className="rounded-lg p-2 sm:p-3 mt-2 bg-white border-2 border-[var(--selago)] shadow-sm w-full">
+						<div className="rounded-2xl p-3 sm:p-5 mt-2 bg-gradient-to-br from-[#f5f7fa] via-[#e0e7ff] to-[#f0abfc] border-0 shadow-xl w-full backdrop-blur-[2px]">
 							
 							{/* Header Section */}
 							<div className='flex items-center justify-between flex-wrap gap-2 pb-2'>
-								<h1 className="text-base sm:text-lg lg:text-xl font-semibold text-[var(--port-gore)] responsiveTextTitle">
+								<h1 className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-500 drop-shadow-md tracking-tight responsiveTextTitle">
 									{getTtl('Contracts', ln)}
 								</h1>
 								
@@ -316,17 +316,14 @@ const Contracts = () => {
 						</div>
 
 						{/* Action Buttons */}
-						<div className="flex flex-col sm:flex-row gap-2 mt-2 ml-4">
+						  <div className="flex flex-col sm:flex-row gap-3 mt-4 ml-4">
 							<Tltip direction='bottom' tltpText='Create new Contract'>
 								<button
 									type="button"
 									onClick={addNewContract}
-									className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 
-										focus:outline-none font-medium rounded-md text-xs px-3 py-2 
-										shadow-sm gap-1.5 items-center flex justify-center transition-all responsiveTextInput
-										whitespace-nowrap"
+									className="text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:to-pink-600 focus:outline-none font-semibold rounded-full text-sm px-5 py-2 shadow-lg gap-2 items-center flex justify-center transition-all duration-200 hover:scale-105 border border-indigo-200/60 responsiveTextInput whitespace-nowrap"
 								>
-									<TbLayoutGridAdd className="text-sm flex-shrink-0" />
+									<TbLayoutGridAdd className="text-lg flex-shrink-0" />
 									<span>{getTtl('New Contract', ln)}</span>
 								</button>
 							</Tltip>
@@ -335,12 +332,9 @@ const Contracts = () => {
 								<button
 									type="button"
 									onClick={() => router.push('/analysis')}
-									className="text-white bg-gradient-to-r from-[var(--endeavour)] to-[var(--chathams-blue)] hover:opacity-90 
-										focus:outline-none font-medium rounded-md text-xs px-3 py-2 
-										shadow-sm gap-1.5 items-center flex justify-center transition-all responsiveTextInput
-										whitespace-nowrap"
+									className="text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:to-pink-600 focus:outline-none font-semibold rounded-full text-sm px-5 py-2 shadow-lg gap-2 items-center flex justify-center transition-all duration-200 hover:scale-105 border border-indigo-200/60 responsiveTextInput whitespace-nowrap"
 								>
-									<IoAnalyticsOutline className="text-sm flex-shrink-0" />
+									<IoAnalyticsOutline className="text-lg flex-shrink-0" />
 									<span>{getTtl('Weight Analysis', ln)}</span>
 								</button>
 							</Tltip>
@@ -349,8 +343,7 @@ const Contracts = () => {
 						{/* Alert Section */}
 						{alertArr.length > 0 && (
 							<div className='mt-4 px-2 sm:px-3'>
-								<div className="text-sm font-medium text-[var(--port-gore)] border border-[var(--selago)] 
-									p-3 rounded-lg shadow-sm bg-white w-full max-w-2xl">
+								<div className="text-sm font-semibold text-indigo-900 border-0 p-4 rounded-xl shadow bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 w-full max-w-2xl">
 									<div className='text-[var(--port-gore)]'>
 										<span className='text-xs sm:text-sm'>Notification for delayed response</span>
 										<DlayedResponse alertArr={alertArr} setAlertArr={setAlertArr} />

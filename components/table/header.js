@@ -56,28 +56,27 @@ const Header = ({
   );
 
   return (
-    <div className="flex justify-between items-center p-2 flex-wrap gap-2 sticky top-0  bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
+    <div className="flex justify-between items-center p-3 flex-wrap gap-3 sticky top-0 z-20 bg-gradient-to-r from-indigo-200 via-purple-100 to-pink-100 shadow-lg rounded-2xl border-0 backdrop-blur-[2px]">
       
       {/* Left Section - Search & Callback */}
-      <div className='flex items-center gap-2 w-full sm:w-auto'>
+      <div className='flex items-center gap-3 w-full sm:w-auto'>
         {pathname !== '/accounting' && (
-          <div className="flex items-center relative w-auto min-w-[100px] sm:min-w-[140px] md:w-48 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all bg-white">
+          <div className="flex items-center relative w-auto min-w-[120px] sm:min-w-[160px] md:w-56 border-0 rounded-xl bg-gradient-to-r from-white via-indigo-50 to-purple-50 shadow focus-within:ring-2 focus-within:ring-indigo-300 transition-all">
             <input
-              className="bg-transparent border-0 shadow-none pr-7 pl-2.5 focus:outline-none focus:ring-0 w-full text-gray-700 placeholder:text-gray-400 h-7"
+              className="bg-transparent border-0 shadow-none pr-8 pl-3 focus:outline-none focus:ring-0 w-full text-indigo-900 placeholder:text-indigo-400 h-8 text-[13px]"
               placeholder={getTtl('Search', ln)}
               value={globalFilter ?? ''}
               onChange={e => setGlobalFilter(e.target.value)}
               type='text'
-              style={{ fontSize: 'clamp(9px, 0.8vw, 11px)' }}
+              style={{ fontSize: 'clamp(11px, 1vw, 14px)' }}
             />
-
             {globalFilter === '' ? (
-              <FaSearch className="text-gray-400 absolute right-2.5" style={{ fontSize: 'clamp(9px, 0.8vw, 11px)' }} />
+              <FaSearch className="text-indigo-300 absolute right-3 top-2.5" style={{ fontSize: 'clamp(12px, 1vw, 15px)' }} />
             ) : (
               <TiDeleteOutline 
-                className="text-gray-500 absolute right-2.5 cursor-pointer hover:text-red-500 transition-colors" 
+                className="text-indigo-400 absolute right-3 top-2.5 cursor-pointer hover:text-pink-500 transition-colors" 
                 onClick={() => setGlobalFilter('')}
-                style={{ fontSize: 'clamp(10px, 0.9vw, 12px)' }}
+                style={{ fontSize: 'clamp(13px, 1vw, 16px)' }}
               />
             )}
           </div>
@@ -94,7 +93,7 @@ const Header = ({
       </div>
 
       {/* Right Section - Actions */}
-      <div className='flex items-center justify-end flex-wrap gap-1.5'>
+      <div className='flex items-center justify-end flex-wrap gap-2'>
         
         {/* Material Table Actions */}
         {type === 'mTable' && (
