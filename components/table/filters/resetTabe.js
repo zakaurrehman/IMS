@@ -1,6 +1,6 @@
 import Tltip from '../../../components/tlTip';
 import { getTtl } from '../../../utils/languages';
-import { AiOutlineClear } from "react-icons/ai";
+import Image from 'next/image';
 
 
 const Filters = (ln, resetTable, filterOn) => {
@@ -14,9 +14,14 @@ const Filters = (ln, resetTable, filterOn) => {
                     className="group hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center w-10 h-10 inline-flex
      items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none transition-colors"
                 >
-                    {
-                        <AiOutlineClear className="scale-[1.4] text-[var(--port-gore)]" />
-                    }
+                    <Image 
+                        src="/logo/reset.svg" 
+                        alt="Reset Table" 
+                        width={32} 
+                        height={32} 
+                        className="w-8 h-8 object-cover inline-block align-middle" 
+                        priority 
+                    />
                 </button>
             </Tltip>
             }

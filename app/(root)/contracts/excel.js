@@ -118,8 +118,8 @@ export const EXD = (dataTable, settings, name, ln) => {
         <div>
             <Tltip direction='bottom' tltpText={getTtl('Excel', ln)}>
                 <div onClick={() => exportExcel()}
-                    className="hover:bg-[var(--selago)] text-[var(--port-gore)] justify-center size-10 inline-flex
-     items-center text-sm rounded-full hover:drop-shadow-md focus:outline-none cursor-pointer transition-colors"
+                    className=" justify-center size-10 inline-flex
+     items-center text-sm rounded-full  focus:outline-none cursor-pointer "
                 >
                     <Image src="/logo/excel.svg" alt="Excel Export" width={32} height={32} className="w-8 h-8 object-cover inline-block align-middle" priority />
                 </div>

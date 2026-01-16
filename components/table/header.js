@@ -2,6 +2,7 @@
 'use client';
 
 import { useContext } from "react";
+
 import { FaSearch } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
 import ColFilter from "./ColumnsFilter";
@@ -130,29 +131,41 @@ const Header = ({
         {/* Contract Statement Table Modes */}
         {type === 'contractStatementTableModes' && tableModes}
 
-        {/* Filter Controls */}
+
+        {/* Filter Controls + Chat Button */}
         <div className="flex items-center gap-1">
           {resetFilterTable}
           {filterIcon}
           {excellReport}
           <ColFilter table={table} />
+          {/* Chat Button */}
+          <Tltip direction="bottom" tltpText={getTtl('Ask question', ln) || 'Ask question'}>
+            <div
+              onClick={() => {
+                if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('ims:openChat'));
+              }}
+              className="justify-center size-10 inline-flex items-center text-sm rounded-full focus:outline-none cursor-pointer"
+              style={{ fontSize: 'clamp(13px, 1vw, 16px)' }}
+              aria-label={getTtl('Ask question', ln) || 'Ask question'}
+              title={getTtl('Ask question', ln) || 'Ask question'}
+            >
+              <Image src="/logo/chat.svg" alt="Chat" width={32} height={32} className="w-8 h-8 object-cover inline-block align-middle" priority />
+            </div>
+          </Tltip>
         </div>
 
         {/* Edit Mode Toggle */}
         {showEditButton && typeof setIsEditMode === 'function' && (
-          <button
-            onClick={() => setIsEditMode(prev => !prev)}
-            className={`
-              px-2 py-1 rounded-lg font-medium transition-all flex items-center gap-1.5 border h-7
-              ${isEditMode
-                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-blue-700 shadow-sm'
-                : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'}
-            `}
-            style={{ fontSize: 'clamp(9px, 0.8vw, 11px)' }}
-            title={isEditMode ? 'Editing ON' : 'Edit'}
-          >
-            <Image src="/logo/edit.svg" alt="Edit" width={22} height={22} className="scale-[1.4] inline-block align-middle" />
-          </button>
+          <Tltip direction="bottom" tltpText={isEditMode ? 'Editing ON' : 'Edit'}>
+            <div
+              onClick={() => setIsEditMode(prev => !prev)}
+              className="justify-center size-10 inline-flex items-center text-sm rounded-full focus:outline-none cursor-pointer"
+              style={{ fontSize: 'clamp(13px, 1vw, 16px)' }}
+              title={isEditMode ? 'Editing ON' : 'Edit'}
+            >
+              <Image src="/logo/edit.svg" alt="Edit" width={32} height={32} className="w-8 h-8 object-cover inline-block align-middle" priority />
+            </div>
+          </Tltip>
         )}
 
         {/* Quick Sum Control */}
